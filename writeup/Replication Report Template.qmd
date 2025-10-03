@@ -1,19 +1,18 @@
 ---
-title: "Replication of Study X by Sample & Sample (20xx, Psychological Science)"
-author: "Replication Author[s] (contact information)"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
-format:
-  html:
+title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills
+X by Van Peppen et al. (2018, November)"
+author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T. 
+date: "`r format(Sys.time(), '%11 %18, %2018')`"
+format: 
+  html: "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2018.00100/full"
     toc: true
     toc_depth: 3
 ---
 
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. --> 
 
 ## Introduction
-
-[No abstract is needed.]  Each replication project will have a straightforward, no frills report of the study and results.  These reports will be publicly available as supplementary material for the aggregate report(s) of the project as a whole.  Also, to maximize project integrity, the intro and methods will be written and critiqued in advance of data collection.  Introductions can be just 1-2 paragraphs clarifying the main idea of the original study, the target finding for replication, and any other essential information. You will likely contact the authors of the original study, so this should be professional and forward facing. It will NOT have a literature review -- that is in the original publication. You can write both the introduction and the methods in past tense.  
-
+I am interested in replicating Van Peppen and colleagues' (2018) study, where they examine how generating explanations for oneself (i.e. self explanations) fosters critical thinking. Understanding the relationship between self-explanation and critical thinking skills directly relates to my first year project, as I am interested in understanding how different explanation strategies (such as AI-generated vs self-explanations) shapes the way learners’ retain and critically think about science. Not only does this study relate to my research interests, but it also provides enough challenge to code and familiarize myself with R. Overall, the ultimate goal is to have this replication project further inform the considerations and study design of my first year project. 
 
 ## Methods
 
@@ -27,11 +26,13 @@ Planned sample size and/or termination rule, sampling frame, known demographics 
 
 ### Materials
 
-All materials - can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+For both the pretest and posttest, participants will be administered the critical thinking (CT) skills test. The CT-skills test tried to measure critical thinking skills in two key categories. The first category was to understand how well people were able to logically reason. To test this, they implemented two exams that measured how susceptible participants are to believe in false information (Syllogistic Reasoning task) as well as how likely participants verify versus disprove claims (Wason Selection task). The second category the study aimed to assess was participants’ statistical reasoning skills. The first test they used was the Base-rate tasks to evaluate whether people prioritized anecdotal evidence over statistical findings. Additionally, they integrated the Conjunction tasks which measured how likely people bias statistics: such as believing events described in detail are more probable than a simplistic recount. 
+
+For the intervention phase, the study provided CT-instructions that educated participants on what inductive versus deductive reasoning is. Additionally, the instructions integrated two worked examples per exam they were administered in the pretest. Then, participants practiced the learned skills with CT-practice material that allowed participants to apply their skills to four different scenarios, and explain why they came to their conclusions. With each test administered, participants were given a mental effort survey where they rated on a 9-point Likert scale (1 being extremely low effort to 9 being extremely high effort) on how much cognitive effort it took to complete the task.
 
 ### Procedure	
 
-Can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+Participants signed the informed consent form before completing the pretest that measured their initial critical thinking skills through Qualtrics. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions. 
 
 ### Analysis Plan
 
@@ -41,7 +42,7 @@ Can also quote directly, though it is less often spelled out effectively for an 
 
 ### Differences from Original Study
 
-Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect.
+One challenge is the original study was conducted in a classroom setting. Though classroom studies reflect genuine learning environments, it is difficult to replicate them due to varying, external factors. Additionally, there is limited funding nor prior notice to implement the intervention in a classroom. To attempt replicating this study, participants will be recruited through UCSD’s sona-system to take the study in-person. Not only will this ensure participants are more engaged and are not using outside sources, but it will also address the second challenge: replicating the participant demographic. In the original study, participants were first-year students enrolled in the Safety and Security Management program offered at Dutch University of Applied Sciences. Recruiting individuals with varying levels of prior knowledge can impact the results. Therefore, restricting the participants to first-year students in introductory-level psychology courses can mitigate substantial differences from the original study.
 
 ### Methods Addendum (Post Data Collection)
 
