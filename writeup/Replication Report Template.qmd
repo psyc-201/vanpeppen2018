@@ -1,10 +1,10 @@
 ---
 title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills
 X by Van Peppen et al. (2018, November)"
-author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T. 
+author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T.
 date: "`r format(Sys.time(), '%11 %18, %2018')`"
 format: 
-  html: "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2018.00100/full"
+  html: "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2018.00100/full 
     toc: true
     toc_depth: 3
 ---
@@ -12,13 +12,11 @@ format:
 <!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. --> 
 
 ## Introduction
-I am interested in replicating Van Peppen and colleagues' (2018) study, where they examine how generating explanations for oneself (i.e. self explanations) fosters critical thinking. Understanding the relationship between self-explanation and critical thinking skills directly relates to my first year project, as I am interested in understanding how different explanation strategies (such as AI-generated vs self-explanations) shapes the way learners’ retain and critically think about science. Not only does this study relate to my research interests, but it also provides enough challenge to code and familiarize myself with R. Overall, the ultimate goal is to have this replication project further inform the considerations and study design of my first year project. 
+Reflecting upon my project proposal feedback, I would like to continue replicating Van Peppen and colleagues (2018) study. The study aims to examine how generating explanations for oneself (i.e. self explanations) fosters critical thinking. Though this does not directly relate to my first year project, I am still interested in launching a study where I test how different types of explanation strategies (such as AI-generated vs self-explanations) shapes the way learners’ retain and critically think about science. Finally, replicating this study will balance both the challenge and feasibility of coding and familiarizing myself with R. Through these efforts, I hope to deepen my understanding on how different learning strategies foster critical thinking and better learning outcomes.
 
 ## Methods
 
 ### Power Analysis
-
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
 
 ### Planned Sample
 
@@ -41,8 +39,7 @@ Can also quote directly, though it is less often spelled out effectively for an 
 **Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
 
 ### Differences from Original Study
-
-One challenge is the original study was conducted in a classroom setting. Though classroom studies reflect genuine learning environments, it is difficult to replicate them due to varying, external factors. Additionally, there is limited funding nor prior notice to implement the intervention in a classroom. To attempt replicating this study, participants will be recruited through UCSD’s sona-system to take the study in-person. Not only will this ensure participants are more engaged and are not using outside sources, but it will also address the second challenge: replicating the participant demographic. In the original study, participants were first-year students enrolled in the Safety and Security Management program offered at Dutch University of Applied Sciences. Recruiting individuals with varying levels of prior knowledge can impact the results. Therefore, restricting the participants to first-year students in introductory-level psychology courses can mitigate substantial differences from the original study.
+One major concern of replicating this study is conducting a longtitudinal study. Addressing this feedback, I am planning to not add the delayed posttest portion of the study. The rationale behind this decision stems from the delayed posttest just measuring how well a student retained information from the task. The immediate posttest will be sufficient to compare how the CT training and self-explanations affected learning outcomes. Beyond this, other concerns raised was understanding how participants' engagement of the study would be impacted if moved to online. One way to test engagement is creating a survey at the end asking if they honestly used any distractions to account for transparent barriers in the study. Also, calculating a power analysis in R to find the amount of participants needed to get medium sized effects will be the next step. The final solution addresses the third feedback: obtaining the CT materials. By emailing the authors, I am hoping to also ask them whether adding all four CT measures are necessary in measuring critical thinking. If it is not, I will utilize their feedback and make the study go faster. This way, it can hopefully keep participants a little more engaged.
 
 ### Methods Addendum (Post Data Collection)
 
