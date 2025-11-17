@@ -124,6 +124,24 @@
     });
 
     var timeline = [];
+    // ============================================
+    // (0) SONA STUDY ID COLLECTION
+    // ============================================
+    const sonaID = {
+        type: jsPsychSurveyText,
+        questions: [
+            {
+                prompt: "Please enter your SONA Study ID (e.g., S1234):",
+                required: true,
+                name: "sona_id"
+            }
+        ],
+        button_label: "Continue",
+        data: {
+            task: 'sona_id_collection'
+        }
+    };
+    timeline.push(sonaID);
 
     // ============================================
     // (1) CONSENT FORM
