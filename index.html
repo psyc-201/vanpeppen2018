@@ -131,7 +131,7 @@
         type: jsPsychSurveyText,
         questions: [
             {
-                prompt: "Please enter your SONA Study ID (e.g., S1234):",
+                prompt: "Please enter the DATE and START TIME you are taking this study. This is essential for us to award your SONA credits correctly:",
                 required: true,
                 name: "sona_id"
             }
@@ -578,7 +578,7 @@
         type: jsPsychPipe,
         action: "save",
         experiment_id: expID,
-        filename: `${participantID}.csv`,
+        filename: `${participantID_pilot}.csv`,
         data_string: () => jsPsych.data.get().csv()
     };
     timeline.push(save_data);
