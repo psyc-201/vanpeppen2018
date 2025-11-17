@@ -123,6 +123,18 @@
         }
     });
 
+<<<<<<< HEAD
+=======
+    // Subject ID & Output Filename
+    const subject__id = jsPsych.randomization.randomID(10);
+    const filename = '${subject__id}.csv';
+
+    // Make these IDs available on every row
+    jsPsych.data.addProperties({
+        subject__id: subject__id
+    });
+
+>>>>>>> 267bb07cb7824ebb034caf1e2f7b883bd78a58ed
     var timeline = [];
 
     // ============================================
@@ -134,10 +146,18 @@
             `<div class="consent-box">
                 <h2>Informed Consent Form</h2>
                 <p><strong>Title of Research Study:</strong> Critical Thinking Skills Learning Study</p>
+<<<<<<< HEAD
                 <p><strong>Purpose:</strong>You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction.” This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course. You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies.</p>
                 <p><strong>Risks and Benefits:</strong> The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations. Your participation in this research should last approximately 5-30 minutes  If you agree to take part in this study, you may be asked to view a set of stimuli, including pictures, sounds, written text, or videos and then giving some responses via key-presses, verbally, or with paper-and-pencil. We may also observe your choices or preferences among an array of stimuli.  These stimuli will be taken directly from or closely adapted from studies that already exist in the published psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli will be disturbing, threatening, or offensive. The online and in-person experiments described in this protocol will take no more than 30 minutes. An example game you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is between 5-30 minutes, and is specified in the study description.</p>
                 <p><strong>Confidentiality:</strong> Your responses will be kept confidential and anonymous. Data will be stored securely and used only for research purposes.</p>
                 <p><strong>Voluntary Participation:</strong> We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your SONA or Prolific IDs will never be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data containing anything that might be personally identifiable (e.g. Prolific IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies.</p>
+=======
+                <p><strong>Purpose:</strong> You are invited to participate in a research study about learning critical thinking skills. The purpose of this study is to understand how different learning methods affect critical thinking performance.</p>
+                <p><strong>What you will do:</strong> You will complete a pretest, read educational materials, and then complete a posttest. The entire study should take approximately 45-60 minutes.</p>
+                <p><strong>Risks and Benefits:</strong> There are no known risks associated with this study. You may benefit from learning about critical thinking skills.</p>
+                <p><strong>Confidentiality:</strong> Your responses will be kept confidential and anonymous. Data will be stored securely and used only for research purposes.</p>
+                <p><strong>Voluntary Participation:</strong> Your participation is completely voluntary. You may withdraw at any time without penalty.</p>
+>>>>>>> 267bb07cb7824ebb034caf1e2f7b883bd78a58ed
                 <p><strong>Contact Information:</strong> If you have questions about this study, please contact the research team.</p>
                 <p><strong>By clicking "I Agree" below, you indicate that:</strong></p>
                 <ul>
@@ -536,6 +556,18 @@
     }
     const randomizedPosttestBlocks = jsPsych.randomization.shuffle(posttestItems.map(makePosttestBlock));
     timeline.push(...randomizedPosttestBlocks);
+<<<<<<< HEAD
+=======
+    // ============================================ SAVE TRIAL DATA
+    const save_data = {
+        type: jsPsychPipe,
+        action: "save",
+        experiment_id: "CgetHBPXUjQP",
+        filename: filename,
+        data_string: () => jsPsych.data.get().csv()
+    };
+    timeline.push(save_data);
+>>>>>>> 267bb07cb7824ebb034caf1e2f7b883bd78a58ed
 
     // End message
     var end_message = {
@@ -550,6 +582,7 @@
 
     // Run the experiment
     jsPsych.run(timeline);
+<<<<<<< HEAD
     // ============================================ SAVE TRIAL DATA
     const expID = "CgetHBPXUjQP";
 
@@ -564,6 +597,8 @@
         data_string: () => jsPsych.data.get().csv()
     };
     timeline.push(save_data);
+=======
+>>>>>>> 267bb07cb7824ebb034caf1e2f7b883bd78a58ed
 </script>
 
 </html>
