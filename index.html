@@ -111,18 +111,7 @@
 <body></body>
 <script>
     // Initialize jsPsych
-    const jsPsych = initJsPsych({
-        on_finish: function () {
-            // Save data as CSV file automatically
-            const data = jsPsych.data.get();
-            const filename = 'experiment-data-' + Date.now() + '.csv';
-            data.localSave('csv', filename);
-
-            // Also display data in browser for verification
-            jsPsych.data.displayData();
-        }
-    });
-
+    const jsPsych = initJsPsych;
     var timeline = [];
     // ============================================
     // (0) SONA STUDY ID COLLECTION
@@ -165,11 +154,14 @@
                 </ul>
             </div>`
         ],
-        show_clickable_nav: true,
-        button_label_next: "I Agree",
-        button_label_previous: "I Do Not Agree",
+        choices: ['I Agree', 'I Do Not Agree'],
         data: {
             task: 'consent'
+        },
+        on_finish: function (data) {
+            if (data.response === 'I Do Not Agree') {
+                jsPsych.endExperiment('You have chosen not to participate in this study. Thank you for your time.');
+            }
         }
     };
     timeline.push(consent);
