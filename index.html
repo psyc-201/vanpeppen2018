@@ -113,6 +113,7 @@
     // Initialize jsPsych
     const jsPsych = initJsPsych;
     var timeline = [];
+
     // ============================================
     // (0) SONA STUDY ID COLLECTION
     // ============================================
@@ -188,7 +189,7 @@
         type: jsPsychSurveyMultiChoice,
         questions: [
             {
-                prompt: "Below you will find two statements. Assume that they are true! Proposition 1: Nuts can be eaten. Proposition 2: Some rocks cannot be eaten. What can you conclude about rocks based on these two statements?",
+                prompt: "Below you will find two statements. Assume that they are true!<br><br> Proposition 1: Nuts can be eaten. <br> Proposition 2: Some rocks cannot be eaten. <br><br> What can you conclude about rocks based on these two statements?",
                 options: ["Some rocks can be eaten", "Some rocks are nuts", "Some rocks are not nuts", "No correct conclusion possible"],
                 required: true
             },
@@ -218,7 +219,7 @@
                 required: true
             },
             {
-                prompt: "Below you will find two statements. Assume that they are true! Proposition 1: All living things need water. Proposition 2: Roses need water.What can you conclude about roses based on these two statements?",
+                prompt: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All living things need water. <br> Proposition 2: Roses need water. <br><br> What can you conclude about roses based on these two statements?",
                 options: ["All roses are living things", "Some roses are living things", "Roses are not living things", "No correct conclusion possible"],
                 required: true
             },
@@ -248,7 +249,7 @@
                 required: true
             },
             {
-                prompt: "Each of the blocks below show a specific behavior (drinking beer or cola) on one side and an age (15 or 18 year old) label on the other side.The rules are the following: If a person drinks beer, than he is 18 years old. Which blocks would you turn over to see if the rule is being broken?",
+                prompt: "Each of the blocks show a specific behavior (drinking beer or cola) on one side and an age (15 or 18 year old) label on the other side.The rules are the following: If a person drinks beer, than he is 18 years old. Which blocks would you turn over to see if the rule is being broken?",
                 options: ["15 and beer", "15 and cola", "18 and beer", "18 and cola"],
                 required: true
             },
@@ -517,9 +518,9 @@
     timeline.push(posttestinstructions);
     // Posttest Items
     const posttestItems = [
-        { id: "q1", stem: "Below you will find two statements. Assume that they are true! Proposition 1: All birds can fly. Proposition 2: Some chickens cannot fly. What can you conclude about chickens based on these two statements", opts: ["Some chickens can fly", "Some chickens are birds.", "Some chickens are not birds.", "No correct conclusion possible."] },
+        { id: "q1", stem: "Below you will find two statements. Assume that they are true! <br<br> Proposition 1: All birds can fly. <br> Proposition 2: Some chickens cannot fly. <br><br> What can you conclude about chickens based on these two statements", opts: ["Some chickens can fly", "Some chickens are birds.", "Some chickens are not birds.", "No correct conclusion possible."] },
         { id: "q2", stem: "A North Brabant law firm has two vacancies for legal assistants. For the past 15 years, this firm has had excellent experiences with numerous law graduates from Tilburg University. Therefore, the firm's management prefers these graduates when filling vacancies. However, a new HR manager proposes giving HBO graduates a chance. At a company where he previously worked, he gained experience with a graduate of Avans University of Applied Sciences. This graduate performed well from the start, and after two years, he even considered him to be performing at an excellent level. The HR manager believes that an HBO graduate is at least as talented as a university graduate and proposes giving Avans University of Applied Sciences graduates priority when filling the vacancies. What should the firm do?", opts: ["Definitely give preference to graduates of Tilburg University.", "Perhaps give preference to graduates of Tilburg University.", "Perhaps give preference to graduates of Avans University of Applied Sciences.", "Definitely give preference to graduates of Avans University of Applied Sciences."] },
-        { id: "q3", stem: "Below you will find two statements. Assume that they are true! Proposition 1: All major events must apply for a permit. Proposition 2: Some music events require a permit. What can you conclude about music events based on these two statements?", opts: ["All music events are big events.", "Some music events are big events.", "Some music events aren't big events.", "No correct conclusion possible."] },
+        { id: "q3", stem: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All major events must apply for a permit. <br> Proposition 2: Some music events require a permit. <br><br> What can you conclude about music events based on these two statements?", opts: ["All music events are big events.", "Some music events are big events.", "Some music events aren't big events.", "No correct conclusion possible."] },
         { id: "q4", stem: "The blocks below from a game show a spade or heart on one side and the number 9 or 2 on the other. The rule is: if there's a heart on one side, there's a 2 on the other. Which blocks do you turn over to see if the rule is being broken?", opts: ["Hearts and 9", "Hearts and 2", "Spades and 9", "Spades and 2"] },
         { id: "q5", stem: "Jacques is an introverted man of small stature. He enjoys French literature and classical music, and he practices Tai Chi every morning. Which of the following is most likely?", opts: ["Jacques is a caretaker and is a member of the Tai Chi Association Netherlands", "Jacques is a concierge and organizes the annual Poetry Night", "Jacques is a janitor", "Jacques is a caretaker, is a member of the Dutch Tai Chi Association and organizes the annual Night of Poetry"] },
         { id: "q6", stem: "In a study, 1,000 people are tested. Among the participants are 950 who buy their clothes at C&A and 50 who buy their clothes at high-end clothing stores. Sacha is a randomly selected participant. Sacha is a 36-year-old woman who works as a wealth management director at a bank and drives a Porsche. She lives with her boyfriend in a penthouse. What is the probability that Sacha buys her clothes at high-end clothing stores?", opts: ["More than 75%", "50%", "30%", "Less than 10%"] },
@@ -547,7 +548,9 @@
     const randomizedPosttestBlocks = jsPsych.randomization.shuffle(posttestItems.map(makePosttestBlock));
     timeline.push(...randomizedPosttestBlocks);
 
-    // End message
+    // ============================================
+    // (6) END MESSAGE
+    // ============================================
     var end_message = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: '<p>Thank you for participating in this experiment! Our study was trying to understand how writing self-explanations enhance critical thinking skills.</p><p>Your responses have been recorded.</p><p>Press any key to finish.</p>',
