@@ -8,8 +8,9 @@
     <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-fullscreen@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
     <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
     <style>
@@ -110,12 +111,14 @@
 
 <body></body>
 <script>
-    // Initialize jsPsych
+    // ============================================
+    // (0) INITIALIZE JSPSYCH
+    // ============================================
     const jsPsych = initJsPsych();
     var timeline = [];
 
     // ============================================
-    // (0) SONA STUDY ID COLLECTION
+    // (1) SONA STUDY ID COLLECTION
     // ============================================
     const sonaID = {
         type: jsPsychSurveyText,
@@ -134,11 +137,11 @@
     timeline.push(sonaID);
 
     // ============================================
-    // (1) CONSENT FORM ##testing one more time to github, removed
+    // (2) CONSENT FORM
     // ============================================
     const consent = {
         type: jsPsychHtmlButtonResponse,
-        pages: [
+        stimulus: [
             `<div class="consent-box">
                 <h2>Informed Consent Form</h2>
                 <p><strong>Title of Research Study:</strong> Critical Thinking Skills Learning Study</p>
