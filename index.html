@@ -374,45 +374,6 @@
             </p>
         </div>
     `;
-    // ADD COUNTDOWN BEFORE PRESSING SPACE BAR
-    let canContinue = false;
-
-    const pdf_display = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: pdfHTML + `
-      <p id="timer-message" style="font-size:16px; color:#c00; margin-top:20px;">
-        Please read for <span id="countdown"></span> seconds before continuing.
-      </p>
-  `,
-        choices: [' '],
-        data: {
-            task: 'pdf_display',
-            condition: condition,
-            pdf_file: selected_pdf
-        },
-        on_load: () => {
-            let seconds = 30; // ← Set required reading time here
-            const countdownSpan = document.getElementById('countdown');
-            countdownSpan.textContent = seconds;
-
-            const interval = setInterval(() => {
-                seconds--;
-                countdownSpan.textContent = seconds;
-                if (seconds <= 0) {
-                    clearInterval(interval);
-                    canContinue = true;
-
-                    document.getElementById('timer-message').innerHTML =
-                        "<span style='color: green;'>You may now press the spacebar to continue.</span>";
-                }
-            }, 1000);
-        },
-        on_finish: function (data) {
-            // BLOCK leaving early  
-            if (!canContinue) return false;
-        }
-    };
-    timeline.push(pdf_display);
 
     // Exit fullscreen mode after PDF is displayed
     var exit_fullscreen = {
