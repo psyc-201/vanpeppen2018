@@ -117,55 +117,55 @@
     // ============================================
     // (0) SONA STUDY ID COLLECTION
     // ============================================
-    // const sonaID = {
-    //     type: jsPsychSurveyText,
-    //     questions: [
-    //         {
-    //             prompt: "Please enter the DATE and START TIME you are taking this study. This is essential for us to award your SONA credits correctly:",
-    //             required: true,
-    //             name: "sona_id"
-    //         }
-    //     ],
-    //     button_label: "Continue",
-    //     data: {
-    //         task: 'sona_id_collection'
-    //     }
-    // };
-    // timeline.push(sonaID);
+    const sonaID = {
+        type: jsPsychSurveyText,
+        questions: [
+            {
+                prompt: "Please enter the DATE and START TIME you are taking this study. This is essential for us to award your SONA credits correctly:",
+                required: true,
+                name: "sona_id"
+            }
+        ],
+        button_label: "Continue",
+        data: {
+            task: 'sona_id_collection'
+        }
+    };
+    timeline.push(sonaID);
 
     // ============================================
-    // (1) CONSENT FORM ##testing one more time to github, removed breakpoints
+    // (1) CONSENT FORM ##testing one more time to github, removed
     // ============================================
-    // const consent = {
-    //     type: jsPsychHtmlButtonResponse,
-    //     pages: [
-    //         `<div class="consent-box">
-    //             <h2>Informed Consent Form</h2>
-    //             <p><strong>Title of Research Study:</strong> Critical Thinking Skills Learning Study</p>
-    //             <p><strong>Purpose:</strong>You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction.” This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course. You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies.</p>
-    //             <p><strong>Risks and Benefits:</strong> The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations. Your participation in this research should last approximately 5-30 minutes  If you agree to take part in this study, you may be asked to view a set of stimuli, including pictures, sounds, written text, or videos and then giving some responses via key-presses, verbally, or with paper-and-pencil. We may also observe your choices or preferences among an array of stimuli.  These stimuli will be taken directly from or closely adapted from studies that already exist in the published psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli will be disturbing, threatening, or offensive. The online and in-person experiments described in this protocol will take no more than 30 minutes. An example game you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is between 5-30 minutes, and is specified in the study description.</p>
-    //             <p><strong>Confidentiality:</strong> Your responses will be kept confidential and anonymous. Data will be stored securely and used only for research purposes.</p>
-    //             <p><strong>Voluntary Participation:</strong> We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your SONA IDs will never be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data containing anything that might be personally identifiable (e.g. SONA IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies.</p>
-    //             <p><strong>Contact Information:</strong> If you have questions about this project or if you have a research-related problem, you may contact the researcher(s),  Dr. Bria Long, brlong@ucsd.edu. If you have any questions concerning your rights as a research subject, you may contact the UC San Diego Office of IRB Administration at irb@ucsd.edu or 858-246-4777.</p>
-    //             <p><strong>By clicking "I Agree" below, you indicate that:</strong></p>
-    //             <ul>
-    //                 <li>You have read and understood the information above</li>
-    //                 <li>You voluntarily agree to participate</li>
-    //                 <li>You are at least 18 years old</li>
-    //             </ul>
-    //         </div>`
-    //     ],
-    //     choices: ['I Agree', 'I Do Not Agree'],
-    //     data: {
-    //         task: 'consent'
-    //     },
-    //     on_finish: function (data) {
-    //         if (data.response === 'I Do Not Agree') {
-    //             jsPsych.endExperiment('You have chosen not to participate in this study. Thank you for your time.');
-    //         }
-    //     }
-    // };
-    // timeline.push(consent);
+    const consent = {
+        type: jsPsychHtmlButtonResponse,
+        pages: [
+            `<div class="consent-box">
+                <h2>Informed Consent Form</h2>
+                <p><strong>Title of Research Study:</strong> Critical Thinking Skills Learning Study</p>
+                <p><strong>Purpose:</strong>You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction.” This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course. You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies.</p>
+                <p><strong>Risks and Benefits:</strong> The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations. Your participation in this research should last approximately 5-30 minutes  If you agree to take part in this study, you may be asked to view a set of stimuli, including pictures, sounds, written text, or videos and then giving some responses via key-presses, verbally, or with paper-and-pencil. We may also observe your choices or preferences among an array of stimuli.  These stimuli will be taken directly from or closely adapted from studies that already exist in the published psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli will be disturbing, threatening, or offensive. The online and in-person experiments described in this protocol will take no more than 30 minutes. An example game you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is between 5-30 minutes, and is specified in the study description.</p>
+                <p><strong>Confidentiality:</strong> Your responses will be kept confidential and anonymous. Data will be stored securely and used only for research purposes.</p>
+                <p><strong>Voluntary Participation:</strong> We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your SONA IDs will never be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data containing anything that might be personally identifiable (e.g. SONA IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies.</p>
+                <p><strong>Contact Information:</strong> If you have questions about this project or if you have a research-related problem, you may contact the researcher(s),  Dr. Bria Long, brlong@ucsd.edu. If you have any questions concerning your rights as a research subject, you may contact the UC San Diego Office of IRB Administration at irb@ucsd.edu or 858-246-4777.</p>
+                <p><strong>By clicking "I Agree" below, you indicate that:</strong></p>
+                <ul>
+                    <li>You have read and understood the information above</li>
+                    <li>You voluntarily agree to participate</li>
+                    <li>You are at least 18 years old</li>
+                </ul>
+            </div>`
+        ],
+        choices: ['I Agree', 'I Do Not Agree'],
+        data: {
+            task: 'consent'
+        },
+        on_finish: function (data) {
+            if (data.response === 'I Do Not Agree') {
+                jsPsych.endExperiment('You have chosen not to participate in this study. Thank you for your time.');
+            }
+        }
+    };
+    timeline.push(consent);
 
     // ============================================
     // (2) PRETEST
@@ -189,7 +189,7 @@
         type: jsPsychSurveyMultiChoice,
         questions: [
             {
-                prompt: "Below you will find two statements. Assume that they are true! Proposition 1: Nuts can be eaten. Proposition 2: Some rocks cannot be eaten. What can you conclude about rocks based on these two statements?",
+                prompt: "Below you will find two statements. Assume that they are true!<br><br> Proposition 1: Nuts can be eaten. <br> Proposition 2: Some rocks cannot be eaten. <br><br> What can you conclude about rocks based on these two statements?",
                 options: ["Some rocks can be eaten", "Some rocks are nuts", "Some rocks are not nuts", "No correct conclusion possible"],
                 required: true
             },
@@ -219,7 +219,7 @@
                 required: true
             },
             {
-                prompt: "Below you will find two statements. Assume that they are true! Proposition 1: All living things need water. Proposition 2: Roses need water. What can you conclude about roses based on these two statements?",
+                prompt: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All living things need water. <br> Proposition 2: Roses need water. <br><br> What can you conclude about roses based on these two statements?",
                 options: ["All roses are living things", "Some roses are living things", "Roses are not living things", "No correct conclusion possible"],
                 required: true
             },
