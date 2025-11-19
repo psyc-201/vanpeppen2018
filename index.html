@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-fullscreen@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
     <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -156,11 +156,9 @@
             </div>`
         ],
         choices: ['I Agree', 'I Do Not Agree'],
-        data: {
-            task: 'consent'
-        },
+        data: { task: 'consent' },
         on_finish: function (data) {
-            if (data.response === 'I Do Not Agree') {
+            if (data.response === 1) {
                 jsPsych.endExperiment('You have chosen not to participate in this study. Thank you for your time.');
             }
         }
@@ -573,7 +571,7 @@
         type: jsPsychPipe,
         action: "save",
         experiment_id: expID,
-        filename: `${participantID_pilot}.csv`,
+        filename: `${participantID}_pilot.csv`,
         data_string: () => jsPsych.data.get().csv()
     };
     timeline.push(save_data);
