@@ -559,8 +559,6 @@
     };
     timeline.push(end_message);
 
-    // Run the experiment
-    jsPsych.run(timeline);
     // ============================================ SAVE TRIAL DATA
     const expID = "CgetHBPXUjQP";
 
@@ -575,6 +573,10 @@
         data_string: () => jsPsych.data.get().csv()
     };
     timeline.push(save_data);
+
+    // Run the experiment
+    jsPsych.run(timeline);
+
 </script>
 
 </html>
