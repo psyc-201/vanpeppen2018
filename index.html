@@ -330,7 +330,8 @@
     const practice_instructions = {
         type: jsPsychInstructions,
         pages: [
-            "You have completed Part 1 of the study. Now we will move on to Part 2. <br> <br> In this part, you will learn about critical thinking skills through educational materials. ${condition === 'self_explanation' ? 'You will be asked to provide self-explanations as you read.' <br> 'Please read the materials carefully. Youw will have two minutes to read the pdf presented.'} <br> Click 'Next' to begin!"
+            "You have completed Part 1 of the study. Now we will move on to Part 2.",
+            `In this part, you will learn about critical thinking skills through educational materials. ${condition === 'self_explanation' ? 'You will be asked to provide self-explanations as you read.' : 'Please read the materials carefully.'} Click 'Next' to begin!`
         ],
         show_clickable_nav: true,
         data: {
@@ -392,6 +393,47 @@
         </div>
     `;
 
+    // TIMER LOCKED PDF TRIAL
+    // ========================
+    let canContinue = false;
+
+    const pdf_display = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: pdfHTML + `
+      <p id="timer-message" style="font-size:16px; color:#c00; margin-top:20px;">
+        Please read for <span id="countdown"></span> seconds before continuing.
+      </p>
+  `,
+        choices: [' '],
+        data: {
+            task: 'pdf_display',
+            condition: condition,
+            pdf_file: selected_pdf
+        },
+        on_load: () => {
+            let seconds = 120; // ← Set required reading time here
+            const countdownSpan = document.getElementById('countdown');
+            countdownSpan.textContent = seconds;
+
+            const interval = setInterval(() => {
+                seconds--;
+                countdownSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    canContinue = true;
+
+                    document.getElementById('timer-message').innerHTML =
+                        "<span style='color: green;'>You may now press the spacebar to continue.</span>";
+                }
+            }, 1000);
+        },
+        on_finish: function (data) {
+            // BLOCK leaving early  
+            if (!canContinue) return false;
+        }
+    };
+    timeline.push(pdf_display);
+
     // Exit fullscreen mode after PDF is displayed
     var exit_fullscreen = {
         type: jsPsychFullscreen,
@@ -430,7 +472,6 @@
         iframe.style.height = '100%';
         zoomDisplay.textContent = '100%';
     };
-
     // ============================================
     // (4) PRACTICE QUESTIONS (Self-Explanation Condition Only)
     // ============================================
