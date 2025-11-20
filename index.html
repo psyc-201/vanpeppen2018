@@ -268,12 +268,30 @@
                 options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
                 required: true
             },
+            {
+                prompt: "Melinda is interested in alright this is just a test. If you are paying attention, click 'X and 2' as your answer.",
+                options: ["X and 3", "Y and 2", "X and 2", "Y and 3"],
+                required: true,
+                name: "attention_check_pretest_question"
+            },
+            {
+                prompt: "In this question, we are testing to see whether or not you are actually paying attention. Please click 'quite a lot of effort' for this question.",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true,
+                name: "attention_check_pretest_effort"
+            }
         ],
         button_label: "Submit Answers",
         data: {
             task: 'pretest'
-        }
-    };
+        },
+        on_finish: function (data) {
+            const r = data.response;
+            data.attention_question_passed = (r.attention_check_pretest_question === "X and 2");
+            data.attention_effort_passed = (r.attention_check_effort === "Quite a lot of effort");
+
+        };
+    }
     timeline.push(pretest);
 
     // ============================================
