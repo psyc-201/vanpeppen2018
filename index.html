@@ -184,141 +184,114 @@
     };
     timeline.push(pretestinstructions);
 
-    // Posttest Items
-    const pretestItems = [
-        { id: "q1", stem: "Below you will find two statements. Assume that they are true! <br<br> Proposition 1: All birds can fly. <br> Proposition 2: Some chickens cannot fly. <br><br> What can you conclude about chickens based on these two statements", opts: ["Some chickens can fly", "Some chickens are birds.", "Some chickens are not birds.", "No correct conclusion possible."] },
-        { id: "q2", stem: "A North Brabant law firm has two vacancies for legal assistants. For the past 15 years, this firm has had excellent experiences with numerous law graduates from Tilburg University. Therefore, the firm's management prefers these graduates when filling vacancies. However, a new HR manager proposes giving HBO graduates a chance. At a company where he previously worked, he gained experience with a graduate of Avans University of Applied Sciences. This graduate performed well from the start, and after two years, he even considered him to be performing at an excellent level. The HR manager believes that an HBO graduate is at least as talented as a university graduate and proposes giving Avans University of Applied Sciences graduates priority when filling the vacancies. What should the firm do?", opts: ["Definitely give preference to graduates of Tilburg University.", "Perhaps give preference to graduates of Tilburg University.", "Perhaps give preference to graduates of Avans University of Applied Sciences.", "Definitely give preference to graduates of Avans University of Applied Sciences."] },
-        { id: "q3", stem: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All major events must apply for a permit. <br> Proposition 2: Some music events require a permit. <br><br> What can you conclude about music events based on these two statements?", opts: ["All music events are big events.", "Some music events are big events.", "Some music events aren't big events.", "No correct conclusion possible."] },
-        { id: "q4", stem: "The blocks below from a game show a spade or heart on one side and the number 9 or 2 on the other. The rule is: if there's a heart on one side, there's a 2 on the other. Which blocks do you turn over to see if the rule is being broken?", opts: ["Hearts and 9", "Hearts and 2", "Spades and 9", "Spades and 2"] },
-        { id: "q5", stem: "Jacques is an introverted man of small stature. He enjoys French literature and classical music, and he practices Tai Chi every morning. Which of the following is most likely?", opts: ["Jacques is a caretaker and is a member of the Tai Chi Association Netherlands", "Jacques is a concierge and organizes the annual Poetry Night", "Jacques is a janitor", "Jacques is a caretaker, is a member of the Dutch Tai Chi Association and organizes the annual Night of Poetry"] },
-        { id: "q6", stem: "In a study, 1,000 people are tested. Among the participants are 950 who buy their clothes at C&A and 50 who buy their clothes at high-end clothing stores. Sacha is a randomly selected participant. Sacha is a 36-year-old woman who works as a wealth management director at a bank and drives a Porsche. She lives with her boyfriend in a penthouse. What is the probability that Sacha buys her clothes at high-end clothing stores?", opts: ["More than 75%", "50%", "30%", "Less than 10%"] },
-        { id: "q7", stem: "Each of the tickets below shows a destination on one side and a company on the other. The rule is: If Madrid is the destination, then the flight is operated by Ryanair. Which tickets do you turn over to see if the rule is being violated?", opts: ["Madrid and Ryanair", "Madrid and Transavia", "Barcelona and Ryanair", "Barcelona and Transavia"] },
-        { id: "q8", stem: "Eindhoven aims to reposition itself in the nightlife sector by extending closing hours. The goal is to increase the number of visitors to Eindhoven's nightlife by 5%. Based on market research, measures are being implemented, such as improving quality, focusing more on consumers, and a more experience-oriented nightlife campaign. Which option is most likely?", opts: ["Within 5 years, the number of visitors will increase by 2%", "Within 5 years, the number of visitors will increase by 5%", "Within 5 years, the number of visitors will increase by 7%", "Within 5 years, the number of visitors will increase by 10%"] }
-    ];
-    function makePretestBlock(q) {
-        const mc = {
-            type: jsPsychSurveyMultiChoice,
-            questions: [{ prompt: q.stem, options: q.opts, required: true, name: `${q.id}_mc` }],
-            data: { item: q.id, phase: "mc", condition: condition_for_pretest }
-        };
-        const effort = {
-            type: jsPsychSurveyMultiChoice,
-            questions: [{ prompt: "How much effort did it take?", options: effortOpts, required: true, name: `${q.id}_effort` }],
-            data: { item: q.id, phase: "effort", condition: condition_for_pretest }
-        };
-        return { timeline: [mc, text, effort] };  // locked order
+    // Pretest
+    const pretest = {
+        type: jsPsychSurveyMultiChoice,
+        questions: [
+            {
+                prompt: "Below you will find two statements. Assume that they are true!<br><br> Proposition 1: Nuts can be eaten. <br> Proposition 2: Some rocks cannot be eaten. <br><br> What can you conclude about rocks based on these two statements?",
+                options: ["Some rocks can be eaten", "Some rocks are nuts", "Some rocks are not nuts", "No correct conclusion possible"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "Imagine that there are four blocks labeled in this exact order: X, Y, 2, 7. The rule is, if the letter Y is on the front, then the number 2 is on the back.Which blocks do you turn over to see if the rule is being broken?",
+                options: ["X and 2", "X and 7", "Y and 2", "Y and 7"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "The Jacobs family has decided to buy a new car, choosing a solid and safe German car-either an Audi or a BMW. They want to do some research before deciding.They receive a copy of a report in which experts state that both cars are mechanically sound, although the Audi performs better in some areas. Consumer research shows that Audi owners report fewer mechanical defects than BMW owneres.The Jacobs family is about to start negotiating with the Audi dealer. Suddenly, they remember two friends, one with a BMW and one with an Audi and call them.The BMW owner reported a few minor issues, but nothing major.The Audi owner nearly exploded on the phone, saying that the fuel injection computer broke, resulting in $800 in damage.They continued to say that there are problems with the steering, and then another problem with the transmission and clutch.After three years and significant repair costs, I finally got rid of the Audi. Hearing these two sides, what is the best thing for the Jacobs family to do?",
+                options: ["Maybe they would be better off buying the BMW", "They would definitely be better off buying the BMW", "Maybe they would be better off buying the Audi", "They would definitely be better off buying the Audi"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All living things need water. <br> Proposition 2: Roses need water. <br><br> What can you conclude about roses based on these two statements?",
+                options: ["All roses are living things", "Some roses are living things", "Roses are not living things", "No correct conclusion possible"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "Karin is a young woman who is 31 years old, single, spontaneous, and a philosophy graduate. During her studies, she was socially active, concerned about declining tolerance in society, and participated in demonstrations against the construction of new nuclear power plants.Which option is most likely?",
+                options: ["Karin works at a bank", "Karin works at a bank and is active in the environmental movement.", "Karin works at a bank and is active for a local political party", "Karin works at a bank and is active in the environmental movement and for a local political party"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "A study of 1,000 people recruited 975 women and 25 men. Robin is a randomly selected participant. Robin is 23 years old, has a mechanical engineering degree, enjoys going out with friends, enjoys a beer, and is a fan of hard rock music.What are the odds that robin is male?",
+                options: ["More than 75%", "50%", "30%", "Less than 3%"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "Each of the blocks show a specific behavior (drinking beer or cola) on one side and an age (15 or 18 year old) label on the other side.The rules are the following: If a person drinks beer, than he is 18 years old. Which blocks would you turn over to see if the rule is being broken?",
+                options: ["15 and beer", "15 and cola", "18 and beer", "18 and cola"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "A public administration instructor has found that when students discuss the material in small groups during lectures, they're more likely to perform better on the exam. therefore, the instructor regularly interrupts the lecture to pose a question to students that they can discuss together. The instructor expects positive results from this. Which of the following options do you think is the most likely to succeed?",
+                options: ["The students score at least 0.1 point higher on the exam", "The students score at least 0.3 points higher on the exam", "The students score at least 0.7 points higher on the exam", "The students score at least 1.0 points higher on the exam"],
+                required: true
+            },
+            {
+                prompt: "How much effort did it take you to answer this question?",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true
+            },
+            {
+                prompt: "Melinda is interested in alright this is just a test. If you are paying attention, click 'X and 2' as your answer.",
+                options: ["X and 3", "Y and 2", "X and 2", "Y and 3"],
+                required: true,
+                name: "attention_check_pretest_question"
+            },
+            {
+                prompt: "In this question, we are testing to see whether or not you are actually paying attention. Please click 'quite a lot of effort' for this question.",
+                options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
+                required: true,
+                name: "attention_check_pretest_effort"
+            }
+        ],
+        button_label: "Submit Answers",
+        data: {
+            task: 'pretest'
+        },
+        on_finish: function (data) {
+            const r = data.response;
+            data.attention_question_passed = (r.attention_check_pretest_question === "X and 2");
+            data.attention_effort_passed = (r.attention_check_pretest_effort === "Quite a lot of effort");
+        },
     }
-    const randomizedPretestBlocks = jsPsych.randomization.shuffle(pretestItems.map(makePretestBlock));
-    timeline.push(...randomizedPretestBlocks);
-
-    // // Pretest
-    // const pretest = {
-    //     type: jsPsychSurveyMultiChoice,
-    //     questions: [
-    //         {
-    //             prompt: "Below you will find two statements. Assume that they are true!<br><br> Proposition 1: Nuts can be eaten. <br> Proposition 2: Some rocks cannot be eaten. <br><br> What can you conclude about rocks based on these two statements?",
-    //             options: ["Some rocks can be eaten", "Some rocks are nuts", "Some rocks are not nuts", "No correct conclusion possible"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "Imagine that there are four blocks labeled in this exact order: X, Y, 2, 7. The rule is, if the letter Y is on the front, then the number 2 is on the back.Which blocks do you turn over to see if the rule is being broken?",
-    //             options: ["X and 2", "X and 7", "Y and 2", "Y and 7"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "The Jacobs family has decided to buy a new car, choosing a solid and safe German car-either an Audi or a BMW. They want to do some research before deciding.They receive a copy of a report in which experts state that both cars are mechanically sound, although the Audi performs better in some areas. Consumer research shows that Audi owners report fewer mechanical defects than BMW owneres.The Jacobs family is about to start negotiating with the Audi dealer. Suddenly, they remember two friends, one with a BMW and one with an Audi and call them.The BMW owner reported a few minor issues, but nothing major.The Audi owner nearly exploded on the phone, saying that the fuel injection computer broke, resulting in $800 in damage.They continued to say that there are problems with the steering, and then another problem with the transmission and clutch.After three years and significant repair costs, I finally got rid of the Audi. Hearing these two sides, what is the best thing for the Jacobs family to do?",
-    //             options: ["Maybe they would be better off buying the BMW", "They would definitely be better off buying the BMW", "Maybe they would be better off buying the Audi", "They would definitely be better off buying the Audi"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "Below you will find two statements. Assume that they are true! <br><br> Proposition 1: All living things need water. <br> Proposition 2: Roses need water. <br><br> What can you conclude about roses based on these two statements?",
-    //             options: ["All roses are living things", "Some roses are living things", "Roses are not living things", "No correct conclusion possible"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "Karin is a young woman who is 31 years old, single, spontaneous, and a philosophy graduate. During her studies, she was socially active, concerned about declining tolerance in society, and participated in demonstrations against the construction of new nuclear power plants.Which option is most likely?",
-    //             options: ["Karin works at a bank", "Karin works at a bank and is active in the environmental movement.", "Karin works at a bank and is active for a local political party", "Karin works at a bank and is active in the environmental movement and for a local political party"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "A study of 1,000 people recruited 975 women and 25 men. Robin is a randomly selected participant. Robin is 23 years old, has a mechanical engineering degree, enjoys going out with friends, enjoys a beer, and is a fan of hard rock music.What are the odds that robin is male?",
-    //             options: ["More than 75%", "50%", "30%", "Less than 3%"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "Each of the blocks show a specific behavior (drinking beer or cola) on one side and an age (15 or 18 year old) label on the other side.The rules are the following: If a person drinks beer, than he is 18 years old. Which blocks would you turn over to see if the rule is being broken?",
-    //             options: ["15 and beer", "15 and cola", "18 and beer", "18 and cola"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "A public administration instructor has found that when students discuss the material in small groups during lectures, they're more likely to perform better on the exam. therefore, the instructor regularly interrupts the lecture to pose a question to students that they can discuss together. The instructor expects positive results from this. Which of the following options do you think is the most likely to succeed?",
-    //             options: ["The students score at least 0.1 point higher on the exam", "The students score at least 0.3 points higher on the exam", "The students score at least 0.7 points higher on the exam", "The students score at least 1.0 points higher on the exam"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "How much effort did it take you to answer this question?",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true
-    //         },
-    //         {
-    //             prompt: "Melinda is interested in alright this is just a test. If you are paying attention, click 'X and 2' as your answer.",
-    //             options: ["X and 3", "Y and 2", "X and 2", "Y and 3"],
-    //             required: true,
-    //             name: "attention_check_pretest_question"
-    //         },
-    //         {
-    //             prompt: "In this question, we are testing to see whether or not you are actually paying attention. Please click 'quite a lot of effort' for this question.",
-    //             options: ["Very little effort", "Little effort", "Not a little nor a lot of effort", "Quite a lot of effort", "A lot of effort"],
-    //             required: true,
-    //             name: "attention_check_pretest_effort"
-    //         }
-    //     ],
-    //     button_label: "Submit Answers",
-    //     data: {
-    //         task: 'pretest'
-    //     },
-    //     on_finish: function (data) {
-    //         const r = data.response;
-    //         data.attention_question_passed = (r.attention_check_pretest_question === "X and 2");
-    //         data.attention_effort_passed = (r.attention_check_pretest_effort === "Quite a lot of effort");
-    //     },
-    // }
-    // timeline.push(pretest);
+    timeline.push(pretest);
 
     // ============================================
     // (3) CONDITION RANDOMIZATION
