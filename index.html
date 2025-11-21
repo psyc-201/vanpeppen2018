@@ -297,19 +297,12 @@
     // (3) CONDITION RANDOMIZATION
     // ============================================
     // Randomize participants into two conditions
-    // Using a simple randomization approach that balances conditions
-    // For 88 participants total (44 per condition), we'll use modulo approach
+    // Using true random assignment for each participant
     var condition;
     var participant_id = jsPsych.data.getURLVariable('participant_id') || Math.floor(Math.random() * 1000000);
 
-    // Simple randomization: use participant ID to determine condition
-    // This ensures consistent assignment if participant ID is provided
-    // Otherwise, random assignment
-    if (participant_id) {
-        condition = (parseInt(participant_id) % 2 === 0) ? 'self_explanation' : 'no_self_explanation';
-    } else {
-        condition = Math.random() < 0.5 ? 'self_explanation' : 'no_self_explanation';
-    }
+    // True random assignment: each participant has 50/50 chance of either condition
+    condition = Math.random() < 0.5 ? 'self_explanation' : 'no_self_explanation';
 
     // Store condition in jsPsych data
     jsPsych.data.addProperties({
