@@ -288,7 +288,7 @@
         on_finish: function (data) {
             const r = data.response;
             data.attention_question_passed = (r.attention_check_pretest_question === "X and 2");
-            data.attention_effort_passed = (r.attention_check_effort === "Quite a lot of effort");
+            data.attention_effort_passed = (r.attention_check_pretest_effort === "Quite a lot of effort");
         },
     }
     timeline.push(pretest);
