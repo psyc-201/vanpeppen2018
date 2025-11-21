@@ -587,7 +587,7 @@
             questions: [{ prompt: "How much effort did it take?", options: effortOpts, required: true, name: `${q.id}_effort` }],
             data: { item: q.id, phase: "effort", condition: condition_for_posttest }
         };
-        return { timeline: [posttest_mc, text, effort] };  // locked order
+        return { timeline: [mc, text, effort] };  // locked order
     }
     const randomizedPosttestBlocks = jsPsych.randomization.shuffle(posttestItems.map(makePosttestBlock));
     timeline.push(...randomizedPosttestBlocks);
