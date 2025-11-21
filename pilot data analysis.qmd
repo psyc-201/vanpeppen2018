@@ -19,7 +19,7 @@ editor: visual
 
 ```{r}
 # Load required packages
-library(tidyverse)
+library(tidyverse) 
 library(knitr)
 library(kableExtra)
 
@@ -78,7 +78,7 @@ In this section, I am going to score the pretest & post-test for accuracy. I am 
 pretest <- data_attention_check %>%
   filter(task == "pretest")
 # Inputting the correct pretest answers 
-correct_Q0 <- "blah blah"
+correct_Q0 <- "No correct conclusions possible"
 correct_Q1 <- "blah blah"
 correct_Q2 <- "blah blah"
 correct_Q3 <- "blah blah"
