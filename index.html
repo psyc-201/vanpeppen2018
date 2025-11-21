@@ -112,29 +112,10 @@
 <body></body>
 <script>
     // ============================================
-    // (0) INITIALIZE JSPSYCH
+    // (1) INITIALIZE JSPSYCH 
     // ============================================
     const jsPsych = initJsPsych();
     var timeline = [];
-
-    // ============================================
-    // (1) SONA STUDY ID COLLECTION
-    // ============================================
-    const sonaID = {
-        type: jsPsychSurveyText,
-        questions: [
-            {
-                prompt: "Please enter the DATE and START TIME YOU SIGNED UP IN SONA (NOT the current time you took in the study) you are taking this study. This is essential for us to award your SONA credits correctly:",
-                required: true,
-                name: "sona_id"
-            }
-        ],
-        button_label: "Continue",
-        data: {
-            task: 'sona_id_collection'
-        }
-    };
-    timeline.push(sonaID);
 
     // ============================================
     // (2) CONSENT FORM
@@ -595,16 +576,16 @@
     // ============================================
     // (6) END MESSAGE
     // ============================================
-    var end_message = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p>Thank you for participating in this experiment! Our study was trying to understand how writing self-explanations enhance critical thinking skills.</p><p>Your responses have been recorded.</p><p>Press any key to finish.</p>',
-        data: {
-            task: 'end',
-            condition: condition_for_posttest
-        }
-    };
-    timeline.push(end_message);
 
+    // var end_message = {
+    //     type: jsPsychHtmlKeyboardResponse,
+    //     stimulus: '<p>Thank you for participating in this experiment! Our study was trying to understand how writing self-explanations enhance critical thinking skills.</p><p>Your responses have been recorded.</p><p>Press any key to finish.</p>',
+    //     data: {
+    //         task: 'end',
+    //         condition: condition_for_posttest
+    //     }
+    // };
+    // timeline.push(end_message);
     // ============================================ SAVE TRIAL DATA
     const expID = "CgetHBPXUjQP";
 
@@ -619,6 +600,15 @@
         data_string: () => jsPsych.data.get().csv()
     };
     timeline.push(save_data);
+
+    // Prolific
+    var final_trial = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<p>You've finished the last task. Thanks for participating!</p>
+        <p><a href="https://app.prolific.com/submissions/complete?cc=CPKHZUIK">Click here to return to Prolific and complete the study</a>.</p>`,
+        choices: "NO_KEYS"
+    };
+    timeline.push(final_trial)
 
     // Run the experiment
     jsPsych.run(timeline);
