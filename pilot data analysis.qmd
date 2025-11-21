@@ -1,0 +1,103 @@
+---
+title: "Vanpeppen et al. (2018) Data Analysis [PILOT]"
+author: "Christine Lee"
+date: "last updated at 11.20.25"
+format: 
+  html:
+    code-fold: false
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+editor: visual
+---
+
+# Introduction
+
+\[add brief introduction of what the project will be about\]
+
+# Setup
+
+```{r}
+# Load required packages
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# Set theme for plots
+theme_set(theme_minimal(base_size = 12))
+
+# Set random seed for reproducibility
+set.seed(123)
+```
+
+# Data Loading
+
+Defining the pilot data files and making sure that all the data are analyzed.
+
+```{r}
+# Defining folder that contains all my pilot data
+data_folder <- "pilot data"
+
+# Obtain all the .csv files in the data_folder
+all_files <- list.files(path = data_folder, pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all the csv files into one data set
+raw_data <- all_files %>%
+  map_df(~ read.csv(.x))
+
+# Look at structure of the combined data
+glimpse(raw_data)
+
+# Look at the first few rows of the data
+head(raw_data)
+```
+
+# Pre-processing Data
+
+To ensure that the correct data is integrated,
+
+```{r}
+# Adding the data of the participants who did complete the test
+data_complete <- raw_data %>%
+  filter(success == TRUE)
+# Filtering out participants who failed the attention check
+data_attention_check <- data_complete %>%
+  filter(attention_question_passed == TRUE &
+           attention_effort_passed == TRUE)
+```
+
+# Scoring the Test
+
+In this section, I am going to score the pretest & post-test for accuracy. I am working on conceptually understanding this section,
+
+```{r}
+#----------------------
+# Scoring Pretest
+#----------------------
+# Focus on the pretest row
+pretest <- data_attention_check %>%
+  filter(task == "pretest")
+# Inputting the correct pretest answers 
+correct_Q0 <- "blah blah"
+correct_Q1 <- "blah blah"
+correct_Q2 <- "blah blah"
+correct_Q3 <- "blah blah"
+correct_Q4 <- "blah blah"
+correct_Q5 <- "blah blah"
+correct_Q6 <- "blah blah"
+correct_Q7 <- "blah blah"
+# Score for correctedness (1 being correct, 0 being incorrect)
+##Currently researching how to complete
+
+#----------------------
+# Scoring Posttest
+#----------------------
+##Same thing, but just for posttest variables
+```
+
+# Descriptive Stats
+
+```{r}
+# Find the mean, SD, minimum, and maximum of the pretest score
+pretest_descriptives 
+```
