@@ -32,7 +32,7 @@ Participants signed the informed consent form before completing the pretest that
 
 ### Analysis Plan
 
-Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.
+
 
 Expressed how "for all analyses in this paper a p-value of 0.05 was used as a threshold for statistical signficance. Partial eta-squared is reported as a measure of effect size for the ANOVAs, for which 0,01 is considered small, 0.06 medium, and 0.14 large, and Cohen's d is reported for the post-hoc tests, with values of 0.2, 0.5, and 0.8 representing a small, medium, and large effect size respectively (Cohen, 1988)"
 
