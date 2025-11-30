@@ -1,7 +1,7 @@
 ---
-title: "Vanpeppen et al. (2018) Data Analysis [PILOT]"
+title: "Replication of Vanpeppen et al. (2018) Data Analysis"
 author: "Christine Lee"
-date: "last updated at 11.20.25"
+date: "last updated at 11.29.2025"
 format: 
   html:
     code-fold: false
@@ -22,6 +22,7 @@ editor: visual
 library(tidyverse) 
 library(knitr)
 library(kableExtra)
+library(jsonlite)
 
 # Set theme for plots
 theme_set(theme_minimal(base_size = 12))
@@ -32,72 +33,175 @@ set.seed(123)
 
 # Data Loading
 
-Defining the pilot data files and making sure that all the data are analyzed.
+In this section, we will load in the file that holds all the SONA data. Then, we will merge the csv files together to interpret.
 
 ```{r}
-# Defining folder that contains all my pilot data
-data_folder <- "pilot data"
-
-# Obtain all the .csv files in the data_folder
-all_files <- list.files(path = data_folder, pattern = "\\.csv$", full.names = TRUE)
-
-# Read and combine all the csv files into one data set
-raw_data <- all_files %>%
-  map_df(~ read.csv(.x))
-
-# Look at structure of the combined data
-glimpse(raw_data)
-
-# Look at the first few rows of the data
-head(raw_data)
+# Labeling the pilot data & listing them for R to see
+data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
+list.files(data_folder)
+# Make sure that all the csv files are in a list
+csv_files <- list.files(
+  data_folder,
+  pattern = "\\.csv$",
+  full.names = TRUE
+)
+# Check that it actually listed the amount of csv files in folder
+length(csv_files)
+# Load all the pilot data csvs into one dataset
+all_data <- do.call(
+  rbind,
+  lapply(csv_files, function(file_path) {
+    temp <- read.csv(file_path)
+    temp$source_file <- basename(file_path)
+    temp
+  })
+)
+# Show a preview of the loaded, merged data
+head(all_data)
 ```
 
 # Pre-processing Data
 
-To ensure that the correct data is integrated,
+Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check.
 
 ```{r}
-# Adding the data of the participants who did complete the test
-data_complete <- raw_data %>%
-  filter(success == TRUE)
-# Filtering out participants who failed the attention check
-data_attention_check <- data_complete %>%
-  filter(attention_question_passed == TRUE &
-           attention_effort_passed == TRUE)
+# Reload merged data
+data_base <- all_data
+# Score attention checks as true/false
+data_base$attention_question_yes <-
+  data_base$attention_question_passed == "true"
+data_base$attention_effort_yes <-
+  data_base$attention_effort_passed == "true"
+# Filter the rows where the attention checks are true
+passing_rows <- data_base [
+  data_base$attention_question_yes == TRUE &
+    data_base$attention_effort_yes == TRUE,
+]
+# Check how many rows passed the attention check
+nrow(passing_rows)
+# Look at the csv files that passed the attention checks
+head(passing_rows[, c("source_file",
+                      "attention_question_passed",
+                      "attention_effort_passed",
+                      "attention_question_yes",
+                      "attention_effort_yes")])
+
+# Select the source files that participants' passed.
+passed_ids <- unique(passing_rows$source_file)
+passed_ids
+length(passed_ids)
+# Finally, keep all the rows except those who have failed the attention check
+data_attention <- data_base [
+  data_base$source_file %in% passed_ids,
+]
 ```
 
-# Scoring the Test
+# Format Questions
 
-In this section, I am going to score the pretest & post-test for accuracy. I am working on conceptually understanding this section,
+In this section, I am going to score the pretest & post-test for accuracy. I am working on conceptually understanding this section.
 
 ```{r}
 #----------------------
-# Scoring Pretest
+# Pretest
 #----------------------
-# Focus on the pretest row
-pretest <- data_attention_check %>%
-  filter(task == "pretest")
-# Inputting the correct pretest answers 
-correct_Q0 <- "No correct conclusions possible"
-correct_Q1 <- "blah blah"
-correct_Q2 <- "blah blah"
-correct_Q3 <- "blah blah"
-correct_Q4 <- "blah blah"
-correct_Q5 <- "blah blah"
-correct_Q6 <- "blah blah"
-correct_Q7 <- "blah blah"
-# Score for correctedness (1 being correct, 0 being incorrect)
-##Currently researching how to complete
+# Filter the data to only focus on the pretest answers for each participant
+pretest_data <- data_attention[
+  data_attention$task == "pretest" &
+    data_attention$trial_type == "survey-multi-choice",
+]
+# Make the questions into each individual column so that we can score them
+one_json <- pretest_data$response[1]
+one_parsed <- fromJSON(one_json)
+one_parsed
+str(one_parsed)
 
+# Now make sure all participants are put in the question columns to score
+## Create a list of all the JSON responses from the pretest section
+pretest_list <- lapply(pretest_data$response, fromJSON)
+## Combine the list of each individual participant into one data frame
+pretest_answers <- do.call(
+  rbind,
+  lapply(pretest_list, as.data.frame)
+)
+head(pretest_answers)
+names(pretest_answers)
 #----------------------
-# Scoring Posttest
+# Posttest
 #----------------------
-##Same thing, but just for posttest variables
+
+```
+
+# Scoring Study
+
+In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Main areas of scoring will be in the pretest
+
+## Pretest Accuracy
+
+```{r}
+# Define pretest CT skill questions
+accuracy_questions <- c("Q0", "Q2", "Q4", "Q6", "Q8", "Q10", "Q12", "Q14")
+# Pretest answer key
+accuracy_key <- list(
+  Q0 = "No correct conclusion possible",
+  Q2 = "X and 7",
+  Q4 = "Maybe they would be better off buying the Audi",
+  Q6 = "No correct conclusion possible",
+  Q8 = "Karin works at a bank",
+  Q10 = "Less than 3%",
+  Q12 = "15 and cola",
+  Q14 = "The students score at least 0.1 point higher on the exam"
+)
+# Now, select the questions that are only accuracy_questions
+accuracy_questions <- names(accuracy_key)
+# Compare the answers to the key. Correct is true, incorrect is false!
+correct_matrix <- pretest_answers[accuracy_questions] == accuracy_key
+# Convert the true/false into binary numbers (1 and 0)
+correct_matrix <- correct_matrix * 1
+pretest_answers$pretest_accuracy <- rowSums(correct_matrix)
+# Sum across all questions and get total pretest accuracy
+pretest_answers$pretest_score <- rowSums(correct_matrix)
+# Look at the data!!
+table(pretest_answers$pretest_accuracy)
+```
+
+## Pretest Mental Effort
+
+```{r}
+# Define pretest mental effort questions
+effort_questions <- c("Q1", "Q3", "Q5", "Q7", "Q9", "Q11", "Q13", "Q15")
+# Mental effort key. 
+effort_key <- c(
+  "Very little effort" = 1,
+  "Little effort" = 2,
+  "Not a little nor a lot of effort" = 3,
+  "Quite a lot of effort" = 4,
+  "A lot of effort" = 5
+)
+# Now, select the questions that are only effort_questions
+effort_data <- pretest_answers[effort_questions]
+# Convert the answers selected into the numbers in the effort_key
+effort_key_number <- as.data.frame(
+  lapply(effort_data, function(x) effort_key[x])
+)
+# Average the effort scores
+pretest_answers$pretest_effort <- rowMeans(effort_key_number)
+# Look at the data!!
+head(effort_key_number)
+summary(pretest_answers$pretest_effort)
 ```
 
 # Descriptive Stats
 
+Running a data analysis to understand whether this study replicated properly.
+
+## Pretest versus Posttest Accuracy
+
 ```{r}
-# Find the mean, SD, minimum, and maximum of the pretest score
-pretest_descriptives 
+# 
+```
+
+## Mental Effort Ratings & Pretest/Posttest Accuracy
+
+```{r}
+
 ```
