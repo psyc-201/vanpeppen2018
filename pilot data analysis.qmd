@@ -37,7 +37,7 @@ In this section, we will load in the file that holds all the SONA data. Then, we
 
 ```{r}
 # Labeling the pilot data & listing them for R to see
-data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
+data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data_pt1"
 list.files(data_folder)
 # Make sure that all the csv files are in a list
 csv_files <- list.files(
@@ -98,12 +98,11 @@ data_attention <- data_base [
 
 # Format Questions
 
-In this section, I am going to score the pretest & post-test for accuracy. I am working on conceptually understanding this section.
+In this section, I am going to let format the csv file to ensure the answers can be interprettable for scoring and analysis.
+
+## Pretest 
 
 ```{r}
-#----------------------
-# Pretest
-#----------------------
 # Filter the data to only focus on the pretest answers for each participant
 pretest_data <- data_attention[
   data_attention$task == "pretest" &
@@ -114,7 +113,6 @@ one_json <- pretest_data$response[1]
 one_parsed <- fromJSON(one_json)
 one_parsed
 str(one_parsed)
-
 # Now make sure all participants are put in the question columns to score
 ## Create a list of all the JSON responses from the pretest section
 pretest_list <- lapply(pretest_data$response, fromJSON)
@@ -125,10 +123,35 @@ pretest_answers <- do.call(
 )
 head(pretest_answers)
 names(pretest_answers)
-#----------------------
-# Posttest
-#----------------------
+```
 
+## Posttest
+
+```{r}
+# Filter the data to only MC posttest responses
+posttest_mc <- posttest_raw %>%
+  filter(phase == "mc")
+# Parse JSON for each row
+posttest_list <- lapply(posttest_mc$response, fromJSON)
+# Combine each participant's JSON into one data frame
+posttest_answers <- dplyr::bind_rows(
+  lapply(posttest_list, as.data.frame)
+)
+# Attach participant metadata so you know whose answers are whose
+posttest_answers_full <- dplyr::bind_cols(
+  posttest_mc %>%
+    select(participant_id, source_file, condition, item),
+  posttest_answers
+)
+# Combine to one row per participant (per file), wide format
+posttest_mc_wide <- posttest_answers_full %>%
+  group_by(participant_id, source_file, condition) %>%
+  summarise(
+    across(ends_with("_mc"), ~ .x[!is.na(.x)][1], .names = "{.col}"),
+    .groups = "drop"
+  )
+glimpse(posttest_mc_wide)
+head(posttest_mc_wide)
 ```
 
 # Scoring Study
@@ -139,9 +162,9 @@ In this section, we will try to score the pretest and posttest section before we
 
 ```{r}
 # Define pretest CT skill questions
-accuracy_questions <- c("Q0", "Q2", "Q4", "Q6", "Q8", "Q10", "Q12", "Q14")
+pretest_accuracy_questions <- c("Q0", "Q2", "Q4", "Q6", "Q8", "Q10", "Q12", "Q14")
 # Pretest answer key
-accuracy_key <- list(
+pretest_accuracy_key <- list(
   Q0 = "No correct conclusion possible",
   Q2 = "X and 7",
   Q4 = "Maybe they would be better off buying the Audi",
@@ -152,16 +175,25 @@ accuracy_key <- list(
   Q14 = "The students score at least 0.1 point higher on the exam"
 )
 # Now, select the questions that are only accuracy_questions
-accuracy_questions <- names(accuracy_key)
+pretest_accuracy_questions <- names(accuracy_key)
 # Compare the answers to the key. Correct is true, incorrect is false!
-correct_matrix <- pretest_answers[accuracy_questions] == accuracy_key
+correct_matrix_pre <- pretest_answers[accuracy_questions] == accuracy_key
 # Convert the true/false into binary numbers (1 and 0)
 correct_matrix <- correct_matrix * 1
 pretest_answers$pretest_accuracy <- rowSums(correct_matrix)
-# Sum across all questions and get total pretest accuracy
-pretest_answers$pretest_score <- rowSums(correct_matrix)
-# Look at the data!!
-table(pretest_answers$pretest_accuracy)
+# Obtain both the total number correct per participant and the proportion correct
+pretest_total_accuracy <- rowSums(correct_matrix_pre, na.rm = TRUE)
+pretest_total_prop <- pretest_total_accuracy / length(pretest_accuracy_questions)
+# Combine the total scores for all participants
+pretest_all_data <- pretest_data[, c("participant_id", "source_file", "condition")]
+pretest_scored <- cbind(
+  pretest_all_data,
+  correct_matrix_pre,         
+  pretest_total_accuracy,
+  pretest_total_prop
+)
+# Run the dataset
+head(pretest_scored)
 ```
 
 ## Pretest Mental Effort
@@ -183,11 +215,43 @@ effort_data <- pretest_answers[effort_questions]
 effort_key_number <- as.data.frame(
   lapply(effort_data, function(x) effort_key[x])
 )
-# Average the effort scores
-pretest_answers$pretest_effort <- rowMeans(effort_key_number)
 # Look at the data!!
 head(effort_key_number)
 summary(pretest_answers$pretest_effort)
+```
+
+## Posttest Accuracy
+
+```{r}
+# Posttest answer key
+posttest_accuracy_key <- list(
+  q1_mc = "No correct conclusion possible",
+  q2_mc = "Perhaps give preference to graduates of Tilburg University.",
+  q3_mc = "No correct conclusion possible",
+  q4_mc = "Hearts and 2",
+  q5_mc = "Jacques is a janitor",
+  q6_mc = "Less than 10%",
+  q7_mc = "Madrid and Transavia",
+  q8_mc = "Within 5 years, the number of visitors will increase by 2%"
+)
+# Now, select the questions that are only accuracy_questions
+accuracy_questions_post <- names(posttest_accuracy_key)
+# Compare the answers to the key. Correct is true, incorrect is false!
+correct_matrix_post <- posttest_mc_wide[accuracy_questions_post] == posttest_accuracy_key
+# Convert the true/false into binary numbers (1 and 0)
+correct_matrix_post_num <- correct_matrix_post * 1
+# Compute total score correct
+posttest_total_accuracy <- rowSums(correct_matrix_post_num, na.rm = TRUE)
+posttest_total_prop <- posttest_total_accuracy / length(accuracy_questions_post)
+# Combine the total scores for all participants
+posttest_scored <- cbind(
+  posttest_mc_wide[c("participant_id", "source_file", "condition")],
+  correct_matrix_post_num,
+  posttest_total_accuracy,
+  posttest_total_prop
+)
+# Run the data set
+head(posttest_scored)
 ```
 
 # Descriptive Stats
@@ -196,12 +260,24 @@ Running a data analysis to understand whether this study replicated properly.
 
 ## Pretest versus Posttest Accuracy
 
+In this section, I am going to run a 2 X 2 ANOVA analyses between SE/no SE condition & pretest/posttest.
+
 ```{r}
 # 
+full_scores$condition <- factor(full_scores$condition)
+levels(full_scores$condition)
+
+
 ```
 
-## Mental Effort Ratings & Pretest/Posttest Accuracy
+## Pretest & Mental Ratings Comparison
 
 ```{r}
-
+# Make sure to link the
+analysis_dr <- cbind(
+  correct_matrix,
+  effort_key_number
+)
+# Average the effort scores
+pretest_answers$pretest_effort <- rowMeans(effort_key_number)
 ```
