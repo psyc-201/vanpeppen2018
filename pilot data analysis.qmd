@@ -100,7 +100,7 @@ data_attention <- data_base [
 
 In this section, I am going to let format the csv file to ensure the answers can be interprettable for scoring and analysis.
 
-## Pretest 
+## Pretest
 
 ```{r}
 # Filter the data to only focus on the pretest answers for each participant
@@ -129,7 +129,7 @@ names(pretest_answers)
 
 ```{r}
 # Filter the data to only MC posttest responses
-posttest_mc <- posttest_raw %>%
+posttest_mc <- data_attention %>%
   filter(phase == "mc")
 # Parse JSON for each row
 posttest_list <- lapply(posttest_mc$response, fromJSON)
@@ -175,25 +175,31 @@ pretest_accuracy_key <- list(
   Q14 = "The students score at least 0.1 point higher on the exam"
 )
 # Now, select the questions that are only accuracy_questions
-pretest_accuracy_questions <- names(accuracy_key)
+pretest_accuracy_questions <- names(pretest_accuracy_key)
 # Compare the answers to the key. Correct is true, incorrect is false!
-correct_matrix_pre <- pretest_answers[accuracy_questions] == accuracy_key
-# Convert the true/false into binary numbers (1 and 0)
-correct_matrix <- correct_matrix * 1
-pretest_answers$pretest_accuracy <- rowSums(correct_matrix)
-# Obtain both the total number correct per participant and the proportion correct
-pretest_total_accuracy <- rowSums(correct_matrix_pre, na.rm = TRUE)
-pretest_total_prop <- pretest_total_accuracy / length(pretest_accuracy_questions)
-# Combine the total scores for all participants
-pretest_all_data <- pretest_data[, c("participant_id", "source_file", "condition")]
-pretest_scored <- cbind(
-  pretest_all_data,
-  correct_matrix_pre,         
-  pretest_total_accuracy,
-  pretest_total_prop
+correct_matrix_pre <- as.data.frame(
+  lapply(pretest_accuracy_questions, function(q) {
+    pretest_answers[[q]] == pretest_accuracy_key[[q]]
+  })
 )
-# Run the dataset
-head(pretest_scored)
+names(correct_matrix_pre) <- pretest_accuracy_questions
+# Convert the true/false into binary numbers (1 and 0)
+correct_matrix <- correct_matrix_pre * 1L
+names(correct_matrix) <- paste0(names(correct_matrix), "_score")
+# Obtain both the total number correct per participant and the proportion correct
+pretest_total_accuracy <- rowSums(correct_matrix, na.rm = TRUE)
+pretest_total_prop    <- pretest_total_accuracy / length(pretest_accuracy_questions)
+# Combine the total scores for all participants
+pretest_scored <- cbind(
+  pretest_all_data,                 # original info + raw answers
+  correct_matrix,                   # 0/1 item scores
+  pretest_total_accuracy = pretest_total_accuracy,
+  pretest_total_prop     = pretest_total_prop
+)
+# 
+head(pretest_scored[
+  , c("pretest_total_accuracy", "pretest_total_prop", "Q0_score", "Q2_score", "Q4_score")
+])
 ```
 
 ## Pretest Mental Effort
@@ -239,9 +245,9 @@ accuracy_questions_post <- names(posttest_accuracy_key)
 # Compare the answers to the key. Correct is true, incorrect is false!
 correct_matrix_post <- posttest_mc_wide[accuracy_questions_post] == posttest_accuracy_key
 # Convert the true/false into binary numbers (1 and 0)
-correct_matrix_post_num <- correct_matrix_post * 1
+correct_matrix_post <- correct_matrix_post * 1
 # Compute total score correct
-posttest_total_accuracy <- rowSums(correct_matrix_post_num, na.rm = TRUE)
+posttest_total_accuracy <- rowSums(correct_matrix_post, na.rm = TRUE)
 posttest_total_prop <- posttest_total_accuracy / length(accuracy_questions_post)
 # Combine the total scores for all participants
 posttest_scored <- cbind(
@@ -257,6 +263,30 @@ head(posttest_scored)
 # Descriptive Stats
 
 Running a data analysis to understand whether this study replicated properly.
+
+## Before Analysis
+
+Before running the descriptive statistics, confirmatory, and exploratory analyses, we will first load in the scored pretest and posttest data.
+
+```{r}
+# Combine the pretest and posttest scorred data into one data set
+analysis_df <- pretest_scored %>%
+  select(participant_id, condition, pretest_total_accuracy, pretest_total_prop) %>%
+  left_join(
+    posttest_scored %>%
+      select(participant_id, posttest_total_accuracy, posttest_total_prop),
+    by = "participant_id"
+  )
+# Open the combined, scored data of the pretest and posttest
+head(analysis_df)
+summary(analysis_df)
+```
+
+## Posttest Analysis
+
+```{r}
+
+```
 
 ## Pretest versus Posttest Accuracy
 

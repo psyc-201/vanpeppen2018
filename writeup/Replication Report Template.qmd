@@ -20,7 +20,7 @@ Reflecting upon my project proposal feedback, I would like to continue replicati
 Calculated a power analysis, in which the study computed that 79 participants would be sufficient for the study. They computed the power analysis using a 3x2x2 mixed ANOVA model, with alpha of 0.05 and correlation of 0.3, and sample size of N=79. They found that this sample size would be sufficient for picking up medium sized effects.
 
 ### Planned Sample
-88 UC San Diego psychology undergraduate students will be recruited for this replication project. Participants will be recruited  through the Sona-system. 
+88 UC San Diego psychology undergraduate students will be recruited for this replication project. Participants will be recruited through the Sona-system. 
 
 ### Materials
 For both the pretest and posttest, participants will be administered the critical thinking (CT) skills test. The CT-skills test tried to measure critical thinking skills in two key categories. The first category was to understand how well people were able to logically reason. To test this, they implemented two exams that measured how susceptible participants are to believe in false information (Syllogistic Reasoning task) as well as how likely participants verify versus disprove claims (Wason Selection task). The second category the study aimed to assess was participants’ statistical reasoning skills. The first test they used was the Base-rate tasks to evaluate whether people prioritized anecdotal evidence over statistical findings. Additionally, they integrated the Conjunction tasks which measured how likely people bias statistics: such as believing events described in detail are more probable than a simplistic recount. 
@@ -31,12 +31,9 @@ For the intervention phase, the study provided CT-instructions that educated par
 Participants signed the informed consent form before completing the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions. 
 
 ### Analysis Plan
+We will use a 2 X 2 mixed ANOVA to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not. For all analyses in this paper, a p-value of 0.05 was used as a threshold for statistical signficance. Partial eta-squared is reported as a measure of effect size for the ANOVAs, for which 0,01 is considered small, 0.06 medium, and 0.14 large, and Cohen's d is reported for the post-hoc tests, with values of 0.2, 0.5, and 0.8 representing a small, medium, and large effect size respectively (Cohen, 1988).
 
-
-
-Expressed how "for all analyses in this paper a p-value of 0.05 was used as a threshold for statistical signficance. Partial eta-squared is reported as a measure of effect size for the ANOVAs, for which 0,01 is considered small, 0.06 medium, and 0.14 large, and Cohen's d is reported for the post-hoc tests, with values of 0.2, 0.5, and 0.8 representing a small, medium, and large effect size respectively (Cohen, 1988)"
-
-**Clarify key analysis of interest here** The key analysis of interest is seeing the interaction between self-explanations and learning outcomes as well as transfer performance. It will be calculated through a mixed ANOVA. 
+**Clarify key analysis of interest here** The key analysis of interest is seeing the interaction between self-explanations and learning outcomes as well as transfer performance. It will be calculated through a 2 X 2 mixed ANOVA. 
 
 ### Differences from Original Study
 One major concern of replicating this study is conducting a longtitudinal study. Addressing this feedback, I am planning to not add the delayed posttest portion of the study. The rationale behind this decision stems from the delayed posttest just measuring how well a student retained information from the task. The immediate posttest will be sufficient to compare how the CT training and self-explanations affected learning outcomes. Beyond this, other concerns raised was understanding how participants' engagement of the study would be impacted if moved to online. One way to test engagement is creating a survey at the end asking if they honestly used any distractions to account for transparent barriers in the study. Also, calculating a power analysis in R to find the amount of participants needed to get medium sized effects will be the next step. The final solution addresses the third feedback: obtaining the CT materials. By emailing the authors, I am hoping to also ask them whether adding all four CT measures are necessary in measuring critical thinking. If it is not, I will utilize their feedback and make the study go faster. This way, it can hopefully keep participants a little more engaged.
@@ -62,7 +59,7 @@ Before data collection, the only differences would be to take out the delayed po
 
 To prepare my data, I will launch my study on jsPsych to ensure that data analyses goes smooth as possible. I will label all my variables based on the CT skills test, as well as the pretest and immediate posttest. If there is any incomplete data, I will remove the participant out of the dataset. This will not be a huge issue, as there is no delayed posttest which would decrease the chance of this happening. I will also preregister my replication study to ensure that I remain open about my practices.  
 	
-```{r include=F}
+```{r}
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
@@ -74,9 +71,9 @@ To prepare my data, I will launch my study on jsPsych to ensure that data analys
 #### Prepare data for analysis - create columns etc.
 ```
 
-### Confirmatory analysis
+### Confirmatory analysis 
 
-Mixed ANOVAs analyses were heavily conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals.
+Mixed ANOVAs analyses were heavily conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals. (add more detail)
 
 ### Exploratory analyses
 
