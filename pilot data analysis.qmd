@@ -25,8 +25,10 @@ library(tidyr)
 library(dplyr)
 library(kableExtra)
 library(jsonlite)
-library(ez)
+library(afex)
 library(ggplot2)
+library(Hmisc)
+library(emmeans)
 
 # Set theme for plots
 theme_set(theme_minimal(base_size = 12))
@@ -37,36 +39,46 @@ set.seed(123)
 
 # Data Loading
 
-In this section, we will load in the file that holds all the SONA data. Then, we will merge the csv files together to interpret.
+In this section, we are loading in the data folder containing all the csvs from the study. Then, we will combine all the csvs from each folder and merge them together into one data set.
 
 ```{r}
-# Labeling the pilot data & listing them for R to see
-data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
-list.files(data_folder)
-# Make sure that all the csv files are in a list
-csv_files <- list.files(
-  data_folder,
-  pattern = "\\.csv$",
-  full.names = TRUE
-)
-# Check that it actually listed the amount of csv files in folder
-length(csv_files)
+# Labeling the data folders that will be analyzed in this study
+data_folder1 <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
+data_folder2 <- "/Users/christinelee/Documents/vanpeppen2018/missing_sona id"
+# Merge all the csv files into ONE data set per individual folder
+load_folder <- function(folder_path) {
+  files <- list.files(folder_path,
+                      pattern = "\\.csv$",
+                      full.names = TRUE)
+
+  if (length(files) == 0) {
+    stop(paste("No CSV files found in", folder_path))
+  }
+
+  do.call(rbind, lapply(files, function(f) {
+    tmp <- read.csv(f)
+    tmp$source_file <- basename(f)
+    tmp
+  }))
+}
 # Load all the pilot data csvs into one dataset
-all_data <- do.call(
-  rbind,
-  lapply(csv_files, function(file_path) {
-    temp <- read.csv(file_path)
-    temp$source_file <- basename(file_path)
-    temp
-  })
-)
-# Show a preview of the loaded, merged data
+dataset1 <- load_folder(data_folder1)
+dataset2 <- load_folder(data_folder2)
+# combine dataset 1 and dataset 2 together in one csv
+all_data <- rbind(dataset1, dataset2)
+#check
+dim(all_data)      # rows x columns
 head(all_data)
+table(all_data$source_file)  # how many rows from each csv
 ```
 
 # Pre-processing Data
 
-Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check.
+Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check. Since there is an unbalanced amount of participants, we will randomly select 40 participants per condition to equally analyze the data.
+
+## Attention Check Filtering
+
+Will exclude all the participants that failed the attention check. This will ensure that there is no confound in the data.
 
 ```{r}
 # Reload merged data
@@ -100,24 +112,54 @@ data_attention <- data_base [
 ]
 ```
 
+## Randomization 
+
+Before we format the question, we will randomly select 40 participants from each condition (SE vs no SE) to analyze. This will amount to a total of 80 participants.
+
+```{r}
+# Split between the self-explanation versus no self-explanation participants.
+data_attention <- data_attention[
+  data_attention$condition %in% c("self_explanation", "no_self_explanation"),
+]
+# Obtain a row per participant in their respective conditions
+participants <- unique(data_attention[, c("source_file", "condition")])
+sampled_participants <- participants %>%
+  group_by(condition) %>%
+  sample_n(size = 40) %>%   # because both groups have at least 40
+  ungroup()
+print(sampled_participants)
+# Take the full data of those participants
+sampled_ids <- sampled_participants$source_file
+data_sampled <- data_attention %>%
+  filter(source_file %in% sampled_ids)
+# Number of unique participants = 80
+print(length(unique(data_sampled$source_file)))
+# Should show 40 in each condition
+participants_sampled <- unique(data_sampled[, c("source_file", "condition")])
+print(table(participants_sampled$condition))
+# Peek at full sampled dataset
+head(data_sampled)
+```
+
 # Format Questions
 
-In this section, I am going to let format the csv file to ensure the answers can be interprettable for scoring and analysis.
+In this section, I will format the csv files so that they can be easily analyzed and scored. Each section will isolate the desired timing condition and organized to accurately show all the questions in one data set.
 
 ## Pretest
 
+In this section, we will organize the combined, csv files to show all of the participants' pretest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.
+
 ```{r}
 # Filter the data to only focus on the pretest answers for each participant
-pretest_data <- data_attention[
-  data_attention$task == "pretest" &
-    data_attention$trial_type == "survey-multi-choice",
+pretest_data <- data_sampled[
+  data_sampled$task == "pretest" &
+    data_sampled$trial_type == "survey-multi-choice",
 ]
 # Make the questions into each individual column so that we can score them
 one_json <- pretest_data$response[1]
 one_parsed <- fromJSON(one_json)
 one_parsed
 str(one_parsed)
-# Now make sure all participants are put in the question columns to score
 ## Create a list of all the JSON responses from the pretest section
 pretest_list <- lapply(pretest_data$response, fromJSON)
 ## Combine the list of each individual participant into one data frame
@@ -139,40 +181,30 @@ head(pretest_all_data)
 
 ## Posttest
 
+In this section, we will organize the combined, csv files to show all of the participants' posttest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.
+
 ```{r}
-# Filter the data to only MC posttest responses
-posttest_mc <- data_attention %>%
+# Keep only posttest MC rows for the 80 sampled participants
+posttest_mc <- data_sampled %>%
   filter(phase == "mc")
-# Parse JSON for each row
-posttest_list <- lapply(posttest_mc$response, fromJSON)
-# Combine each participant's JSON into one data frame
-posttest_answers <- dplyr::bind_rows(
-  lapply(posttest_list, as.data.frame)
-)
-# Attach participant metadata so you know whose answers are whose
-posttest_answers_full <- dplyr::bind_cols(
-  posttest_mc %>%
-    select(participant_id, source_file, condition, item),
-  posttest_answers
-)
-# Combine to one row per participant (per file), wide format
-posttest_mc_wide <- posttest_answers_full %>%
-  group_by(participant_id, source_file, condition) %>%
-  summarise(
-    across(ends_with("_mc"), ~ .x[!is.na(.x)][1], .names = "{.col}"),
-    .groups = "drop"
+# 2) Filter the columns to include the source file, item, condition, and response
+posttest_long <- posttest_mc %>%
+  select(participant_id, source_file, condition, item, response)
+# Rearrange the format of the data set to cleanly show the answers for all 80 participants
+posttest_all_data <- posttest_long %>%
+  pivot_wider(
+    names_from  = item,        
+    values_from = response,   
+    names_prefix = "mc_"     
   )
-glimpse(posttest_mc_wide)
-head(posttest_mc_wide)
-# Ensure that all 80 participants are accounted in the data
-posttest_all_data <- posttest_mc_wide
+# Look at the data
 nrow(posttest_all_data)
 head(posttest_all_data)
 ```
 
 # Scoring Study
 
-In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Main areas of scoring will be in the pretest
+In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Specifically, we will analyze both the pretest and posttest multi-choice answers.
 
 ## Pretest Accuracy
 
@@ -248,44 +280,38 @@ summary(pretest_answers$pretest_effort)
 ```{r}
 # Posttest answer key
 posttest_accuracy_key <- list(
-  q1_mc = "No correct conclusion possible",
-  q2_mc = "Perhaps give preference to graduates of Tilburg University.",
-  q3_mc = "No correct conclusion possible",
-  q4_mc = "Hearts and 2",
-  q5_mc = "Jacques is a janitor",
-  q6_mc = "Less than 10%",
-  q7_mc = "Madrid and Transavia",
-  q8_mc = "Within 5 years, the number of visitors will increase by 2%"
+  mc_q1 = "No correct conclusion possible",
+  mc_q2 = "Perhaps give preference to graduates of Tilburg University.",
+  mc_q3 = "No correct conclusion possible",
+  mc_q4 = "Hearts and 2",
+  mc_q5 = "Jacques is a janitor",
+  mc_q6 = "Less than 10%",
+  mc_q7 = "Madrid and Transavia",
+  mc_q8 = "Within 5 years, the number of visitors will increase by 2%"
 )
-# Now, select the questions that are only accuracy_questions
 posttest_accuracy_questions <- names(posttest_accuracy_key)
-# Compare the answers to the key. Correct is true, incorrect is false!
+# Compare answers to key → TRUE/FALSE
 correct_matrix_post <- as.data.frame(
   lapply(posttest_accuracy_questions, function(q) {
-    posttest_all_data[[q]] == posttest_accuracy_key[[q]]
+    grepl(posttest_accuracy_key[[q]],
+          posttest_all_data[[q]],
+          fixed = TRUE)      # literal match, no regex weirdness
   })
 )
-# Convert the true/false into binary numbers (1 and 0)
+# Convert the TRUE/FALSE answers 
 correct_matrix_post <- correct_matrix_post * 1L
 names(correct_matrix_post) <- paste0(posttest_accuracy_questions, "_score")
-# Compute total score correct
+# Commpute total scores correct
 posttest_total_accuracy <- rowSums(correct_matrix_post, na.rm = TRUE)
 posttest_total_prop    <- posttest_total_accuracy / length(posttest_accuracy_questions)
-# Combine the total scores for all participants
+# Combine the scoring all together with the data set
 posttest_scored <- cbind(
-  posttest_all_data,
+  posttest_all_data[, c("participant_id", "source_file", "condition")],
   correct_matrix_post,
   posttest_total_accuracy = posttest_total_accuracy,
   posttest_total_prop     = posttest_total_prop
 )
-# Run the data set
-head(posttest_scored[
-  , c("posttest_total_accuracy",
-      "posttest_total_prop",
-      paste0(posttest_accuracy_questions[1], "_score"),
-      paste0(posttest_accuracy_questions[2], "_score"),
-      paste0(posttest_accuracy_questions[3], "_score"))
-])
+head(posttest_scored)
 ```
 
 # Descriptive Statistics
@@ -344,30 +370,50 @@ names(analysis_long)
 
 ## Overview Statistics
 
-In the overview, we will try to analyze the overall descriptive statistics of posttest and pretest total accuracy means and standard deviations.
+In the overview, we will try to analyze the overall descriptive statistics of posttest and pretest total accuracy means and standard deviations. First, we are going to look at the total sample size we collected as well as per condition.
 
 ```{r}
-# Total number of N as well as N per condition
-analysis_df %>%
-  count(condition, name = "n")
-# Overall descriptive statistics 
-analysis_df %>%
+# Report the total number of N 
+overall_n <- data.frame(
+  condition = "Overall",
+  n = nrow(analysis_df)
+)
+# Report the total number of N per condition
+by_condition_n <- as.data.frame(table(analysis_df$condition))
+names(by_condition_n) <- c("condition", "n")
+by_condition_n
+# Combine
+n_table <- bind_rows(overall_n, by_condition_n)
+n_table
+```
+
+Afterwards, we are going to run the full descriptive statistics that will report the mean & sd overall as well as per condition.
+
+```{r}
+# Overall descriptive statistics
+overall_desc <- analysis_df %>%
   summarise(
+    n = n(),
     pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
     pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
     posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
     posttest_sd   = sd(posttest_total_accuracy, na.rm = TRUE)
   )
-# Descriptive statistic overview of each condition
-analysis_df %>%
+
+overall_desc
+# Descripitive statistics per condition
+condition_desc <- analysis_df %>%
   group_by(condition) %>%
   summarise(
-    n             = n(),
-    pretest_mean  = mean(pretest, na.rm = TRUE),
-    pretest_sd    = sd(pretest, na.rm = TRUE),
-    posttest_mean = mean(posttest, na.rm = TRUE),
-    posttest_sd   = sd(posttest, na.rm = TRUE)
-  )
+    n = n(),
+    pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
+    pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
+    posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
+    posttest_sd   = sd(posttest_total_accuracy, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+condition_desc
 ```
 
 ## Visualization of Overview Stats
@@ -414,10 +460,48 @@ anova_afex <- aov_ez(
 anova_afex
 ```
 
+```{r}
+# Conduct a pairwise analysis to se
+emm <- emmeans(anova_afex, ~ time * condition)
+pairs(emm)
+```
+
 This analysis differs from the original replication project, that did a 3 X 2 X 2 analyses comparing the types of critical thinking questions. Additionally, they added a delayed posttest to measure the retention of this effect. This replication project truncated the analysis to ensure that people are writing the
 
-## Pretest & Mental Ratings Comparison
+## Visualization of Confirmatory Analysis
+
+Showing several visualizations of the mixed ANOVA results.
+
+### Interaction Plot
+
+```{r}
+anova_plot <- ggplot(analysis_long, aes(x = time, y = accuracy, 
+                               color = condition, group = condition)) +
+  stat_summary(fun = mean, geom = "line", size = 1) +
+  stat_summary(fun = mean, geom = "point", size = 3) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  theme_minimal(base_size = 14) +
+  labs(title = "Interaction Plot: Accuracy by Time and Condition",
+       x = "Time", y = "Accuracy")
+# Add the statistical significance indicator on the graph for pretest/posttest no SE
+anova_plot + annotate("segment",
+             x = 1, xend = 2,
+             y = 3.25, yend = 3.25,   # the height of the bar
+             color = "#E76F51", size = 0.8) +
+    annotate("text", 
+             x = 1.5, y = 3.32, 
+             label = "**",           # p = .001 → ** or ***
+             color = "#E76F51", size = 6)
+```
+
+### LMER plot
+
+A linear mixed
 
 ```{r}
 
 ```
+
+# Exploratory Analyses
+
+The results show that

@@ -86,18 +86,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
   <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data Loading</a></li>
-  <li><a href="#pre-processing-data" id="toc-pre-processing-data" class="nav-link" data-scroll-target="#pre-processing-data">Pre-processing Data</a></li>
-  <li><a href="#format-questions" id="toc-format-questions" class="nav-link" data-scroll-target="#format-questions">Format Questions</a></li>
+  <li><a href="#pre-processing-data" id="toc-pre-processing-data" class="nav-link" data-scroll-target="#pre-processing-data">Pre-processing Data</a>
+  <ul class="collapse">
+  <li><a href="#attention-check-filtering" id="toc-attention-check-filtering" class="nav-link" data-scroll-target="#attention-check-filtering">Attention Check Filtering</a></li>
+  <li><a href="#randomization" id="toc-randomization" class="nav-link" data-scroll-target="#randomization">Randomization</a></li>
+  </ul></li>
+  <li><a href="#format-questions" id="toc-format-questions" class="nav-link" data-scroll-target="#format-questions">Format Questions</a>
+  <ul class="collapse">
+  <li><a href="#pretest" id="toc-pretest" class="nav-link" data-scroll-target="#pretest">Pretest</a></li>
+  <li><a href="#posttest" id="toc-posttest" class="nav-link" data-scroll-target="#posttest">Posttest</a></li>
+  </ul></li>
   <li><a href="#scoring-study" id="toc-scoring-study" class="nav-link" data-scroll-target="#scoring-study">Scoring Study</a>
   <ul class="collapse">
   <li><a href="#pretest-accuracy" id="toc-pretest-accuracy" class="nav-link" data-scroll-target="#pretest-accuracy">Pretest Accuracy</a></li>
   <li><a href="#pretest-mental-effort" id="toc-pretest-mental-effort" class="nav-link" data-scroll-target="#pretest-mental-effort">Pretest Mental Effort</a></li>
+  <li><a href="#posttest-accuracy" id="toc-posttest-accuracy" class="nav-link" data-scroll-target="#posttest-accuracy">Posttest Accuracy</a></li>
   </ul></li>
-  <li><a href="#descriptive-stats" id="toc-descriptive-stats" class="nav-link" data-scroll-target="#descriptive-stats">Descriptive Stats</a>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a>
   <ul class="collapse">
-  <li><a href="#pretest-versus-posttest-accuracy" id="toc-pretest-versus-posttest-accuracy" class="nav-link" data-scroll-target="#pretest-versus-posttest-accuracy">Pretest versus Posttest Accuracy</a></li>
-  <li><a href="#pretest-mental-ratings-comparison" id="toc-pretest-mental-ratings-comparison" class="nav-link" data-scroll-target="#pretest-mental-ratings-comparison">Pretest &amp; Mental Ratings Comparison</a></li>
+  <li><a href="#before-analysis-formatting" id="toc-before-analysis-formatting" class="nav-link" data-scroll-target="#before-analysis-formatting">Before Analysis – Formatting</a>
+  <ul class="collapse">
+  <li><a href="#combined-scored-data-set" id="toc-combined-scored-data-set" class="nav-link" data-scroll-target="#combined-scored-data-set">Combined Scored Data Set</a></li>
+  <li><a href="#data-preparation-for-anova" id="toc-data-preparation-for-anova" class="nav-link" data-scroll-target="#data-preparation-for-anova">Data Preparation for ANOVA</a></li>
   </ul></li>
+  <li><a href="#overview-statistics" id="toc-overview-statistics" class="nav-link" data-scroll-target="#overview-statistics">Overview Statistics</a></li>
+  <li><a href="#visualization-of-overview-stats" id="toc-visualization-of-overview-stats" class="nav-link" data-scroll-target="#visualization-of-overview-stats">Visualization of Overview Stats</a></li>
+  </ul></li>
+  <li><a href="#confirmatory-analyses" id="toc-confirmatory-analyses" class="nav-link" data-scroll-target="#confirmatory-analyses">Confirmatory Analyses</a>
+  <ul class="collapse">
+  <li><a href="#mixed-anova-analysis" id="toc-mixed-anova-analysis" class="nav-link" data-scroll-target="#mixed-anova-analysis">Mixed ANOVA Analysis</a></li>
+  <li><a href="#visualization-of-confirmatory-analysis" id="toc-visualization-of-confirmatory-analysis" class="nav-link" data-scroll-target="#visualization-of-confirmatory-analysis">Visualization of Confirmatory Analysis</a>
+  <ul class="collapse">
+  <li><a href="#interaction-plot" id="toc-interaction-plot" class="nav-link" data-scroll-target="#interaction-plot">Interaction Plot</a></li>
+  <li><a href="#lmer-plot" id="toc-lmer-plot" class="nav-link" data-scroll-target="#lmer-plot">LMER plot</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#exploratory-analyses" id="toc-exploratory-analyses" class="nav-link" data-scroll-target="#exploratory-analyses">Exploratory Analyses</a></li>
   </ul>
 </nav>
 </div>
@@ -156,7 +180,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'kableExtra'
@@ -174,76 +200,405 @@ The following object is masked from 'package:purrr':
 
     flatten</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theme for plots</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(afex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lme4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix
+
+Attaching package: 'Matrix'
+
+The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack
+
+************
+Welcome to afex. For support visit: http://afex.singmann.science/
+- Functions for ANOVAs: aov_car(), aov_ez(), and aov_4()
+- Methods for calculating p-values with mixed(): 'S', 'KR', 'LRT', and 'PB'
+- 'afex_aov' and 'mixed' objects can be passed to emmeans() for follow-up tests
+- Get and set global package options with: afex_options()
+- Set sum-to-zero contrasts globally: set_sum_contrasts()
+- For example analyses see: browseVignettes("afex")
+************
+
+Attaching package: 'afex'
+
+The following object is masked from 'package:lme4':
+
+    lmer</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Hmisc'
+
+The following objects are masked from 'package:dplyr':
+
+    src, summarize
+
+The following objects are masked from 'package:base':
+
+    format.pval, units</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theme for plots</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-loading" class="level1">
 <h1>Data Loading</h1>
-<p>In this section, we will load in the file that holds all the SONA data. Then, we will merge the csv files together to interpret.</p>
+<p>In this section, we are loading in the data folder containing all the csvs from the study. Then, we will combine all the csvs from each folder and merge them together into one data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Labeling the pilot data &amp; listing them for R to see</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data_folder <span class="ot">&lt;-</span> <span class="st">"/Users/christinelee/Documents/vanpeppen2018/sona_data_pt1"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(data_folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Labeling the data folders that will be analyzed in this study</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>data_folder1 <span class="ot">&lt;-</span> <span class="st">"/Users/christinelee/Documents/vanpeppen2018/sona_data"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>data_folder2 <span class="ot">&lt;-</span> <span class="st">"/Users/christinelee/Documents/vanpeppen2018/missing_sona id"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all the csv files into ONE data set per individual folder</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>load_folder <span class="ot">&lt;-</span> <span class="cf">function</span>(folder_path) {</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(folder_path,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(files) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"No CSV files found in"</span>, folder_path))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(files, <span class="cf">function</span>(f) {</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    tmp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(f)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    tmp<span class="sc">$</span>source_file <span class="ot">&lt;-</span> <span class="fu">basename</span>(f)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    tmp</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all the pilot data csvs into one dataset</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>dataset1 <span class="ot">&lt;-</span> <span class="fu">load_folder</span>(data_folder1)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>dataset2 <span class="ot">&lt;-</span> <span class="fu">load_folder</span>(data_folder2)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># combine dataset 1 and dataset 2 together in one csv</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(dataset1, dataset2)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#check</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(all_data)      <span class="co"># rows x columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "1m3jhrcedv_TEST.csv" "30dlr6fb6n_SONA.csv" "36gmqf7dhq_SONA.csv"
- [4] "3hwcznr584_SONA.csv" "3o0xd7zdr2_TEST.csv" "4722wpfxn6_SONA.csv"
- [7] "49je1ewy6w_SONA.csv" "4nhx5ujp3g_SONA.csv" "4p9ac6mlok_SONA.csv"
-[10] "52b01z9hsu_SONA.csv" "55c57ntl12_SONA.csv" "5cz293n9r3_SONA.csv"
-[13] "5e80c1s2b7_SONA.csv" "5haagdmrqd_TEST.csv" "5jwe09o01v_TEST.csv"
-[16] "5lw367pfyh_SONA.csv" "5mgsb9l969_SONA.csv" "5ocgozssss_SONA.csv"
-[19] "6ofs36k6ja_SONA.csv" "74y6wm2box_SONA.csv" "7comq8nn6m_SONA.csv"
-[22] "7fdy0lkchw_SONA.csv" "7tvfdg4yt6_SONA.csv" "7xkp7zhcdo_SONA.csv"
-[25] "7y2unttgqd_SONA.csv" "806ju2xpeq_SONA.csv" "84t78pho49_SONA.csv"
-[28] "8sztoac30v_SONA.csv" "9p8nt5u1rz_SONA.csv" "adum4qfh7s_SONA.csv"
-[31] "afl6mky2ka_SONA.csv" "anejhx1wwx_SONA.csv" "aylrwurwco_SONA.csv"
-[34] "bh7tl79spo_SONA.csv" "c1ckpw1vsy_SONA.csv" "dmhguz5xmd_SONA.csv"
-[37] "dthh9h53gm_SONA.csv" "ehwky7ssuo_SONA.csv" "eoc3gu55to_SONA.csv"
-[40] "f4xyfjhajb_TEST.csv" "f6f4ahv77e_SONA.csv" "f76xn6uef1_SONA.csv"
-[43] "fj6pd3rzgz_SONA.csv" "flajp878ab_SONA.csv" "fxd2p81omt_TEST.csv"
-[46] "g9swzkwkof_SONA.csv" "gafuc0b09v_SONA.csv" "gaxt12ccbz_SONA.csv"
-[49] "ghb474bz57_SONA.csv" "gq5418gl20_SONA.csv" "hftyeo6arf_SONA.csv"
-[52] "hw8yavnmsc_SONA.csv" "j9wz1c88z2_SONA.csv" "ja88eqs571_SONA.csv"
-[55] "jfwoy0npza_SONA.csv" "jmh6nx008r_TEST.csv" "jxz8h20u7x_SONA.csv"
-[58] "l8mc41jxe1_TEST.csv" "ldenxyrz0c_SONA.csv" "lgqp3q22yl_SONA.csv"
-[61] "lx718yk8qm_TEST.csv" "mxt2bwnfmq_SONA.csv" "ngm3lmlah1_SONA.csv"
-[64] "nm2xpeu5hj_SONA.csv" "o7o2nv1xk0_TEST.csv" "oaws9ht5gf_SONA.csv"
-[67] "pfv4mguf6n_SONA.csv" "pnsz8tsh7h_SONA.csv" "qllowho78v_SONA.csv"
-[70] "qpfg1x32pt_SONA.csv" "qy6wvm9wn5_SONA.csv" "rctfa8nz7n_SONA.csv"
-[73] "rkygpvyrqk_TEST.csv" "rqqcztcs9s_TEST.csv" "ry5kcf4lje_SONA.csv"
-[76] "skwk9e6zef_SONA.csv" "t9x5btafjr_TEST.csv" "tdzdanvc0s_SONA.csv"
-[79] "tvjemu1rc0_SONA.csv" "txhuq57m6o_SONA.csv" "u3v4zc3hd2_SONA.csv"
-[82] "uk7skqkmks_SONA.csv" "vbmurlahq0_SONA.csv" "vm50hz98pu_SONA.csv"
-[85] "vxx96ulrs6_SONA.csv" "vyp38y9mr1_TEST.csv" "w4cpcbzbdy_SONA.csv"
-[88] "wd4gdquj2e_SONA.csv" "wwc9d2u2fm_SONA.csv" "x7zngfze5z_SONA.csv"
-[91] "xyww1cmexz_SONA.csv" "y76vne8ath_SONA.csv" "yp1cs2f08t_SONA.csv"
-[94] "yyln7blzek_SONA.csv" "zx3n79mm1x_SONA.csv"</code></pre>
+<pre><code>[1] 4929   23</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure that all the csv files are in a list</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>csv_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  data_folder,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that it actually listed the amount of csv files in folder</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(csv_files)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 95</code></pre>
+<pre><code>                   task     rt
+1    sona_id_collection  60933
+2               consent  13414
+3  pretest_instructions   3699
+4               pretest 353818
+5 practice_instructions   3976
+6           preload_pdf       
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             response
+1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   {"sona_id":"12/02/2025 ; 1:00PM"}
+2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   0
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+4 {"Q0":"Some rocks are not nuts","Q1":"Little effort","Q2":"X and 7","Q3":"Quite a lot of effort","Q4":"Maybe they would be better off buying the BMW","Q5":"Little effort","Q6":"No correct conclusion possible","Q7":"Not a little nor a lot of effort","Q8":"Karin works at a bank and is active in the environmental movement.","Q9":"Little effort","Q10":"Less than 3%","Q11":"Very little effort","Q12":"15 and cola","Q13":"Not a little nor a lot of effort","Q14":"The students score at least 0.3 points higher on the exam","Q15":"Little effort","attention_check_pretest_question":"X and 2","attention_check_pretest_effort":"Quite a lot of effort"}
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+            trial_type trial_index plugin_version time_elapsed participant_id
+1          survey-text           0          2.1.0        60943          89552
+2 html-button-response           1          2.1.0        74359          89552
+3         instructions           2          2.1.0        78058          89552
+4  survey-multi-choice           3          2.1.0       431871          89552
+5         instructions           4          2.1.0       435848          89552
+6              preload           5          2.0.0       435850          89552
+            condition
+1 no_self_explanation
+2 no_self_explanation
+3 no_self_explanation
+4 no_self_explanation
+5 no_self_explanation
+6 no_self_explanation
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             stimulus
+1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+2 ["&lt;div class=\\"consent-box\\"&gt;\\n                &lt;h2&gt;Informed Consent Form&lt;/h2&gt;\\n                &lt;p&gt;&lt;strong&gt;Title of Research Study:&lt;/strong&gt; Critical Thinking Skills Learning Study&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt;You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction.” This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course. You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies.&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;Risks and Benefits:&lt;/strong&gt; The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations. Your participation in this research should last approximately 5-30 minutes  If you agree to take part in this study, you may be asked to view a set of stimuli, including pictures, sounds, written text, or videos and then giving some responses via key-presses, verbally, or with paper-and-pencil. We may also observe your choices or preferences among an array of stimuli.  These stimuli will be taken directly from or closely adapted from studies that already exist in the published psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli will be disturbing, threatening, or offensive. The online and in-person experiments described in this protocol will take no more than 30 minutes. An example game you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is between 5-30 minutes, and is specified in the study description.&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;Confidentiality:&lt;/strong&gt; Your responses will be kept confidential and anonymous. Data will be stored securely and used only for research purposes.&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;Voluntary Participation:&lt;/strong&gt; We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your SONA IDs will never be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data containing anything that might be personally identifiable (e.g. SONA IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies.&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;Contact Information:&lt;/strong&gt; If you have questions about this project or if you have a research-related problem, you may contact the researcher(s),  Dr. Bria Long, brlong@ucsd.edu. If you have any questions concerning your rights as a research subject, you may contact the UC San Diego Office of IRB Administration at irb@ucsd.edu or 858-246-4777.&lt;/p&gt;\\n                &lt;p&gt;&lt;strong&gt;By clicking \\"I Agree\\" below, you indicate that:&lt;/strong&gt;&lt;/p&gt;\\n                &lt;ul&gt;\\n                    &lt;li&gt;You have read and understood the information above&lt;/li&gt;\\n                    &lt;li&gt;You voluntarily agree to participate&lt;/li&gt;\\n                    &lt;li&gt;You are at least 18 years old&lt;/li&gt;\\n                &lt;/ul&gt;\\n            &lt;/div&gt;"]
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                 view_history
+1                                                                            
+2                                                                            
+3                                      [{"page_index":0,"viewing_time":3699}]
+4                                                                            
+5 [{"page_index":0,"viewing_time":1609},{"page_index":1,"viewing_time":2367}]
+6                                                                            
+                                 question_order attention_question_passed
+1                                                                        
+2                                                                        
+3                                                                        
+4 [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]                      true
+5                                                                        
+6                                                                        
+  attention_effort_passed pdf_file success timeout failed_images failed_audio
+1                                                                            
+2                                                                            
+3                                                                            
+4                    true                                                    
+5                                                                            
+6                            2.pdf    true   false            []           []
+  failed_video item phase         source_file
+1                         1ac6gmlxb2_SONA.csv
+2                         1ac6gmlxb2_SONA.csv
+3                         1ac6gmlxb2_SONA.csv
+4                         1ac6gmlxb2_SONA.csv
+5                         1ac6gmlxb2_SONA.csv
+6           []            1ac6gmlxb2_SONA.csv</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all the pilot data csvs into one dataset</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">do.call</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  rbind,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(csv_files, <span class="cf">function</span>(file_path) {</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    temp<span class="sc">$</span>source_file <span class="ot">&lt;-</span> <span class="fu">basename</span>(file_path)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    temp</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show a preview of the loaded, merged data</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(all_data<span class="sc">$</span>source_file)  <span class="co"># how many rows from each csv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1ac6gmlxb2_SONA.csv  1do0js6ofq_TEST.csv  1m3jhrcedv_TEST.csv 
+                  34                   38                   38 
+ 27lgpz3tcw_SONA.csv  2lrqk8qc3k_SONA.csv  30dlr6fb6n_SONA.csv 
+                  34                   38                   38 
+ 36gmqf7dhq_SONA.csv  3hwcznr584_SONA.csv  3o0xd7zdr2_TEST.csv 
+                  34                   38                   34 
+ 4722wpfxn6_SONA.csv  49je1ewy6w_SONA.csv  4cr2g21y23_SONA.csv 
+                  38                   34                   34 
+ 4na5t263c9_SONA.csv  4nhx5ujp3g_SONA.csv  4p9ac6mlok_SONA.csv 
+                  38                   34                   34 
+ 52b01z9hsu_SONA.csv  55c57ntl12_SONA.csv  5cz293n9r3_SONA.csv 
+                  34                   38                   34 
+ 5e80c1s2b7_SONA.csv  5haagdmrqd_TEST.csv  5jwe09o01v_TEST.csv 
+                  34                   38                   34 
+ 5lw367pfyh_SONA.csv  5mgsb9l969_SONA.csv  5ocgozssss_SONA.csv 
+                  38                   34                   34 
+ 6ofs36k6ja_SONA.csv  6xzauz7xqf_SONA.csv  74y6wm2box_SONA.csv 
+                  38                   38                   38 
+ 7comq8nn6m_SONA.csv  7fdy0lkchw_SONA.csv  7tvfdg4yt6_SONA.csv 
+                  34                   34                   38 
+ 7xkp7zhcdo_SONA.csv  7y2unttgqd_SONA.csv  806ju2xpeq_SONA.csv 
+                  38                   38                   34 
+ 84t78pho49_SONA.csv  8sztoac30v_SONA.csv  9n59omqa6y_SONA.csv 
+                  34                   38                   38 
+ 9p8nt5u1rz_SONA.csv  9t24wuz934_SONA.csv  adum4qfh7s_SONA.csv 
+                  34                   34                   38 
+ afl6mky2ka_SONA.csv  amyf1z6eco_SONA.csv  anejhx1wwx_SONA.csv 
+                  34                   38                   38 
+ aylrwurwco_SONA.csv  bh7tl79spo_SONA.csv  c1ckpw1vsy_SONA.csv 
+                  38                   34                   34 
+ dmhguz5xmd_SONA.csv  dthh9h53gm_SONA.csv  duyflwatm0_SONA.csv 
+                  38                   34                   34 
+ ehwky7ssuo_SONA.csv  eoc3gu55to_SONA.csv  f11wx6h3u0_TEST.csv 
+                  34                   38                   38 
+ f4xyfjhajb_TEST.csv  f6f4ahv77e_SONA.csv  f76xn6uef1_SONA.csv 
+                  34                   38                   38 
+ fj6pd3rzgz_SONA.csv  flajp878ab_SONA.csv  fpxujx4vw3_TEST.csv 
+                  34                   34                   34 
+ fxd2p81omt_TEST.csv  g9swzkwkof_SONA.csv  gafuc0b09v_SONA.csv 
+                  38                   34                   38 
+ gaxt12ccbz_SONA.csv  gh2ll43bwg_SONA.csv  ghb474bz57_SONA.csv 
+                  34                   34                   38 
+ go4ksb9dfa_SONA.csv  gq5418gl20_SONA.csv  hb61ncbulz_SONA.csv 
+                  34                   34                   34 
+ hftyeo6arf_SONA.csv  hvrrfwaa6v_SONA.csv  hw8yavnmsc_SONA.csv 
+                  34                   34                   38 
+ j9wz1c88z2_SONA.csv  ja88eqs571_SONA.csv  jfwoy0npza_SONA.csv 
+                  38                   34                   34 
+ jmh6nx008r_TEST.csv  jtkpuuyw6u_TEST.csv  jvq8vd6x97_SONA.csv 
+                  38                   34                   38 
+ jwhcxh6czz_SONA.csv  jxz8h20u7x_SONA.csv  k340uxes35_TEST.csv 
+                  38                   38                   38 
+ l2lv4x6xky_SONA.csv  l8mc41jxe1_TEST.csv  ldenxyrz0c_SONA.csv 
+                  34                   38                   34 
+ lgqp3q22yl_SONA.csv  lx718yk8qm_TEST.csv  mcu9jg2nfl_SONA.csv 
+                  38                   34                   38 
+ mfdh0l5724_SONA.csv  ml8crcj5ge_SONA.csv  mxt2bwnfmq_SONA.csv 
+                  34                   38                   34 
+n8s5j8onml_pilot.csv  ngm3lmlah1_SONA.csv  nl1hsa775j_SONA.csv 
+                  37                   34                   34 
+ nm2xpeu5hj_SONA.csv  o440534nn2_SONA.csv  o7o2nv1xk0_TEST.csv 
+                  38                   34                   38 
+ oaws9ht5gf_SONA.csv  oby1k3jc4h_SONA.csv  oprodnjs4d_SONA.csv 
+                  34                   38                   38 
+ pfv4mguf6n_SONA.csv  ph266kyf7n_SONA.csv  pnsz8tsh7h_SONA.csv 
+                  38                   38                   34 
+ qllowho78v_SONA.csv  qpfg1x32pt_SONA.csv  qqawcsravm_SONA.csv 
+                  34                   34                   34 
+ qy6wvm9wn5_SONA.csv  rctfa8nz7n_SONA.csv  rj4qtxg2uh_SONA.csv 
+                  38                   34                   38 
+ rkygpvyrqk_TEST.csv  rqqcztcs9s_TEST.csv  rrw5fhrvan_SONA.csv 
+                  38                   34                   38 
+ ry5kcf4lje_SONA.csv  skwk9e6zef_SONA.csv  sz93hk5twn_SONA.csv 
+                  38                   38                   38 
+ t73g6fqabf_SONA.csv  t9x5btafjr_TEST.csv  tdzdanvc0s_SONA.csv 
+                  38                   38                   34 
+ tvjemu1rc0_SONA.csv  txhuq57m6o_SONA.csv  tzf979m8cu_SONA.csv 
+                  38                   34                   34 
+ u3v4zc3hd2_SONA.csv  uk7skqkmks_SONA.csv  v19ftsxx4h_SONA.csv 
+                  34                   38                   38 
+ vbmurlahq0_SONA.csv  vm50hz98pu_SONA.csv  vxx96ulrs6_SONA.csv 
+                  38                   38                   34 
+ vyp38y9mr1_TEST.csv  w0gjnjzkf3_SONA.csv  w4cpcbzbdy_SONA.csv 
+                  34                   38                   34 
+ w82mb81k9y_SONA.csv  wd4gdquj2e_SONA.csv  wwc9d2u2fm_SONA.csv 
+                  38                   34                   34 
+ x7zngfze5z_SONA.csv  xsb0yojkka_SONA.csv  xyww1cmexz_SONA.csv 
+                  38                   34                   34 
+ y76vne8ath_SONA.csv  yp1cs2f08t_SONA.csv  yyln7blzek_SONA.csv 
+                  38                   38                   38 
+ zn2q78v45z_SONA.csv  zx3n79mm1x_SONA.csv 
+                  34                   34 </code></pre>
+</div>
+</div>
+</section>
+<section id="pre-processing-data" class="level1">
+<h1>Pre-processing Data</h1>
+<p>Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check. Since there is an unbalanced amount of participants, we will randomly select 40 participants per condition to equally analyze the data.</p>
+<section id="attention-check-filtering" class="level2">
+<h2 class="anchored" data-anchor-id="attention-check-filtering">Attention Check Filtering</h2>
+<p>Will exclude all the participants that failed the attention check. This will ensure that there is no confound in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload merged data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data_base <span class="ot">&lt;-</span> all_data</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Score attention checks as true/false</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>data_base<span class="sc">$</span>attention_question_yes <span class="ot">&lt;-</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_question_passed <span class="sc">==</span> <span class="st">"true"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>data_base<span class="sc">$</span>attention_effort_yes <span class="ot">&lt;-</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_effort_passed <span class="sc">==</span> <span class="st">"true"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the rows where the attention checks are true</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>passing_rows <span class="ot">&lt;-</span> data_base [</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_question_yes <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    data_base<span class="sc">$</span>attention_effort_yes <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many rows passed the attention check</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(passing_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 96</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the csv files that passed the attention checks</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(passing_rows[, <span class="fu">c</span>(<span class="st">"source_file"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_question_passed"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_effort_passed"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_question_yes"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_effort_yes"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            source_file attention_question_passed attention_effort_passed
+4   1ac6gmlxb2_SONA.csv                      true                    true
+38  1m3jhrcedv_TEST.csv                      true                    true
+76  30dlr6fb6n_SONA.csv                      true                    true
+114 36gmqf7dhq_SONA.csv                      true                    true
+186 3o0xd7zdr2_TEST.csv                      true                    true
+258 49je1ewy6w_SONA.csv                      true                    true
+    attention_question_yes attention_effort_yes
+4                     TRUE                 TRUE
+38                    TRUE                 TRUE
+76                    TRUE                 TRUE
+114                   TRUE                 TRUE
+186                   TRUE                 TRUE
+258                   TRUE                 TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the source files that participants' passed.</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>passed_ids <span class="ot">&lt;-</span> <span class="fu">unique</span>(passing_rows<span class="sc">$</span>source_file)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>passed_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "1ac6gmlxb2_SONA.csv" "1m3jhrcedv_TEST.csv" "30dlr6fb6n_SONA.csv"
+ [4] "36gmqf7dhq_SONA.csv" "3o0xd7zdr2_TEST.csv" "49je1ewy6w_SONA.csv"
+ [7] "4cr2g21y23_SONA.csv" "4nhx5ujp3g_SONA.csv" "4p9ac6mlok_SONA.csv"
+[10] "55c57ntl12_SONA.csv" "5cz293n9r3_SONA.csv" "5haagdmrqd_TEST.csv"
+[13] "5jwe09o01v_TEST.csv" "5lw367pfyh_SONA.csv" "5mgsb9l969_SONA.csv"
+[16] "74y6wm2box_SONA.csv" "7comq8nn6m_SONA.csv" "7fdy0lkchw_SONA.csv"
+[19] "7tvfdg4yt6_SONA.csv" "7xkp7zhcdo_SONA.csv" "84t78pho49_SONA.csv"
+[22] "9p8nt5u1rz_SONA.csv" "adum4qfh7s_SONA.csv" "afl6mky2ka_SONA.csv"
+[25] "anejhx1wwx_SONA.csv" "aylrwurwco_SONA.csv" "bh7tl79spo_SONA.csv"
+[28] "c1ckpw1vsy_SONA.csv" "dmhguz5xmd_SONA.csv" "f4xyfjhajb_TEST.csv"
+[31] "f6f4ahv77e_SONA.csv" "f76xn6uef1_SONA.csv" "fj6pd3rzgz_SONA.csv"
+[34] "flajp878ab_SONA.csv" "fxd2p81omt_TEST.csv" "g9swzkwkof_SONA.csv"
+[37] "gafuc0b09v_SONA.csv" "ghb474bz57_SONA.csv" "go4ksb9dfa_SONA.csv"
+[40] "gq5418gl20_SONA.csv" "j9wz1c88z2_SONA.csv" "ja88eqs571_SONA.csv"
+[43] "jfwoy0npza_SONA.csv" "jxz8h20u7x_SONA.csv" "l8mc41jxe1_TEST.csv"
+[46] "ldenxyrz0c_SONA.csv" "lx718yk8qm_TEST.csv" "ngm3lmlah1_SONA.csv"
+[49] "nm2xpeu5hj_SONA.csv" "o7o2nv1xk0_TEST.csv" "oaws9ht5gf_SONA.csv"
+[52] "ph266kyf7n_SONA.csv" "pnsz8tsh7h_SONA.csv" "qllowho78v_SONA.csv"
+[55] "qpfg1x32pt_SONA.csv" "qy6wvm9wn5_SONA.csv" "rctfa8nz7n_SONA.csv"
+[58] "rkygpvyrqk_TEST.csv" "ry5kcf4lje_SONA.csv" "skwk9e6zef_SONA.csv"
+[61] "t9x5btafjr_TEST.csv" "tdzdanvc0s_SONA.csv" "tvjemu1rc0_SONA.csv"
+[64] "txhuq57m6o_SONA.csv" "u3v4zc3hd2_SONA.csv" "uk7skqkmks_SONA.csv"
+[67] "v19ftsxx4h_SONA.csv" "w4cpcbzbdy_SONA.csv" "wd4gdquj2e_SONA.csv"
+[70] "xyww1cmexz_SONA.csv" "y76vne8ath_SONA.csv" "yp1cs2f08t_SONA.csv"
+[73] "yyln7blzek_SONA.csv" "zx3n79mm1x_SONA.csv" "27lgpz3tcw_SONA.csv"
+[76] "6xzauz7xqf_SONA.csv" "9n59omqa6y_SONA.csv" "9t24wuz934_SONA.csv"
+[79] "amyf1z6eco_SONA.csv" "f11wx6h3u0_TEST.csv" "fpxujx4vw3_TEST.csv"
+[82] "gh2ll43bwg_SONA.csv" "hb61ncbulz_SONA.csv" "hvrrfwaa6v_SONA.csv"
+[85] "jvq8vd6x97_SONA.csv" "l2lv4x6xky_SONA.csv" "ml8crcj5ge_SONA.csv"
+[88] "nl1hsa775j_SONA.csv" "o440534nn2_SONA.csv" "oby1k3jc4h_SONA.csv"
+[91] "qqawcsravm_SONA.csv" "t73g6fqabf_SONA.csv" "tzf979m8cu_SONA.csv"
+[94] "w0gjnjzkf3_SONA.csv" "xsb0yojkka_SONA.csv" "zn2q78v45z_SONA.csv"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(passed_ids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 96</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, keep all the rows except those who have failed the attention check</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>data_attention <span class="ot">&lt;-</span> data_base [</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>source_file <span class="sc">%in%</span> passed_ids,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="randomization" class="level2">
+<h2 class="anchored" data-anchor-id="randomization">Randomization</h2>
+<p>Before we format the question, we will randomly select 40 participants from each condition (SE vs no SE) to analyze. This will amount to a total of 80 participants.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split between the self-explanation versus no self-explanation participants.</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>data_attention <span class="ot">&lt;-</span> data_attention[</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  data_attention<span class="sc">$</span>condition <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"self_explanation"</span>, <span class="st">"no_self_explanation"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain a row per participant in their respective conditions</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>participants <span class="ot">&lt;-</span> <span class="fu">unique</span>(data_attention[, <span class="fu">c</span>(<span class="st">"source_file"</span>, <span class="st">"condition"</span>)])</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>sampled_participants <span class="ot">&lt;-</span> participants <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span>   <span class="co"># because both groups have at least 40</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sampled_participants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 2
+   source_file         condition          
+   &lt;chr&gt;               &lt;chr&gt;              
+ 1 qllowho78v_SONA.csv no_self_explanation
+ 2 afl6mky2ka_SONA.csv no_self_explanation
+ 3 tzf979m8cu_SONA.csv no_self_explanation
+ 4 9p8nt5u1rz_SONA.csv no_self_explanation
+ 5 3o0xd7zdr2_TEST.csv no_self_explanation
+ 6 9t24wuz934_SONA.csv no_self_explanation
+ 7 fpxujx4vw3_TEST.csv no_self_explanation
+ 8 w4cpcbzbdy_SONA.csv no_self_explanation
+ 9 qqawcsravm_SONA.csv no_self_explanation
+10 jfwoy0npza_SONA.csv no_self_explanation
+# ℹ 70 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take the full data of those participants</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sampled_ids <span class="ot">&lt;-</span> sampled_participants<span class="sc">$</span>source_file</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data_sampled <span class="ot">&lt;-</span> data_attention <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source_file <span class="sc">%in%</span> sampled_ids)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of unique participants = 80</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(<span class="fu">unique</span>(data_sampled<span class="sc">$</span>source_file)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 80</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Should show 40 in each condition</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>participants_sampled <span class="ot">&lt;-</span> <span class="fu">unique</span>(data_sampled[, <span class="fu">c</span>(<span class="st">"source_file"</span>, <span class="st">"condition"</span>)])</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">table</span>(participants_sampled<span class="sc">$</span>condition))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+no_self_explanation    self_explanation 
+                 40                  40 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Peek at full sampled dataset</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_sampled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   task     rt
 1    sona_id_collection  24923
@@ -301,113 +656,40 @@ The following object is masked from 'package:purrr':
 4                    true                                                    
 5                                                                            
 6                            1.pdf    true   false            []           []
-  failed_video item phase         source_file
-1                         1m3jhrcedv_TEST.csv
-2                         1m3jhrcedv_TEST.csv
-3                         1m3jhrcedv_TEST.csv
-4                         1m3jhrcedv_TEST.csv
-5                         1m3jhrcedv_TEST.csv
-6           []            1m3jhrcedv_TEST.csv</code></pre>
+  failed_video item phase         source_file attention_question_yes
+1                         1m3jhrcedv_TEST.csv                  FALSE
+2                         1m3jhrcedv_TEST.csv                  FALSE
+3                         1m3jhrcedv_TEST.csv                  FALSE
+4                         1m3jhrcedv_TEST.csv                   TRUE
+5                         1m3jhrcedv_TEST.csv                  FALSE
+6           []            1m3jhrcedv_TEST.csv                  FALSE
+  attention_effort_yes
+1                FALSE
+2                FALSE
+3                FALSE
+4                 TRUE
+5                FALSE
+6                FALSE</code></pre>
 </div>
 </div>
 </section>
-<section id="pre-processing-data" class="level1">
-<h1>Pre-processing Data</h1>
-<p>Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload merged data</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_base <span class="ot">&lt;-</span> all_data</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Score attention checks as true/false</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>data_base<span class="sc">$</span>attention_question_yes <span class="ot">&lt;-</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_question_passed <span class="sc">==</span> <span class="st">"true"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>data_base<span class="sc">$</span>attention_effort_yes <span class="ot">&lt;-</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_effort_passed <span class="sc">==</span> <span class="st">"true"</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the rows where the attention checks are true</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>passing_rows <span class="ot">&lt;-</span> data_base [</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>attention_question_yes <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    data_base<span class="sc">$</span>attention_effort_yes <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many rows passed the attention check</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(passing_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 69</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the csv files that passed the attention checks</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(passing_rows[, <span class="fu">c</span>(<span class="st">"source_file"</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_question_passed"</span>,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_effort_passed"</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_question_yes"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"attention_effort_yes"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            source_file attention_question_passed attention_effort_passed
-4   1m3jhrcedv_TEST.csv                      true                    true
-42  30dlr6fb6n_SONA.csv                      true                    true
-80  36gmqf7dhq_SONA.csv                      true                    true
-152 3o0xd7zdr2_TEST.csv                      true                    true
-224 49je1ewy6w_SONA.csv                      true                    true
-258 4nhx5ujp3g_SONA.csv                      true                    true
-    attention_question_yes attention_effort_yes
-4                     TRUE                 TRUE
-42                    TRUE                 TRUE
-80                    TRUE                 TRUE
-152                   TRUE                 TRUE
-224                   TRUE                 TRUE
-258                   TRUE                 TRUE</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the source files that participants' passed.</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>passed_ids <span class="ot">&lt;-</span> <span class="fu">unique</span>(passing_rows<span class="sc">$</span>source_file)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>passed_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "1m3jhrcedv_TEST.csv" "30dlr6fb6n_SONA.csv" "36gmqf7dhq_SONA.csv"
- [4] "3o0xd7zdr2_TEST.csv" "49je1ewy6w_SONA.csv" "4nhx5ujp3g_SONA.csv"
- [7] "4p9ac6mlok_SONA.csv" "55c57ntl12_SONA.csv" "5cz293n9r3_SONA.csv"
-[10] "5haagdmrqd_TEST.csv" "5jwe09o01v_TEST.csv" "5lw367pfyh_SONA.csv"
-[13] "5mgsb9l969_SONA.csv" "74y6wm2box_SONA.csv" "7comq8nn6m_SONA.csv"
-[16] "7fdy0lkchw_SONA.csv" "7tvfdg4yt6_SONA.csv" "7xkp7zhcdo_SONA.csv"
-[19] "84t78pho49_SONA.csv" "9p8nt5u1rz_SONA.csv" "adum4qfh7s_SONA.csv"
-[22] "afl6mky2ka_SONA.csv" "anejhx1wwx_SONA.csv" "aylrwurwco_SONA.csv"
-[25] "bh7tl79spo_SONA.csv" "c1ckpw1vsy_SONA.csv" "dmhguz5xmd_SONA.csv"
-[28] "f4xyfjhajb_TEST.csv" "f6f4ahv77e_SONA.csv" "f76xn6uef1_SONA.csv"
-[31] "fj6pd3rzgz_SONA.csv" "flajp878ab_SONA.csv" "fxd2p81omt_TEST.csv"
-[34] "g9swzkwkof_SONA.csv" "gafuc0b09v_SONA.csv" "ghb474bz57_SONA.csv"
-[37] "gq5418gl20_SONA.csv" "j9wz1c88z2_SONA.csv" "ja88eqs571_SONA.csv"
-[40] "jfwoy0npza_SONA.csv" "jxz8h20u7x_SONA.csv" "l8mc41jxe1_TEST.csv"
-[43] "ldenxyrz0c_SONA.csv" "lx718yk8qm_TEST.csv" "ngm3lmlah1_SONA.csv"
-[46] "nm2xpeu5hj_SONA.csv" "o7o2nv1xk0_TEST.csv" "oaws9ht5gf_SONA.csv"
-[49] "pnsz8tsh7h_SONA.csv" "qllowho78v_SONA.csv" "qpfg1x32pt_SONA.csv"
-[52] "qy6wvm9wn5_SONA.csv" "rctfa8nz7n_SONA.csv" "rkygpvyrqk_TEST.csv"
-[55] "ry5kcf4lje_SONA.csv" "skwk9e6zef_SONA.csv" "t9x5btafjr_TEST.csv"
-[58] "tdzdanvc0s_SONA.csv" "tvjemu1rc0_SONA.csv" "txhuq57m6o_SONA.csv"
-[61] "u3v4zc3hd2_SONA.csv" "uk7skqkmks_SONA.csv" "w4cpcbzbdy_SONA.csv"
-[64] "wd4gdquj2e_SONA.csv" "xyww1cmexz_SONA.csv" "y76vne8ath_SONA.csv"
-[67] "yp1cs2f08t_SONA.csv" "yyln7blzek_SONA.csv" "zx3n79mm1x_SONA.csv"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(passed_ids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 69</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, keep all the rows except those who have failed the attention check</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data_attention <span class="ot">&lt;-</span> data_base [</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  data_base<span class="sc">$</span>source_file <span class="sc">%in%</span> passed_ids,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="format-questions" class="level1">
 <h1>Format Questions</h1>
-<p>In this section, I am going to score the pretest &amp; post-test for accuracy. I am working on conceptually understanding this section.</p>
+<p>In this section, I will format the csv files so that they can be easily analyzed and scored. Each section will isolate the desired timing condition and organized to accurately show all the questions in one data set.</p>
+<section id="pretest" class="level2">
+<h2 class="anchored" data-anchor-id="pretest">Pretest</h2>
+<p>In this section, we will organize the combined, csv files to show all of the participants’ pretest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#----------------------</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pretest</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#----------------------</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data to only focus on the pretest answers for each participant</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>pretest_data <span class="ot">&lt;-</span> data_attention[</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  data_attention<span class="sc">$</span>task <span class="sc">==</span> <span class="st">"pretest"</span> <span class="sc">&amp;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    data_attention<span class="sc">$</span>trial_type <span class="sc">==</span> <span class="st">"survey-multi-choice"</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the questions into each individual column so that we can score them</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>one_json <span class="ot">&lt;-</span> pretest_data<span class="sc">$</span>response[<span class="dv">1</span>]</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>one_parsed <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(one_json)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>one_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data to only focus on the pretest answers for each participant</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pretest_data <span class="ot">&lt;-</span> data_sampled[</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  data_sampled<span class="sc">$</span>task <span class="sc">==</span> <span class="st">"pretest"</span> <span class="sc">&amp;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    data_sampled<span class="sc">$</span>trial_type <span class="sc">==</span> <span class="st">"survey-multi-choice"</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the questions into each individual column so that we can score them</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>one_json <span class="ot">&lt;-</span> pretest_data<span class="sc">$</span>response[<span class="dv">1</span>]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>one_parsed <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(one_json)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>one_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Q0
 [1] "Some rocks can be eaten"
@@ -463,7 +745,7 @@ $attention_check_pretest_question
 $attention_check_pretest_effort
 [1] "Quite a lot of effort"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(one_parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(one_parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 18
  $ Q0                              : chr "Some rocks can be eaten"
@@ -485,81 +767,87 @@ $attention_check_pretest_effort
  $ attention_check_pretest_question: chr "X and 2"
  $ attention_check_pretest_effort  : chr "Quite a lot of effort"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now make sure all participants are put in the question columns to score</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a list of all the JSON responses from the pretest section</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pretest_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(pretest_data<span class="sc">$</span>response, fromJSON)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Combine the list of each individual participant into one data frame</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>pretest_answers <span class="ot">&lt;-</span> <span class="fu">do.call</span>(</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  rbind,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(pretest_list, as.data.frame)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_answers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a list of all the JSON responses from the pretest section</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>pretest_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(pretest_data<span class="sc">$</span>response, fromJSON)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Combine the list of each individual participant into one data frame</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>pretest_answers <span class="ot">&lt;-</span> <span class="fu">do.call</span>(</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  rbind,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(pretest_list, as.data.frame)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_answers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                              Q0                               Q1      Q2
 1        Some rocks can be eaten               Very little effort Y and 2
 2        Some rocks are not nuts                    Little effort X and 2
-3        Some rocks can be eaten               Very little effort X and 7
-4        Some rocks can be eaten Not a little nor a lot of effort Y and 2
-5 No correct conclusion possible               Very little effort X and 7
-6        Some rocks can be eaten Not a little nor a lot of effort Y and 7
-                     Q3                                                 Q4
-1         Little effort     Maybe they would be better off buying the Audi
-2         Little effort They would definitely be better off buying the BMW
-3         Little effort They would definitely be better off buying the BMW
-4         Little effort      Maybe they would be better off buying the BMW
-5         Little effort They would definitely be better off buying the BMW
-6 Quite a lot of effort      Maybe they would be better off buying the BMW
-                                Q5                          Q6
-1                    Little effort All roses are living things
-2 Not a little nor a lot of effort All roses are living things
-3               Very little effort All roses are living things
-4 Not a little nor a lot of effort All roses are living things
-5                    Little effort All roses are living things
-6                    Little effort All roses are living things
+3        Some rocks can be eaten Not a little nor a lot of effort Y and 2
+4 No correct conclusion possible               Very little effort X and 7
+5        Some rocks can be eaten               Very little effort Y and 2
+6        Some rocks can be eaten                    Little effort Y and 2
+                                Q3
+1                    Little effort
+2                    Little effort
+3                    Little effort
+4                    Little effort
+5               Very little effort
+6 Not a little nor a lot of effort
+                                                  Q4
+1     Maybe they would be better off buying the Audi
+2 They would definitely be better off buying the BMW
+3      Maybe they would be better off buying the BMW
+4 They would definitely be better off buying the BMW
+5     Maybe they would be better off buying the Audi
+6     Maybe they would be better off buying the Audi
+                                Q5                             Q6
+1                    Little effort    All roses are living things
+2 Not a little nor a lot of effort    All roses are living things
+3 Not a little nor a lot of effort    All roses are living things
+4                    Little effort    All roses are living things
+5                    Little effort No correct conclusion possible
+6                    Little effort    All roses are living things
                   Q7
 1 Very little effort
 2      Little effort
-3 Very little effort
-4      Little effort
+3      Little effort
+4 Very little effort
 5 Very little effort
-6 Very little effort
-                                                                                                 Q8
-1                                Karin works at a bank and is active in the environmental movement.
-2                                Karin works at a bank and is active in the environmental movement.
-3 Karin works at a bank and is active in the environmental movement and for a local political party
-4                                Karin works at a bank and is active in the environmental movement.
-5                                Karin works at a bank and is active in the environmental movement.
-6                                Karin works at a bank and is active in the environmental movement.
-                                Q9          Q10                   Q11
-1                    Little effort Less than 3%    Very little effort
-2 Not a little nor a lot of effort          30%         Little effort
-3 Not a little nor a lot of effort Less than 3%    Very little effort
-4                    Little effort Less than 3%         Little effort
-5 Not a little nor a lot of effort Less than 3%    Very little effort
-6            Quite a lot of effort          30% Quite a lot of effort
-          Q12                   Q13
-1 18 and beer         Little effort
-2 15 and beer         Little effort
-3 18 and beer Quite a lot of effort
-4 18 and beer         Little effort
-5 15 and cola         Little effort
-6 15 and beer    Very little effort
-                                                        Q14                Q15
-1 The students score at least 1.0 points higher on the exam Very little effort
-2 The students score at least 1.0 points higher on the exam      Little effort
-3 The students score at least 1.0 points higher on the exam      Little effort
-4  The students score at least 0.1 point higher on the exam      Little effort
-5  The students score at least 0.1 point higher on the exam      Little effort
-6  The students score at least 0.1 point higher on the exam      Little effort
-  attention_check_pretest_question attention_check_pretest_effort
-1                          X and 2          Quite a lot of effort
-2                          X and 2          Quite a lot of effort
-3                          X and 2          Quite a lot of effort
-4                          X and 2          Quite a lot of effort
-5                          X and 2          Quite a lot of effort
-6                          X and 2          Quite a lot of effort</code></pre>
+6      Little effort
+                                                                  Q8
+1 Karin works at a bank and is active in the environmental movement.
+2 Karin works at a bank and is active in the environmental movement.
+3 Karin works at a bank and is active in the environmental movement.
+4 Karin works at a bank and is active in the environmental movement.
+5                                              Karin works at a bank
+6                                              Karin works at a bank
+                                Q9          Q10                Q11         Q12
+1                    Little effort Less than 3% Very little effort 18 and beer
+2 Not a little nor a lot of effort          30%      Little effort 15 and beer
+3                    Little effort Less than 3%      Little effort 18 and beer
+4 Not a little nor a lot of effort Less than 3% Very little effort 15 and cola
+5 Not a little nor a lot of effort Less than 3% Very little effort 15 and beer
+6                    Little effort Less than 3%      Little effort 18 and beer
+            Q13                                                       Q14
+1 Little effort The students score at least 1.0 points higher on the exam
+2 Little effort The students score at least 1.0 points higher on the exam
+3 Little effort  The students score at least 0.1 point higher on the exam
+4 Little effort  The students score at least 0.1 point higher on the exam
+5 Little effort  The students score at least 0.1 point higher on the exam
+6 Little effort  The students score at least 0.1 point higher on the exam
+                 Q15 attention_check_pretest_question
+1 Very little effort                          X and 2
+2      Little effort                          X and 2
+3      Little effort                          X and 2
+4      Little effort                          X and 2
+5 Very little effort                          X and 2
+6 Very little effort                          X and 2
+  attention_check_pretest_effort
+1          Quite a lot of effort
+2          Quite a lot of effort
+3          Quite a lot of effort
+4          Quite a lot of effort
+5          Quite a lot of effort
+6          Quite a lot of effort</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pretest_answers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pretest_answers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Q0"                               "Q1"                              
  [3] "Q2"                               "Q3"                              
@@ -571,107 +859,575 @@ $attention_check_pretest_effort
 [15] "Q14"                              "Q15"                             
 [17] "attention_check_pretest_question" "attention_check_pretest_effort"  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#----------------------</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Posttest</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#----------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure that all 80 participants are formatted into the answers</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>pretest_all_data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  pretest_data <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, source_file, condition),</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  pretest_answers</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pretest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 80</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id         source_file           condition
+1         223300 1m3jhrcedv_TEST.csv    self_explanation
+2          45050 30dlr6fb6n_SONA.csv    self_explanation
+3          44124 3o0xd7zdr2_TEST.csv no_self_explanation
+4         339773 49je1ewy6w_SONA.csv no_self_explanation
+5         932281 4cr2g21y23_SONA.csv no_self_explanation
+6            284 4p9ac6mlok_SONA.csv no_self_explanation
+                              Q0                               Q1      Q2
+1        Some rocks can be eaten               Very little effort Y and 2
+2        Some rocks are not nuts                    Little effort X and 2
+3        Some rocks can be eaten Not a little nor a lot of effort Y and 2
+4 No correct conclusion possible               Very little effort X and 7
+5        Some rocks can be eaten               Very little effort Y and 2
+6        Some rocks can be eaten                    Little effort Y and 2
+                                Q3
+1                    Little effort
+2                    Little effort
+3                    Little effort
+4                    Little effort
+5               Very little effort
+6 Not a little nor a lot of effort
+                                                  Q4
+1     Maybe they would be better off buying the Audi
+2 They would definitely be better off buying the BMW
+3      Maybe they would be better off buying the BMW
+4 They would definitely be better off buying the BMW
+5     Maybe they would be better off buying the Audi
+6     Maybe they would be better off buying the Audi
+                                Q5                             Q6
+1                    Little effort    All roses are living things
+2 Not a little nor a lot of effort    All roses are living things
+3 Not a little nor a lot of effort    All roses are living things
+4                    Little effort    All roses are living things
+5                    Little effort No correct conclusion possible
+6                    Little effort    All roses are living things
+                  Q7
+1 Very little effort
+2      Little effort
+3      Little effort
+4 Very little effort
+5 Very little effort
+6      Little effort
+                                                                  Q8
+1 Karin works at a bank and is active in the environmental movement.
+2 Karin works at a bank and is active in the environmental movement.
+3 Karin works at a bank and is active in the environmental movement.
+4 Karin works at a bank and is active in the environmental movement.
+5                                              Karin works at a bank
+6                                              Karin works at a bank
+                                Q9          Q10                Q11         Q12
+1                    Little effort Less than 3% Very little effort 18 and beer
+2 Not a little nor a lot of effort          30%      Little effort 15 and beer
+3                    Little effort Less than 3%      Little effort 18 and beer
+4 Not a little nor a lot of effort Less than 3% Very little effort 15 and cola
+5 Not a little nor a lot of effort Less than 3% Very little effort 15 and beer
+6                    Little effort Less than 3%      Little effort 18 and beer
+            Q13                                                       Q14
+1 Little effort The students score at least 1.0 points higher on the exam
+2 Little effort The students score at least 1.0 points higher on the exam
+3 Little effort  The students score at least 0.1 point higher on the exam
+4 Little effort  The students score at least 0.1 point higher on the exam
+5 Little effort  The students score at least 0.1 point higher on the exam
+6 Little effort  The students score at least 0.1 point higher on the exam
+                 Q15 attention_check_pretest_question
+1 Very little effort                          X and 2
+2      Little effort                          X and 2
+3      Little effort                          X and 2
+4      Little effort                          X and 2
+5 Very little effort                          X and 2
+6 Very little effort                          X and 2
+  attention_check_pretest_effort
+1          Quite a lot of effort
+2          Quite a lot of effort
+3          Quite a lot of effort
+4          Quite a lot of effort
+5          Quite a lot of effort
+6          Quite a lot of effort</code></pre>
+</div>
+</div>
+</section>
+<section id="posttest" class="level2">
+<h2 class="anchored" data-anchor-id="posttest">Posttest</h2>
+<p>In this section, we will organize the combined, csv files to show all of the participants’ posttest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only posttest MC rows for the 80 sampled participants</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>posttest_mc <span class="ot">&lt;-</span> data_sampled <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(phase <span class="sc">==</span> <span class="st">"mc"</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Filter the columns to include the source file, item, condition, and response</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>posttest_long <span class="ot">&lt;-</span> posttest_mc <span class="sc">%&gt;%</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant_id, source_file, condition, item, response)</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Rearrange the format of the data set to cleanly show the answers for all 80 participants</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>posttest_all_data <span class="ot">&lt;-</span> posttest_long <span class="sc">%&gt;%</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> item,        </span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> response,   </span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"mc_"</span>     </span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(posttest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 80</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 11
+  participant_id source_file condition mc_q5 mc_q6 mc_q3 mc_q1 mc_q8 mc_q2 mc_q7
+           &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1         223300 1m3jhrcedv… self_exp… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+2          45050 30dlr6fb6n… self_exp… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+3          44124 3o0xd7zdr2… no_self_… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+4         339773 49je1ewy6w… no_self_… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+5         932281 4cr2g21y23… no_self_… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+6            284 4p9ac6mlok… no_self_… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"… "{\"…
+# ℹ 1 more variable: mc_q4 &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="scoring-study" class="level1">
 <h1>Scoring Study</h1>
-<p>In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Main areas of scoring will be in the pretest</p>
+<p>In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Specifically, we will analyze both the pretest and posttest multi-choice answers.</p>
 <section id="pretest-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="pretest-accuracy">Pretest Accuracy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define pretest CT skill questions</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>accuracy_questions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Q0"</span>, <span class="st">"Q2"</span>, <span class="st">"Q4"</span>, <span class="st">"Q6"</span>, <span class="st">"Q8"</span>, <span class="st">"Q10"</span>, <span class="st">"Q12"</span>, <span class="st">"Q14"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pretest answer key</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>accuracy_key <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q0 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q2 =</span> <span class="st">"X and 7"</span>,</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q4 =</span> <span class="st">"Maybe they would be better off buying the Audi"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q6 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q8 =</span> <span class="st">"Karin works at a bank"</span>,</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q10 =</span> <span class="st">"Less than 3%"</span>,</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q12 =</span> <span class="st">"15 and cola"</span>,</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q14 =</span> <span class="st">"The students score at least 0.1 point higher on the exam"</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, select the questions that are only accuracy_questions</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>accuracy_questions <span class="ot">&lt;-</span> <span class="fu">names</span>(accuracy_key)</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the answers to the key. Correct is true, incorrect is false!</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>correct_matrix <span class="ot">&lt;-</span> pretest_answers[accuracy_questions] <span class="sc">==</span> accuracy_key</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the true/false into binary numbers (1 and 0)</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>correct_matrix <span class="ot">&lt;-</span> correct_matrix <span class="sc">*</span> <span class="dv">1</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>pretest_answers<span class="sc">$</span>pretest_accuracy <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(correct_matrix)</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum across all questions and get total pretest accuracy</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>pretest_answers<span class="sc">$</span>pretest_score <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(correct_matrix)</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data!!</span></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pretest_answers<span class="sc">$</span>pretest_accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define pretest CT skill questions</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>pretest_accuracy_questions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Q0"</span>, <span class="st">"Q2"</span>, <span class="st">"Q4"</span>, <span class="st">"Q6"</span>, <span class="st">"Q8"</span>, <span class="st">"Q10"</span>, <span class="st">"Q12"</span>, <span class="st">"Q14"</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pretest answer key</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>pretest_accuracy_key <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q0 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q2 =</span> <span class="st">"X and 7"</span>,</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q4 =</span> <span class="st">"Maybe they would be better off buying the Audi"</span>,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q6 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q8 =</span> <span class="st">"Karin works at a bank"</span>,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q10 =</span> <span class="st">"Less than 3%"</span>,</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q12 =</span> <span class="st">"15 and cola"</span>,</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q14 =</span> <span class="st">"The students score at least 0.1 point higher on the exam"</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, select the questions that are only accuracy_questions</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>pretest_accuracy_questions <span class="ot">&lt;-</span> <span class="fu">names</span>(pretest_accuracy_key)</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the answers to the key. Correct is true, incorrect is false!</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>correct_matrix <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(pretest_accuracy_questions, <span class="cf">function</span>(q) {</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    pretest_all_data[[q]] <span class="sc">==</span> pretest_accuracy_key[[q]]</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the true/false into binary numbers (1 and 0)</span></span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>correct_matrix <span class="ot">&lt;-</span> correct_matrix <span class="sc">*</span> <span class="dv">1</span>L</span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(correct_matrix) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(pretest_accuracy_questions, <span class="st">"_score"</span>)</span>
+<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain both the total number correct per participant and the proportion correct</span></span>
+<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>pretest_total_accuracy <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(correct_matrix, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a>pretest_total_prop    <span class="ot">&lt;-</span> pretest_total_accuracy <span class="sc">/</span> <span class="fu">length</span>(pretest_accuracy_questions)</span>
+<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the total scores for all participants</span></span>
+<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>pretest_scored <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>  pretest_all_data,</span>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>  correct_matrix,</span>
+<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">pretest_total_accuracy =</span> pretest_total_accuracy,</span>
+<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">pretest_total_prop     =</span> pretest_total_prop</span>
+<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the pretest scored data set</span></span>
+<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_scored[</span>
+<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a>  , <span class="fu">c</span>(<span class="st">"pretest_total_accuracy"</span>,</span>
+<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a>      <span class="st">"pretest_total_prop"</span>,</span>
+<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Q0_score"</span>, <span class="st">"Q2_score"</span>, <span class="st">"Q4_score"</span>)</span>
+<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
- 0  1  2  3  4  5  6 
- 4 24 21  5  8  6  1 </code></pre>
+<pre><code>  pretest_total_accuracy pretest_total_prop Q0_score Q2_score Q4_score
+1                      2              0.250        0        0        1
+2                      0              0.000        0        0        0
+3                      2              0.250        0        0        0
+4                      5              0.625        1        1        0
+5                      5              0.625        0        0        1
+6                      4              0.500        0        0        1</code></pre>
 </div>
 </div>
 </section>
 <section id="pretest-mental-effort" class="level2">
 <h2 class="anchored" data-anchor-id="pretest-mental-effort">Pretest Mental Effort</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define pretest mental effort questions</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>effort_questions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Q1"</span>, <span class="st">"Q3"</span>, <span class="st">"Q5"</span>, <span class="st">"Q7"</span>, <span class="st">"Q9"</span>, <span class="st">"Q11"</span>, <span class="st">"Q13"</span>, <span class="st">"Q15"</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Mental effort key. </span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>effort_key <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Very little effort"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Little effort"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Not a little nor a lot of effort"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Quite a lot of effort"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A lot of effort"</span> <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, select the questions that are only effort_questions</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>effort_data <span class="ot">&lt;-</span> pretest_answers[effort_questions]</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the answers selected into the numbers in the effort_key</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>effort_key_number <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(effort_data, <span class="cf">function</span>(x) effort_key[x])</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Average the effort scores</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>pretest_answers<span class="sc">$</span>pretest_effort <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(effort_key_number)</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data!!</span></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(effort_key_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define pretest mental effort questions</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>effort_questions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Q1"</span>, <span class="st">"Q3"</span>, <span class="st">"Q5"</span>, <span class="st">"Q7"</span>, <span class="st">"Q9"</span>, <span class="st">"Q11"</span>, <span class="st">"Q13"</span>, <span class="st">"Q15"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Mental effort key. </span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>effort_key <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Very little effort"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Little effort"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Not a little nor a lot of effort"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Quite a lot of effort"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A lot of effort"</span> <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, select the questions that are only effort_questions</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>effort_data <span class="ot">&lt;-</span> pretest_answers[effort_questions]</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the answers selected into the numbers in the effort_key</span></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>effort_key_number <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(effort_data, <span class="cf">function</span>(x) effort_key[x])</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data!!</span></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(effort_key_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Q1 Q3 Q5 Q7 Q9 Q11 Q13 Q15
 1  1  2  2  1  2   1   2   1
 2  2  2  3  2  3   2   2   2
-3  1  2  1  1  3   1   4   2
-4  3  2  3  2  2   2   2   2
-5  1  2  2  1  3   1   2   2
-6  3  4  2  1  4   4   1   2</code></pre>
+3  3  2  3  2  2   2   2   2
+4  1  2  2  1  3   1   2   2
+5  1  1  2  1  3   1   2   1
+6  2  3  2  2  2   2   2   1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pretest_answers<span class="sc">$</span>pretest_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pretest_answers<span class="sc">$</span>pretest_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  1.375   2.000   2.375   2.380   2.625   3.625 </code></pre>
+<pre><code>Length  Class   Mode 
+     0   NULL   NULL </code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="descriptive-stats" class="level1">
-<h1>Descriptive Stats</h1>
-<p>Running a data analysis to understand whether this study replicated properly.</p>
-<section id="pretest-versus-posttest-accuracy" class="level2">
-<h2 class="anchored" data-anchor-id="pretest-versus-posttest-accuracy">Pretest versus Posttest Accuracy</h2>
+<section id="posttest-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="posttest-accuracy">Posttest Accuracy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posttest answer key</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>posttest_accuracy_key <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q1 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q2 =</span> <span class="st">"Perhaps give preference to graduates of Tilburg University."</span>,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q3 =</span> <span class="st">"No correct conclusion possible"</span>,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q4 =</span> <span class="st">"Hearts and 2"</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q5 =</span> <span class="st">"Jacques is a janitor"</span>,</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q6 =</span> <span class="st">"Less than 10%"</span>,</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q7 =</span> <span class="st">"Madrid and Transavia"</span>,</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">mc_q8 =</span> <span class="st">"Within 5 years, the number of visitors will increase by 2%"</span></span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>posttest_accuracy_questions <span class="ot">&lt;-</span> <span class="fu">names</span>(posttest_accuracy_key)</span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare answers to key → TRUE/FALSE</span></span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>correct_matrix_post <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(posttest_accuracy_questions, <span class="cf">function</span>(q) {</span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">grepl</span>(posttest_accuracy_key[[q]],</span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>          posttest_all_data[[q]],</span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">fixed =</span> <span class="cn">TRUE</span>)      <span class="co"># literal match, no regex weirdness</span></span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the TRUE/FALSE answers </span></span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>correct_matrix_post <span class="ot">&lt;-</span> correct_matrix_post <span class="sc">*</span> <span class="dv">1</span>L</span>
+<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(correct_matrix_post) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(posttest_accuracy_questions, <span class="st">"_score"</span>)</span>
+<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Commpute total scores correct</span></span>
+<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>posttest_total_accuracy <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(correct_matrix_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>posttest_total_prop    <span class="ot">&lt;-</span> posttest_total_accuracy <span class="sc">/</span> <span class="fu">length</span>(posttest_accuracy_questions)</span>
+<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the scoring all together with the data set</span></span>
+<span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a>posttest_scored <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a>  posttest_all_data[, <span class="fu">c</span>(<span class="st">"participant_id"</span>, <span class="st">"source_file"</span>, <span class="st">"condition"</span>)],</span>
+<span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a>  correct_matrix_post,</span>
+<span id="cb61-31"><a href="#cb61-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">posttest_total_accuracy =</span> posttest_total_accuracy,</span>
+<span id="cb61-32"><a href="#cb61-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">posttest_total_prop     =</span> posttest_total_prop</span>
+<span id="cb61-33"><a href="#cb61-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb61-34"><a href="#cb61-34" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_scored)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id         source_file           condition mc_q1_score
+1         223300 1m3jhrcedv_TEST.csv    self_explanation           1
+2          45050 30dlr6fb6n_SONA.csv    self_explanation           0
+3          44124 3o0xd7zdr2_TEST.csv no_self_explanation           0
+4         339773 49je1ewy6w_SONA.csv no_self_explanation           0
+5         932281 4cr2g21y23_SONA.csv no_self_explanation           1
+6            284 4p9ac6mlok_SONA.csv no_self_explanation           0
+  mc_q2_score mc_q3_score mc_q4_score mc_q5_score mc_q6_score mc_q7_score
+1           1           0           1           0           1           0
+2           1           0           0           0           0           1
+3           1           0           1           0           1           0
+4           1           0           0           0           1           0
+5           1           1           1           0           1           0
+6           1           1           1           1           1           0
+  mc_q8_score posttest_total_accuracy posttest_total_prop
+1           0                       4               0.500
+2           0                       2               0.250
+3           0                       3               0.375
+4           0                       2               0.250
+5           1                       6               0.750
+6           1                       6               0.750</code></pre>
+</div>
 </div>
 </section>
-<section id="pretest-mental-ratings-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="pretest-mental-ratings-comparison">Pretest &amp; Mental Ratings Comparison</h2>
+</section>
+<section id="descriptive-statistics" class="level1">
+<h1>Descriptive Statistics</h1>
+<p>[WRITE INTRODUCTION]</p>
+<section id="before-analysis-formatting" class="level2">
+<h2 class="anchored" data-anchor-id="before-analysis-formatting">Before Analysis – Formatting</h2>
+<p>Before running the descriptive statistics, confirmatory, and exploratory analyses, we will first combine the accuracy data set and format it for the different statistical studies to be ran smoothly.</p>
+<section id="combined-scored-data-set" class="level3">
+<h3 class="anchored" data-anchor-id="combined-scored-data-set">Combined Scored Data Set</h3>
+<p>Before we analyze the data, we will combine the pretest and posttest scored data. The logic of this section is combining the pretest and posttest scores in one data set. The scores will use the total accuracy score, as everyone completed 8 questions which we hope to identify how much they improved.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure to link the</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>analysis_dr <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  correct_matrix,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  effort_key_number</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the pretest and posttest scorred data into one data set</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>analysis_df <span class="ot">&lt;-</span> pretest_scored <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    participant_id,</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>    condition,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pretest =</span> pretest_total_accuracy</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>    posttest_scored <span class="sc">%&gt;%</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>        participant_id,</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">posttest =</span> posttest_total_accuracy</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"participant_id"</span></span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the combined, scored data of the pretest and posttest</span></span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(analysis_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id           condition pretest posttest
+1         223300    self_explanation       2        4
+2          45050    self_explanation       0        2
+3          44124 no_self_explanation       2        3
+4         339773 no_self_explanation       5        2
+5         932281 no_self_explanation       5        6
+6            284 no_self_explanation       4        6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(analysis_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> participant_id    condition            pretest         posttest    
+ Min.   :   284   Length:80          Min.   :0.000   Min.   :0.000  
+ 1st Qu.:174736   Class :character   1st Qu.:1.000   1st Qu.:2.000  
+ Median :500646   Mode  :character   Median :2.000   Median :3.000  
+ Mean   :506545                      Mean   :2.062   Mean   :3.237  
+ 3rd Qu.:814405                      3rd Qu.:3.000   3rd Qu.:4.000  
+ Max.   :996685                      Max.   :5.000   Max.   :7.000  </code></pre>
+</div>
 </div>
 </section>
+<section id="data-preparation-for-anova" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation-for-anova">Data Preparation for ANOVA</h3>
+<p>Next, we are going to create a data-set interpretable for ANOVA analyses. In this section, we will have the participant pretest and posttest paired with each other and accuracy shown side by side. Structuring the data in this fashion will be interpretable for both ggplots and ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the columns that we want to add for the new data set used for the ANOVA analyses</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>analysis_long <span class="ot">&lt;-</span> analysis_df <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(pretest, posttest),</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"accuracy"</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">factor</span>(time, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"pretest"</span>, <span class="st">"posttest"</span>)),</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">condition =</span> <span class="fu">factor</span>(condition)</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data set</span></span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(analysis_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  participant_id condition           time     accuracy
+           &lt;int&gt; &lt;fct&gt;               &lt;fct&gt;       &lt;dbl&gt;
+1         223300 self_explanation    pretest         2
+2         223300 self_explanation    posttest        4
+3          45050 self_explanation    pretest         0
+4          45050 self_explanation    posttest        2
+5          44124 no_self_explanation pretest         2
+6          44124 no_self_explanation posttest        3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(analysis_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "participant_id" "condition"      "time"           "accuracy"      </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="overview-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="overview-statistics">Overview Statistics</h2>
+<p>In the overview, we will try to analyze the overall descriptive statistics of posttest and pretest total accuracy means and standard deviations. First, we are going to look at the total sample size we collected as well as per condition.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Report the total number of N </span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>overall_n <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> <span class="st">"Overall"</span>,</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(analysis_df)</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Report the total number of N per condition</span></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>by_condition_n <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(analysis_df<span class="sc">$</span>condition))</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(by_condition_n) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"condition"</span>, <span class="st">"n"</span>)</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>by_condition_n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            condition  n
+1 no_self_explanation 40
+2    self_explanation 40</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>n_table <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(overall_n, by_condition_n)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>n_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            condition  n
+1             Overall 80
+2 no_self_explanation 40
+3    self_explanation 40</code></pre>
+</div>
+</div>
+<p>Afterwards, we are going to run the full descriptive statistics that will report the mean &amp; sd overall as well as per condition.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall descriptive statistics</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>overall_desc <span class="ot">&lt;-</span> analysis_df <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">pretest_mean  =</span> <span class="fu">mean</span>(pretest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pretest_sd    =</span> <span class="fu">sd</span>(pretest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">posttest_mean =</span> <span class="fu">mean</span>(posttest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">posttest_sd   =</span> <span class="fu">sd</span>(posttest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>overall_desc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n pretest_mean pretest_sd posttest_mean posttest_sd
+1 80       2.0625   1.362646        3.2375    1.494664</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descripitive statistics per condition</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>condition_desc <span class="ot">&lt;-</span> analysis_df <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pretest_mean  =</span> <span class="fu">mean</span>(pretest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pretest_sd    =</span> <span class="fu">sd</span>(pretest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">posttest_mean =</span> <span class="fu">mean</span>(posttest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">posttest_sd   =</span> <span class="fu">sd</span>(posttest_total_accuracy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a>condition_desc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  condition               n pretest_mean pretest_sd posttest_mean posttest_sd
+  &lt;chr&gt;               &lt;int&gt;        &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;
+1 no_self_explanation    40         2.06       1.36          3.24        1.49
+2 self_explanation       40         2.06       1.36          3.24        1.49</code></pre>
+</div>
+</div>
+</section>
+<section id="visualization-of-overview-stats" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-of-overview-stats">Visualization of Overview Stats</h2>
+<p>In this section, we will be looking at a visualization of the mean pretest versus posttest accuracy by condition. Want to analyze which one improved more visually and look through the patterns before completing the confirmatory analysis to understand the main effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a ggplot to see the mean pretest versus posttest accuracy by condition (SE vs no SE)</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(analysis_long, <span class="fu">aes</span>(</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> time,</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> accuracy,</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> condition,</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> condition</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time"</span>,</span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Accuracy"</span>,</span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Condition"</span>,</span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mean Pretest vs Posttest Accuracy by Condition"</span></span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pilot-data-analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="confirmatory-analyses" class="level1">
+<h1>Confirmatory Analyses</h1>
+<p>For the confirmatory analyses, we will use a 2 X 2 mixed ANOVA to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not.</p>
+<section id="mixed-anova-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="mixed-anova-analysis">Mixed ANOVA Analysis</h2>
+<p>In this section, we will run the main effect we want to see which is the interaction between condition (no SE versus SE) and timing (pretest versus posttest).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>anova_afex <span class="ot">&lt;-</span> <span class="fu">aov_ez</span>(</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"participant_id"</span>,</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> <span class="st">"accuracy"</span>,</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> analysis_long,</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">within =</span> <span class="st">"time"</span>,</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">between =</span> <span class="st">"condition"</span>,</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="dv">3</span></span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Contrasts set to contr.sum for the following variables: condition</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the ANOVA analysis!</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>anova_afex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type 3 tests)
+
+Response: accuracy
+          Effect    df  MSE         F   ges p.value
+1      condition 1, 78 2.97      0.01 &lt;.001    .927
+2           time 1, 78 1.17 47.40 ***  .146   &lt;.001
+3 condition:time 1, 78 1.17      0.77  .003    .382
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a pairwise analysis to se</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(anova_afex, <span class="sc">~</span> time <span class="sc">*</span> condition)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(emm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast                                                   estimate    SE df
+ pretest no_self_explanation - posttest no_self_explanation   -1.325 0.241 78
+ pretest no_self_explanation - pretest self_explanation       -0.175 0.306 78
+ pretest no_self_explanation - posttest self_explanation      -1.200 0.321 78
+ posttest no_self_explanation - pretest self_explanation       1.150 0.321 78
+ posttest no_self_explanation - posttest self_explanation      0.125 0.336 78
+ pretest self_explanation - posttest self_explanation         -1.025 0.241 78
+ t.ratio p.value
+  -5.490  &lt;.0001
+  -0.572  0.9402
+  -3.734  0.0020
+   3.578  0.0033
+   0.372  0.9823
+  -4.247  0.0003
+
+P value adjustment: tukey method for comparing a family of 4 estimates </code></pre>
+</div>
+</div>
+<p>This analysis differs from the original replication project, that did a 3 X 2 X 2 analyses comparing the types of critical thinking questions. Additionally, they added a delayed posttest to measure the retention of this effect. This replication project truncated the analysis to ensure that people are writing the</p>
+</section>
+<section id="visualization-of-confirmatory-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-of-confirmatory-analysis">Visualization of Confirmatory Analysis</h2>
+<p>Showing several visualizations of the mixed ANOVA results.</p>
+<section id="interaction-plot" class="level3">
+<h3 class="anchored" data-anchor-id="interaction-plot">Interaction Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>anova_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(analysis_long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> accuracy, </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">color =</span> condition, <span class="at">group =</span> condition)) <span class="sc">+</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Interaction Plot: Accuracy by Time and Condition"</span>,</span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the statistical significance indicator on the graph for pretest/posttest no SE</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>anova_plot <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"segment"</span>,</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="dv">1</span>, <span class="at">xend =</span> <span class="dv">2</span>,</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">3.25</span>, <span class="at">yend =</span> <span class="fl">3.25</span>,   <span class="co"># the height of the bar</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"#E76F51"</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, </span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">1.5</span>, <span class="at">y =</span> <span class="fl">3.32</span>, </span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"**"</span>,           <span class="co"># p = .001 → ** or ***</span></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"#E76F51"</span>, <span class="at">size =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pilot-data-analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lmer-plot" class="level3">
+<h3 class="anchored" data-anchor-id="lmer-plot">LMER plot</h3>
+<p>A linear mixed</p>
+</section>
+</section>
+</section>
+<section id="exploratory-analyses" class="level1">
+<h1>Exploratory Analyses</h1>
+<p>The results show that</p>
 </section>
 
 </main>
