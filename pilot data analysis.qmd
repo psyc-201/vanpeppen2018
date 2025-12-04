@@ -21,8 +21,12 @@ editor: visual
 # Load required packages
 library(tidyverse) 
 library(knitr)
+library(tidyr)
+library(dplyr)
 library(kableExtra)
 library(jsonlite)
+library(ez)
+library(ggplot2)
 
 # Set theme for plots
 theme_set(theme_minimal(base_size = 12))
@@ -37,7 +41,7 @@ In this section, we will load in the file that holds all the SONA data. Then, we
 
 ```{r}
 # Labeling the pilot data & listing them for R to see
-data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data_pt1"
+data_folder <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
 list.files(data_folder)
 # Make sure that all the csv files are in a list
 csv_files <- list.files(
@@ -123,6 +127,14 @@ pretest_answers <- do.call(
 )
 head(pretest_answers)
 names(pretest_answers)
+# Ensure that all 80 participants are formatted into the answers
+pretest_all_data <- dplyr::bind_cols(
+  pretest_data %>%
+    dplyr::select(participant_id, source_file, condition),
+  pretest_answers
+)
+nrow(pretest_all_data)
+head(pretest_all_data)
 ```
 
 ## Posttest
@@ -152,6 +164,10 @@ posttest_mc_wide <- posttest_answers_full %>%
   )
 glimpse(posttest_mc_wide)
 head(posttest_mc_wide)
+# Ensure that all 80 participants are accounted in the data
+posttest_all_data <- posttest_mc_wide
+nrow(posttest_all_data)
+head(posttest_all_data)
 ```
 
 # Scoring Study
@@ -177,28 +193,29 @@ pretest_accuracy_key <- list(
 # Now, select the questions that are only accuracy_questions
 pretest_accuracy_questions <- names(pretest_accuracy_key)
 # Compare the answers to the key. Correct is true, incorrect is false!
-correct_matrix_pre <- as.data.frame(
+correct_matrix <- as.data.frame(
   lapply(pretest_accuracy_questions, function(q) {
-    pretest_answers[[q]] == pretest_accuracy_key[[q]]
+    pretest_all_data[[q]] == pretest_accuracy_key[[q]]
   })
 )
-names(correct_matrix_pre) <- pretest_accuracy_questions
 # Convert the true/false into binary numbers (1 and 0)
-correct_matrix <- correct_matrix_pre * 1L
-names(correct_matrix) <- paste0(names(correct_matrix), "_score")
+correct_matrix <- correct_matrix * 1L
+names(correct_matrix) <- paste0(pretest_accuracy_questions, "_score")
 # Obtain both the total number correct per participant and the proportion correct
 pretest_total_accuracy <- rowSums(correct_matrix, na.rm = TRUE)
 pretest_total_prop    <- pretest_total_accuracy / length(pretest_accuracy_questions)
 # Combine the total scores for all participants
 pretest_scored <- cbind(
-  pretest_all_data,                 # original info + raw answers
-  correct_matrix,                   # 0/1 item scores
+  pretest_all_data,
+  correct_matrix,
   pretest_total_accuracy = pretest_total_accuracy,
   pretest_total_prop     = pretest_total_prop
 )
-# 
+# Look at the pretest scored data set
 head(pretest_scored[
-  , c("pretest_total_accuracy", "pretest_total_prop", "Q0_score", "Q2_score", "Q4_score")
+  , c("pretest_total_accuracy",
+      "pretest_total_prop",
+      "Q0_score", "Q2_score", "Q4_score")
 ])
 ```
 
@@ -241,40 +258,62 @@ posttest_accuracy_key <- list(
   q8_mc = "Within 5 years, the number of visitors will increase by 2%"
 )
 # Now, select the questions that are only accuracy_questions
-accuracy_questions_post <- names(posttest_accuracy_key)
+posttest_accuracy_questions <- names(posttest_accuracy_key)
 # Compare the answers to the key. Correct is true, incorrect is false!
-correct_matrix_post <- posttest_mc_wide[accuracy_questions_post] == posttest_accuracy_key
+correct_matrix_post <- as.data.frame(
+  lapply(posttest_accuracy_questions, function(q) {
+    posttest_all_data[[q]] == posttest_accuracy_key[[q]]
+  })
+)
 # Convert the true/false into binary numbers (1 and 0)
-correct_matrix_post <- correct_matrix_post * 1
+correct_matrix_post <- correct_matrix_post * 1L
+names(correct_matrix_post) <- paste0(posttest_accuracy_questions, "_score")
 # Compute total score correct
 posttest_total_accuracy <- rowSums(correct_matrix_post, na.rm = TRUE)
-posttest_total_prop <- posttest_total_accuracy / length(accuracy_questions_post)
+posttest_total_prop    <- posttest_total_accuracy / length(posttest_accuracy_questions)
 # Combine the total scores for all participants
 posttest_scored <- cbind(
-  posttest_mc_wide[c("participant_id", "source_file", "condition")],
-  correct_matrix_post_num,
-  posttest_total_accuracy,
-  posttest_total_prop
+  posttest_all_data,
+  correct_matrix_post,
+  posttest_total_accuracy = posttest_total_accuracy,
+  posttest_total_prop     = posttest_total_prop
 )
 # Run the data set
-head(posttest_scored)
+head(posttest_scored[
+  , c("posttest_total_accuracy",
+      "posttest_total_prop",
+      paste0(posttest_accuracy_questions[1], "_score"),
+      paste0(posttest_accuracy_questions[2], "_score"),
+      paste0(posttest_accuracy_questions[3], "_score"))
+])
 ```
 
-# Descriptive Stats
+# Descriptive Statistics
 
-Running a data analysis to understand whether this study replicated properly.
+\[WRITE INTRODUCTION\]
 
-## Before Analysis
+## Before Analysis – Formatting
 
-Before running the descriptive statistics, confirmatory, and exploratory analyses, we will first load in the scored pretest and posttest data.
+Before running the descriptive statistics, confirmatory, and exploratory analyses, we will first combine the accuracy data set and format it for the different statistical studies to be ran smoothly.
+
+### Combined Scored Data Set
+
+Before we analyze the data, we will combine the pretest and posttest scored data. The logic of this section is combining the pretest and posttest scores in one data set. The scores will use the total accuracy score, as everyone completed 8 questions which we hope to identify how much they improved.
 
 ```{r}
 # Combine the pretest and posttest scorred data into one data set
 analysis_df <- pretest_scored %>%
-  select(participant_id, condition, pretest_total_accuracy, pretest_total_prop) %>%
+  select(
+    participant_id,
+    condition,
+    pretest = pretest_total_accuracy
+  ) %>%
   left_join(
     posttest_scored %>%
-      select(participant_id, posttest_total_accuracy, posttest_total_prop),
+      select(
+        participant_id,
+        posttest = posttest_total_accuracy
+      ),
     by = "participant_id"
   )
 # Open the combined, scored data of the pretest and posttest
@@ -282,32 +321,103 @@ head(analysis_df)
 summary(analysis_df)
 ```
 
-## Posttest Analysis
+### Data Preparation for ANOVA
+
+Next, we are going to create a data-set interpretable for ANOVA analyses. In this section, we will have the participant pretest and posttest paired with each other and accuracy shown side by side. Structuring the data in this fashion will be interpretable for both ggplots and ANOVA.
 
 ```{r}
-
+# Pull the columns that we want to add for the new data set used for the ANOVA analyses
+analysis_long <- analysis_df %>%
+  pivot_longer(
+    cols = c(pretest, posttest),
+    names_to = "time",
+    values_to = "accuracy"
+  ) %>%
+  mutate(
+    time = factor(time, levels = c("pretest", "posttest")),
+    condition = factor(condition)
+  )
+# Look at the data set
+head(analysis_long)
+names(analysis_long)
 ```
 
-## Pretest versus Posttest Accuracy
+## Overview Statistics
 
-In this section, I am going to run a 2 X 2 ANOVA analyses between SE/no SE condition & pretest/posttest.
+In the overview, we will try to analyze the overall descriptive statistics of posttest and pretest total accuracy means and standard deviations.
 
 ```{r}
-# 
-full_scores$condition <- factor(full_scores$condition)
-levels(full_scores$condition)
-
-
+# Total number of N as well as N per condition
+analysis_df %>%
+  count(condition, name = "n")
+# Overall descriptive statistics 
+analysis_df %>%
+  summarise(
+    pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
+    pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
+    posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
+    posttest_sd   = sd(posttest_total_accuracy, na.rm = TRUE)
+  )
+# Descriptive statistic overview of each condition
+analysis_df %>%
+  group_by(condition) %>%
+  summarise(
+    n             = n(),
+    pretest_mean  = mean(pretest, na.rm = TRUE),
+    pretest_sd    = sd(pretest, na.rm = TRUE),
+    posttest_mean = mean(posttest, na.rm = TRUE),
+    posttest_sd   = sd(posttest, na.rm = TRUE)
+  )
 ```
+
+## Visualization of Overview Stats
+
+In this section, we will be looking at a visualization of the mean pretest versus posttest accuracy by condition. Want to analyze which one improved more visually and look through the patterns before completing the confirmatory analysis to understand the main effects.
+
+```{r}
+# Creating a ggplot to see the mean pretest versus posttest accuracy by condition (SE vs no SE)
+ggplot(analysis_long, aes(
+  x = time,
+  y = accuracy,
+  group = condition,
+  color = condition
+)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1) +
+  stat_summary(fun = mean, geom = "point", size = 3) +
+  labs(
+    x = "Time",
+    y = "Mean Accuracy",
+    color = "Condition",
+    title = "Mean Pretest vs Posttest Accuracy by Condition"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+# Confirmatory Analyses
+
+For the confirmatory analyses, we will use a 2 X 2 mixed ANOVA to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not.
+
+## Mixed ANOVA Analysis
+
+In this section, we will run the main effect we want to see which is the interaction between condition (no SE versus SE) and timing (pretest versus posttest).
+
+```{r}
+anova_afex <- aov_ez(
+  id = "participant_id",
+  dv = "accuracy",
+  data = analysis_long,
+  within = "time",
+  between = "condition",
+  type = 3
+)
+# Show the ANOVA analysis!
+anova_afex
+```
+
+This analysis differs from the original replication project, that did a 3 X 2 X 2 analyses comparing the types of critical thinking questions. Additionally, they added a delayed posttest to measure the retention of this effect. This replication project truncated the analysis to ensure that people are writing the
 
 ## Pretest & Mental Ratings Comparison
 
 ```{r}
-# Make sure to link the
-analysis_dr <- cbind(
-  correct_matrix,
-  effort_key_number
-)
-# Average the effort scores
-pretest_answers$pretest_effort <- rowMeans(effort_key_number)
+
 ```
