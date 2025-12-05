@@ -391,9 +391,10 @@ Afterwards, we are going to run the full descriptive statistics that will report
 
 ```{r}
 # Overall descriptive statistics
+options(digits = 15)
 overall_desc <- analysis_df %>%
   summarise(
-    n = n(),
+    n = nrow(.),
     pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
     pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
     posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
@@ -403,15 +404,15 @@ overall_desc <- analysis_df %>%
 overall_desc
 # Descripitive statistics per condition
 condition_desc <- analysis_df %>%
-  group_by(condition) %>%
-  summarise(
-    n = n(),
-    pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
-    pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
-    posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
-    posttest_sd   = sd(posttest_total_accuracy, na.rm = TRUE)
-  ) %>%
-  ungroup()
+  dplyr::group_by(condition) %>%
+  dplyr::summarise(
+    n             = dplyr::n(),
+    pretest_mean  = mean(pretest,  na.rm = TRUE),
+    pretest_sd    = sd(pretest,    na.rm = TRUE),
+    posttest_mean = mean(posttest, na.rm = TRUE),
+    posttest_sd   = sd(posttest,   na.rm = TRUE),
+    .groups = "drop"
+  )
 
 condition_desc
 ```
@@ -430,13 +431,14 @@ ggplot(analysis_long, aes(
 )) +
   stat_summary(fun = mean, geom = "line", linewidth = 1) +
   stat_summary(fun = mean, geom = "point", size = 3) +
+  scale_color_manual(values = c("#004aad", "#FF9F45")) +  # academic colors
+  theme_classic(base_size = 14) +
   labs(
     x = "Time",
     y = "Mean Accuracy",
     color = "Condition",
     title = "Mean Pretest vs Posttest Accuracy by Condition"
-  ) +
-  theme_minimal(base_size = 14)
+  )
 ```
 
 # Confirmatory Analyses
@@ -475,33 +477,39 @@ Showing several visualizations of the mixed ANOVA results.
 ### Interaction Plot
 
 ```{r}
-anova_plot <- ggplot(analysis_long, aes(x = time, y = accuracy, 
-                               color = condition, group = condition)) +
+anova_plot <- ggplot(
+  analysis_long,
+  aes(x = time, y = accuracy, color = condition, group = condition)
+) +
   stat_summary(fun = mean, geom = "line", size = 1) +
   stat_summary(fun = mean, geom = "point", size = 3) +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.1) +
+  scale_color_manual(values = c("#004AAD", "#FF9F45")) +  # blue + orange
   theme_minimal(base_size = 14) +
-  labs(title = "Interaction Plot: Accuracy by Time and Condition",
-       x = "Time", y = "Accuracy")
-# Add the statistical significance indicator on the graph for pretest/posttest no SE
-anova_plot + annotate("segment",
-             x = 1, xend = 2,
-             y = 3.25, yend = 3.25,   # the height of the bar
-             color = "#E76F51", size = 0.8) +
-    annotate("text", 
-             x = 1.5, y = 3.32, 
-             label = "**",           # p = .001 → ** or ***
-             color = "#E76F51", size = 6)
-```
-
-### LMER plot
-
-A linear mixed
-
-```{r}
-
+  labs(
+    title = "Interaction Plot: Accuracy by Time and Condition",
+    x = "Time",
+    y = "Accuracy",
+    color = "Condition"
+  )
+# Add significance bar (adjust y values if needed to sit above your data)
+anova_plot +
+  annotate(
+    "segment",
+    x = 1, xend = 2,
+    y = 3.25, yend = 3.25,
+    color = "#FF9F45",
+    size = 0.8
+  ) +
+  annotate(
+    "text",
+    x = 1.5, y = 3.32,
+    label = "**",
+    color = "#FF9F45",
+    size = 6
+  )
 ```
 
 # Exploratory Analyses
 
-The results show that
+The results reveal that
