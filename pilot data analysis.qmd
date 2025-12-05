@@ -112,7 +112,7 @@ data_attention <- data_base [
 ]
 ```
 
-## Randomization 
+## Randomization
 
 Before we format the question, we will randomly select 40 participants from each condition (SE vs no SE) to analyze. This will amount to a total of 80 participants.
 
@@ -184,21 +184,20 @@ head(pretest_all_data)
 In this section, we will organize the combined, csv files to show all of the participants' posttest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.
 
 ```{r}
-# Keep only posttest MC rows for the 80 sampled participants
-posttest_mc <- data_sampled %>%
-  filter(phase == "mc")
-# 2) Filter the columns to include the source file, item, condition, and response
-posttest_long <- posttest_mc %>%
+# Keep BOTH mc and mc_effort rows for the 80 sampled participants
+posttest_mc_and_effort <- data_sampled %>%
+  filter(
+    task == "posttest",                                      
+    grepl("^q[1-8]_(mc|effort)$", item)                      
+  ) %>%
   select(participant_id, source_file, condition, item, response)
-# Rearrange the format of the data set to cleanly show the answers for all 80 participants
-posttest_all_data <- posttest_long %>%
+# Pivot to wide format
+posttest_all_data <- posttest_mc_and_effort %>%
   pivot_wider(
-    names_from  = item,        
-    values_from = response,   
-    names_prefix = "mc_"     
+    names_from  = item,
+    values_from = response
   )
-# Look at the data
-nrow(posttest_all_data)
+names(posttest_all_data)
 head(posttest_all_data)
 ```
 
@@ -270,9 +269,14 @@ effort_data <- pretest_answers[effort_questions]
 effort_key_number <- as.data.frame(
   lapply(effort_data, function(x) effort_key[x])
 )
-# Look at the data!!
-head(effort_key_number)
-summary(pretest_answers$pretest_effort)
+# Rename effort columns
+names(effort_key_number) <- paste0(names(effort_key_number), "_effort")
+# Bind them directly (same row order in both dataframes)
+pretest_scored_effort <- cbind(
+  pretest_scored,
+  effort_key_number
+)
+head(pretest_scored_effort)
 ```
 
 ## Posttest Accuracy
@@ -293,17 +297,19 @@ posttest_accuracy_questions <- names(posttest_accuracy_key)
 # Compare answers to key → TRUE/FALSE
 correct_matrix_post <- as.data.frame(
   lapply(posttest_accuracy_questions, function(q) {
-    grepl(posttest_accuracy_key[[q]],
-          posttest_all_data[[q]],
-          fixed = TRUE)      # literal match, no regex weirdness
+    grepl(
+      posttest_accuracy_key[[q]],
+      posttest_all_data[[q]],
+      fixed = TRUE
+    )
   })
 )
 # Convert the TRUE/FALSE answers 
 correct_matrix_post <- correct_matrix_post * 1L
 names(correct_matrix_post) <- paste0(posttest_accuracy_questions, "_score")
-# Commpute total scores correct
+# Compute total scores correct
 posttest_total_accuracy <- rowSums(correct_matrix_post, na.rm = TRUE)
-posttest_total_prop    <- posttest_total_accuracy / length(posttest_accuracy_questions)
+posttest_total_prop     <- posttest_total_accuracy / length(posttest_accuracy_questions)
 # Combine the scoring all together with the data set
 posttest_scored <- cbind(
   posttest_all_data[, c("participant_id", "source_file", "condition")],
@@ -312,6 +318,34 @@ posttest_scored <- cbind(
   posttest_total_prop     = posttest_total_prop
 )
 head(posttest_scored)
+```
+
+## Posttest Mental Effort & Score
+
+```{r}
+# Posttest effort questions (the effort ratings)
+effort_questions_post <- c("effort_q1", "effort_q2", "effort_q3", "effort_q4",
+                           "effort_q5", "effort_q6", "effort_q7", "effort_q8")
+# Take only those columns from posttest_answers
+posttest_effort_data <- posttest_answers[effort_questions_post]
+# Mental effort key (same as pretest)
+effort_key <- c(
+  "Very little effort",
+  "Little effort",
+  "Not a little nor a lot of effort",
+  "Quite a lot of effort",
+  "A lot of effort"
+)
+# Convert effort text → numeric 1–5 safely
+effort_num_post <- as.data.frame(
+  lapply(posttest_effort_data, function(x)
+    as.numeric(factor(x, levels = effort_key, labels = 1:5)))
+)
+# Name them something like q1_mc_effort, q2_mc_effort, ...
+names(effort_num_post) <- paste0(names(effort_num_post), "_effort")
+# Attach effort columns to your scored posttest data
+posttest_scored_effort <- cbind(posttest_scored, effort_num_post)
+head(posttest_scored_effort)
 ```
 
 # Descriptive Statistics
@@ -387,11 +421,10 @@ n_table <- bind_rows(overall_n, by_condition_n)
 n_table
 ```
 
-Afterwards, we are going to run the full descriptive statistics that will report the mean & sd overall as well as per condition.
+Afterwards, we are going to run the full descriptive statistics that will report the mean & standard deviation overall as well as per condition.
 
 ```{r}
 # Overall descriptive statistics
-options(digits = 15)
 overall_desc <- analysis_df %>%
   summarise(
     n = nrow(.),
@@ -431,7 +464,7 @@ ggplot(analysis_long, aes(
 )) +
   stat_summary(fun = mean, geom = "line", linewidth = 1) +
   stat_summary(fun = mean, geom = "point", size = 3) +
-  scale_color_manual(values = c("#004aad", "#FF9F45")) +  # academic colors
+  scale_color_manual(values = c("#004aad", "#ffde59")) + 
   theme_classic(base_size = 14) +
   labs(
     x = "Time",
@@ -450,6 +483,13 @@ For the confirmatory analyses, we will use a 2 X 2 mixed ANOVA to analyze our re
 In this section, we will run the main effect we want to see which is the interaction between condition (no SE versus SE) and timing (pretest versus posttest).
 
 ```{r}
+# Run the ANOVA test
+analysis_long <- analysis_long |>
+  mutate(
+    participant_id = factor(participant_id),
+    time           = factor(time),
+    condition      = factor(condition)
+  )
 anova_afex <- aov_ez(
   id = "participant_id",
   dv = "accuracy",
@@ -460,56 +500,123 @@ anova_afex <- aov_ez(
 )
 # Show the ANOVA analysis!
 anova_afex
-```
-
-```{r}
-# Conduct a pairwise analysis to se
-emm <- emmeans(anova_afex, ~ time * condition)
-pairs(emm)
+anova(anova_afex, correction = "GG")
 ```
 
 This analysis differs from the original replication project, that did a 3 X 2 X 2 analyses comparing the types of critical thinking questions. Additionally, they added a delayed posttest to measure the retention of this effect. This replication project truncated the analysis to ensure that people are writing the
 
-## Visualization of Confirmatory Analysis
-
-Showing several visualizations of the mixed ANOVA results.
-
-### Interaction Plot
+## Pairwise Comparison
 
 ```{r}
-anova_plot <- ggplot(
-  analysis_long,
-  aes(x = time, y = accuracy, color = condition, group = condition)
-) +
-  stat_summary(fun = mean, geom = "line", size = 1) +
-  stat_summary(fun = mean, geom = "point", size = 3) +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.1) +
-  scale_color_manual(values = c("#004AAD", "#FF9F45")) +  # blue + orange
-  theme_minimal(base_size = 14) +
-  labs(
-    title = "Interaction Plot: Accuracy by Time and Condition",
-    x = "Time",
-    y = "Accuracy",
-    color = "Condition"
-  )
-# Add significance bar (adjust y values if needed to sit above your data)
-anova_plot +
-  annotate(
-    "segment",
-    x = 1, xend = 2,
-    y = 3.25, yend = 3.25,
-    color = "#FF9F45",
-    size = 0.8
+# Compute the estimated marginal means
+emm <- emmeans(anova_afex, ~ condition * time)
+emm_df <- as.data.frame(emm)
+emm_df
+# Compute pairwise comparison between pretest and posttest
+pairs_cond_within_time <- contrast(emm, 
+                                   method = "pairwise", 
+                                   by = "time",
+                                   adjust = "bonferroni")
+
+pairs_cond_df <- as.data.frame(pairs_cond_within_time)
+pairs_cond_df
+# Compute pairwise comparison on time within each condition
+pairs_time_within_cond <- contrast(emm, 
+                                   method = "pairwise",
+                                   by = "condition",
+                                   adjust = "bonferroni")
+
+pairs_time_df <- as.data.frame(pairs_time_within_cond)
+pairs_time_df
+```
+
+## Bar Plot
+
+```{r}
+ggplot(emm_df, aes(x = time, y = emmean, fill = condition)) +
+  geom_col(position = position_dodge(width = 0.9)) +
+  geom_errorbar(
+    aes(ymin = emmean - SE, ymax = emmean + SE),
+    position = position_dodge(width = 0.9),
+    width = 0.4,
+    color = "black"
   ) +
-  annotate(
-    "text",
-    x = 1.5, y = 3.32,
-    label = "**",
-    color = "#FF9F45",
-    size = 6
+  scale_fill_manual(
+    values = c("#004aad", "#ffde59"),  # academic colors
+    name   = "Condition",
+    labels = c("no_self_explanation", "self_explanation")
+  ) +
+  labs(
+    x = "Time",
+    y = "Accuracy score"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    panel.grid.minor = element_blank()
   )
 ```
 
 # Exploratory Analyses
 
 The results reveal that
+
+## MC + Effort Data Set
+
+### Correlation Test for Pretest
+
+Pretest accuracy score & mental effort score correlation test
+
+```{r}
+# Find columns with "_effort" in the name
+effort_cols <- grep("_effort$", names(pretest_scored_effort), value = TRUE)
+
+# Convert all effort columns to numeric
+pretest_scored_effort[effort_cols] <- lapply(
+  pretest_scored_effort[effort_cols],
+  function(x) as.numeric(x)
+)
+# Create a mean pretest score of the participants
+pretest_scored_effort <- pretest_scored_effort %>%
+  mutate(
+    pretest_effort_mean = rowMeans(across(all_of(effort_cols)), na.rm = TRUE)
+  )
+# Run the correlation based on the proportion correct on the pretest
+cor.test(
+  pretest_scored_effort$pretest_total_prop,
+  pretest_scored_effort$pretest_effort_mean
+)
+```
+
+Create a correlation scatterplot to visually look at the weak correlation between pretest effort & accuracy.
+
+```{r}
+ggplot(pretest_scored_effort, aes(x = pretest_effort_mean,
+                                  y = pretest_total_prop)) +
+  geom_point(alpha = 0.6, size = 2) +
+  geom_smooth(method = "lm", se = TRUE, color = "#ffde59") +
+  labs(
+    title = "Correlation Between Pretest Effort and Pretest Accuracy",
+    x = "Mean Pretest Mental Effort",
+    y = "Pretest Accuracy (Proportion Correct)"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Posttest MC + Effort Correlation
+
+```{r}
+# Find all posttest effort columns
+effort_cols_post <- grep("_effort$", names(posttest_scored_effort), value = TRUE)
+# Compute mean posttest effort across all 8 items
+posttest_scored_effort <- posttest_scored_effort %>%
+  mutate(
+    posttest_effort_mean = rowMeans(across(all_of(effort_cols_post)), na.rm = TRUE)
+  )
+summary(posttest_scored_effort$posttest_effort_mean)
+# Correlation
+cor.test(
+  posttest_scored_effort$posttest_total_prop,
+  posttest_scored_effort$posttest_effort_mean
+)
+```
