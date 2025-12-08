@@ -23,6 +23,7 @@ library(tidyverse)
 library(knitr)
 library(tidyr)
 library(dplyr)
+library(magrittr)
 library(kableExtra)
 library(jsonlite)
 library(afex)
@@ -184,19 +185,41 @@ head(pretest_all_data)
 In this section, we will organize the combined, csv files to show all of the participants' posttest multi-choice responses. As the csv logged the answers through a string, we will create individual columns for each question while the rows will represent each randomized participant for analysis.
 
 ```{r}
-# Keep BOTH mc and mc_effort rows for the 80 sampled participants
-posttest_mc_and_effort <- data_sampled %>%
+## 1. Start from ALL sampled rows, only filter by the pattern in `response`
+posttest_raw <- data_sampled %>%
   filter(
-    task == "posttest",                                      
-    grepl("^q[1-8]_(mc|effort)$", item)                      
+    !is.na(response),
+    grepl('"q[0-9]+_(mc|effort)"', response)   # look inside the JSON string
   ) %>%
-  select(participant_id, source_file, condition, item, response)
-# Pivot to wide format
-posttest_all_data <- posttest_mc_and_effort %>%
-  pivot_wider(
-    names_from  = item,
-    values_from = response
+  select(participant_id, source_file, condition, response)
+
+nrow(posttest_raw)
+head(posttest_raw$response)
+## 2. Parse JSON, extract key (q5_mc, q5_effort, ...) and value
+posttest_keys <- posttest_raw %>%
+  mutate(
+    parsed = map(response, ~ fromJSON(.x)),
+    key    = map_chr(parsed, ~ names(.x)[1]),
+    value  = map_chr(parsed, ~ as.character(unlist(.x)[1]))
   )
+
+# sanity check: see what keys we actually have
+unique(posttest_keys$key)[1:20]
+## 3. Keep only q1–q8 mc/effort keys (ignore q*_text, etc.) and pivot wide
+posttest_mc_effort <- posttest_keys %>%
+  filter(grepl("^q[1-8]_(mc|effort)$", key)) %>%
+  select(participant_id, source_file, condition, key, value)
+
+nrow(posttest_mc_effort)
+head(posttest_mc_effort)
+posttest_all_data <- posttest_mc_effort %>%
+  distinct() %>%
+  pivot_wider(
+    names_from  = key,    # q1_mc, q1_effort, ...
+    values_from = value
+  )
+
+nrow(posttest_all_data)
 names(posttest_all_data)
 head(posttest_all_data)
 ```
@@ -284,14 +307,14 @@ head(pretest_scored_effort)
 ```{r}
 # Posttest answer key
 posttest_accuracy_key <- list(
-  mc_q1 = "No correct conclusion possible",
-  mc_q2 = "Perhaps give preference to graduates of Tilburg University.",
-  mc_q3 = "No correct conclusion possible",
-  mc_q4 = "Hearts and 2",
-  mc_q5 = "Jacques is a janitor",
-  mc_q6 = "Less than 10%",
-  mc_q7 = "Madrid and Transavia",
-  mc_q8 = "Within 5 years, the number of visitors will increase by 2%"
+  q1_mc = "No correct conclusion possible",
+  q2_mc = "Perhaps give preference to graduates of Tilburg University.",
+  q3_mc = "No correct conclusion possible",
+  q4_mc = "Hearts and 2",
+  q5_mc = "Jacques is a janitor",
+  q6_mc = "Less than 10%",
+  q7_mc = "Madrid and Transavia",
+  q8_mc = "Within 5 years, the number of visitors will increase by 2%"
 )
 posttest_accuracy_questions <- names(posttest_accuracy_key)
 # Compare answers to key → TRUE/FALSE
@@ -323,11 +346,12 @@ head(posttest_scored)
 ## Posttest Mental Effort & Score
 
 ```{r}
-# Posttest effort questions (the effort ratings)
-effort_questions_post <- c("effort_q1", "effort_q2", "effort_q3", "effort_q4",
-                           "effort_q5", "effort_q6", "effort_q7", "effort_q8")
-# Take only those columns from posttest_answers
-posttest_effort_data <- posttest_answers[effort_questions_post]
+# Effort columns in the new structure
+effort_questions_post <- paste0("q", 1:8, "_effort")
+
+# Take only those columns from posttest_all_data
+posttest_effort_data <- posttest_all_data[effort_questions_post]
+
 # Mental effort key (same as pretest)
 effort_key <- c(
   "Very little effort",
@@ -336,15 +360,20 @@ effort_key <- c(
   "Quite a lot of effort",
   "A lot of effort"
 )
-# Convert effort text → numeric 1–5 safely
+
+# Convert effort text → numeric 1–5
 effort_num_post <- as.data.frame(
-  lapply(posttest_effort_data, function(x)
-    as.numeric(factor(x, levels = effort_key, labels = 1:5)))
+  lapply(posttest_effort_data, function(x) {
+    as.numeric(factor(x, levels = effort_key, labels = 1:5))
+  })
 )
-# Name them something like q1_mc_effort, q2_mc_effort, ...
-names(effort_num_post) <- paste0(names(effort_num_post), "_effort")
+
+# Name them something clear, e.g. q1_effort_num, ...
+names(effort_num_post) <- paste0(names(effort_num_post), "_num")
+
 # Attach effort columns to your scored posttest data
 posttest_scored_effort <- cbind(posttest_scored, effort_num_post)
+
 head(posttest_scored_effort)
 ```
 
@@ -597,8 +626,8 @@ ggplot(pretest_scored_effort, aes(x = pretest_effort_mean,
   geom_smooth(method = "lm", se = TRUE, color = "#ffde59") +
   labs(
     title = "Correlation Between Pretest Effort and Pretest Accuracy",
-    x = "Mean Pretest Mental Effort",
-    y = "Pretest Accuracy (Proportion Correct)"
+    x = "Mean Mental Effort (1 = low, 5 = high)",
+    y = "Pretest Accuracy (0-8 correct)"
   ) +
   theme_minimal(base_size = 14)
 ```
@@ -606,17 +635,39 @@ ggplot(pretest_scored_effort, aes(x = pretest_effort_mean,
 ## Posttest MC + Effort Correlation
 
 ```{r}
-# Find all posttest effort columns
-effort_cols_post <- grep("_effort$", names(posttest_scored_effort), value = TRUE)
-# Compute mean posttest effort across all 8 items
-posttest_scored_effort <- posttest_scored_effort %>%
-  mutate(
-    posttest_effort_mean = rowMeans(across(all_of(effort_cols_post)), na.rm = TRUE)
-  )
-summary(posttest_scored_effort$posttest_effort_mean)
-# Correlation
-cor.test(
-  posttest_scored_effort$posttest_total_prop,
-  posttest_scored_effort$posttest_effort_mean
+# Numeric effort columns end in "_effort_num"
+effort_cols <- grep("_effort_num$", names(posttest_scored_effort), value = TRUE)
+# Participant-level mean mental effort
+posttest_scored_effort$mean_effort <- rowMeans(
+  posttest_scored_effort[effort_cols],
+  na.rm = TRUE
 )
+# Sanity check
+head(posttest_scored_effort[, c("posttest_total_accuracy", "mean_effort")])
+# Run correlation
+cor_test_result <- cor.test(
+  posttest_scored_effort$mean_effort,
+  posttest_scored_effort$posttest_total_accuracy,
+  method = "pearson"
+)
+cor_test_result
+```
+
+Ggplot
+
+```{r}
+library(ggplot2)
+
+ggplot(posttest_scored_effort, aes(
+  x = mean_effort,
+  y = posttest_total_accuracy
+)) +
+  geom_point(alpha = 0.7, size = 3, color = "black") +
+  geom_smooth(method = "lm", se = TRUE, color = "#ffde59") +
+  labs(
+    title = "Correlation Between Mental Effort and Posttest Accuracy",
+    x = "Mean Mental Effort (1 = low, 5 = high)",
+    y = "Posttest Accuracy (0–8 correct)"
+  ) +
+  theme_minimal(base_size = 14)
 ```
