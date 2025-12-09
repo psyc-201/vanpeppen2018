@@ -9,82 +9,667 @@ format:
     toc_depth: 3
 ---
 
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. --> 
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
 
 ## Introduction
-Reflecting upon my project proposal feedback, I would like to continue replicating Van Peppen and colleagues (2018) study. The study aims to examine how generating explanations for oneself (i.e. self explanations) fosters critical thinking. Though this does not directly relate to my first year project, I am still interested in launching a study where I test how different types of explanation strategies (such as AI-generated vs self-explanations) shapes the way learners’ retain and critically think about science. Finally, replicating this study will balance both the challenge and feasibility of coding and familiarizing myself with R. Through these efforts, I hope to deepen my understanding on how different learning strategies foster critical thinking and better learning outcomes.
 
 ## Methods
 
 ### Power Analysis
+
 Calculated a power analysis, in which the study computed that 79 participants would be sufficient for the study. They computed the power analysis using a 3x2x2 mixed ANOVA model, with alpha of 0.05 and correlation of 0.3, and sample size of N=79. They found that this sample size would be sufficient for picking up medium sized effects.
 
 ### Planned Sample
-88 UC San Diego psychology undergraduate students will be recruited for this replication project. Participants will be recruited through the Sona-system. 
+
+80 UC San Diego psychology undergraduate students will be recruited for this replication project. Participants will be recruited through Sona.
 
 ### Materials
-For both the pretest and posttest, participants will be administered the critical thinking (CT) skills test. The CT-skills test tried to measure critical thinking skills in two key categories. The first category was to understand how well people were able to logically reason. To test this, they implemented two exams that measured how susceptible participants are to believe in false information (Syllogistic Reasoning task) as well as how likely participants verify versus disprove claims (Wason Selection task). The second category the study aimed to assess was participants’ statistical reasoning skills. The first test they used was the Base-rate tasks to evaluate whether people prioritized anecdotal evidence over statistical findings. Additionally, they integrated the Conjunction tasks which measured how likely people bias statistics: such as believing events described in detail are more probable than a simplistic recount. 
+
+For both the pretest and posttest, participants will be administered the critical thinking (CT) skills test. The CT-skills test tried to measure critical thinking skills in two key categories. The first category was to understand how well people were able to logically reason. To test this, they implemented two exams that measured how susceptible participants are to believe in false information (Syllogistic Reasoning task) as well as how likely participants verify versus disprove claims (Wason Selection task). The second category the study aimed to assess was participants’ statistical reasoning skills. The first test they used was the Base-rate tasks to evaluate whether people prioritized anecdotal evidence over statistical findings. Additionally, they integrated the Conjunction tasks which measured how likely people bias statistics: such as believing events described in detail are more probable than a simplistic recount.
 
 For the intervention phase, the study provided CT-instructions that educated participants on what inductive versus deductive reasoning is. Additionally, the instructions integrated two worked examples per exam they were administered in the pretest. Then, participants practiced the learned skills with CT-practice material that allowed participants to apply their skills to four different scenarios, and explain why they came to their conclusions. With each test administered, participants were given a mental effort survey where they rated on a 9-point Likert scale (1 being extremely low effort to 9 being extremely high effort) on how much cognitive effort it took to complete the task.
 
-### Procedure	
-Participants signed the informed consent form before completing the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions. 
+### Procedure
+
+Once completing a consent form, participants completed the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions.
 
 ### Analysis Plan
+
 We will use a 2 X 2 mixed ANOVA to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not. For all analyses in this paper, a p-value of 0.05 was used as a threshold for statistical signficance. Partial eta-squared is reported as a measure of effect size for the ANOVAs, for which 0,01 is considered small, 0.06 medium, and 0.14 large, and Cohen's d is reported for the post-hoc tests, with values of 0.2, 0.5, and 0.8 representing a small, medium, and large effect size respectively (Cohen, 1988).
 
-**Clarify key analysis of interest here** The key analysis of interest is seeing the interaction between self-explanations and learning outcomes as well as transfer performance. It will be calculated through a 2 X 2 mixed ANOVA. 
-
 ### Differences from Original Study
-One major concern of replicating this study is conducting a longtitudinal study. Addressing this feedback, I am planning to not add the delayed posttest portion of the study. The rationale behind this decision stems from the delayed posttest just measuring how well a student retained information from the task. The immediate posttest will be sufficient to compare how the CT training and self-explanations affected learning outcomes. Beyond this, other concerns raised was understanding how participants' engagement of the study would be impacted if moved to online. One way to test engagement is creating a survey at the end asking if they honestly used any distractions to account for transparent barriers in the study. Also, calculating a power analysis in R to find the amount of participants needed to get medium sized effects will be the next step. The final solution addresses the third feedback: obtaining the CT materials. By emailing the authors, I am hoping to also ask them whether adding all four CT measures are necessary in measuring critical thinking. If it is not, I will utilize their feedback and make the study go faster. This way, it can hopefully keep participants a little more engaged.
+
+Compared to the original study, the replication project employed a 2 X 2 mixed ANOVA analysis. Originally, the study tries to measure three different factors: timing, condition, and critical thinking test type. Due to the constrained timeline of the project, comparing how participants improved on the different critical thinking skills were not analyzed. Rather, we analyzed the main effect between self-explanation and timing. Additionally, this replication study did not include the delayed posttest. Beyond timing constraints, we felt that comparing immediate posttest alone could still reveal interesting findings of the role self-explanation has on critical thinking.
+
+Beyond
+
+Another difference from the original study , other concerns raised was understanding how participants' engagement of the study would be impacted if moved to online. One way engagement was assessed was by implementing attention checks throughout the pretest condition.
+
+Finally, the original study was in Dutch while this current study is in English. Materials were recruited under the authors' OSF repository that included the pretest, practice materials, and posttest of the partici
+
+he final solution addresses the third feedback: obtaining the CT materials. By emailing the authors, I am hoping to also ask them whether adding all four CT measures are necessary in measuring critical thinking. If it is not, I will utilize their feedback and make the study go faster. This way, it can hopefully keep participants a little more engaged.
 
 ### Reliability & Validity
-The study scores reliability through recruiting two raters to score the data. Since interrater reliability was high, two raters only scored 25% of the tests (r=0.899) and one rater scored the rest of the CT skills tests. Beyond reliability, the study fails to have ecologically validity, as Vanpeppen and colleagues (2018) admit that the study may be difficult to translate into classroom environments. To elaborate, the study could not find any meaningful effects on how self-explanations benefit unbiased reasoning skills. This is due to how those who attend class are more likely to be motivated to do well on tasks, which make the perceived difficulty of the task less effective.
+
+The original study scores reliability through recruiting two raters to score the data. Since interrater reliability was high, two raters only scored 25% of the tests (r=0.899) and one rater scored the rest of the CT skills tests. Beyond reliability, the study fails to have ecologically validity, as Vanpeppen and colleagues (2018) admit that the study may be difficult to translate into classroom environments. To elaborate, the study could not find any meaningful effects on how self-explanations benefit unbiased reasoning skills. This is due to how those who attend class are more likely to be motivated to do well on tasks, which make the perceived difficulty of the task less effective.
 
 ### Methods Addendum (Post Data Collection)
 
-You can comment this section out prior to final report with data collection.
+Post-data-collection methods addendum: Include how many participants you actually got. If anything unexpected happened, what happened and how did you address it
 
 #### Actual Sample
+
 The study recruited 88 participants, but 11 people were taken out of the data due to technical issues or partially reported data. In the replication project, this will not be an issue as there is no delayed posttest. Therefore, the data of 79 participants were analyzed.
 
 #### Differences from pre-data collection methods plan
-Before data collection, the only differences would be to take out the delayed posttest from the study. 
 
+Before data collection, the only differences would be to take out the delayed posttest from the study.
 
 ## Results
 
-
 ### Data preparation
 
-To prepare my data, I will launch my study on jsPsych to ensure that data analyses goes smooth as possible. I will label all my variables based on the CT skills test, as well as the pretest and immediate posttest. If there is any incomplete data, I will remove the participant out of the dataset. This will not be a huge issue, as there is no delayed posttest which would decrease the chance of this happening. I will also preregister my replication study to ensure that I remain open about my practices.  
-	
+To prepare my data, I will launch my study on jsPsych to ensure that data analyses goes smooth as possible. I will label all my variables based on the CT skills test, as well as the pretest and immediate posttest. If there is any incomplete data, I will remove the participant out of the dataset. This will not be a huge issue, as there is no delayed posttest which would decrease the chance of this happening. I will also preregister my replication study to ensure that I remain open about my practices.
+
+#### Setup
+
 ```{r}
-### Data Preparation
+# Load required packages
+library(tidyverse) 
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(magrittr)
+library(kableExtra)
+library(jsonlite)
+library(afex)
+library(ggplot2)
+library(Hmisc)
+library(emmeans)
 
-#### Load Relevant Libraries and Functions
+# Set theme for plots
+theme_set(theme_minimal(base_size = 12))
 
-#### Import data
-
-#### Data exclusion / filtering
-
-#### Prepare data for analysis - create columns etc.
+# Set random seed for reproducibility
+set.seed(123)
 ```
 
-### Confirmatory analysis 
+#### Data Loading
 
-Mixed ANOVAs analyses were heavily conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals. (add more detail)
+In this section, we are loading in the data folder containing all the csvs from the study. Then, we will combine all the csvs from each folder and merge them together into one data set.
+
+```{r}
+# Labeling the data folders that will be analyzed in this study
+data_folder1 <- "/Users/christinelee/Documents/vanpeppen2018/sona_data"
+data_folder2 <- "/Users/christinelee/Documents/vanpeppen2018/missing_sona id"
+# Merge all the csv files into ONE data set per individual folder
+load_folder <- function(folder_path) {
+  files <- list.files(folder_path,
+                      pattern = "\\.csv$",
+                      full.names = TRUE)
+
+  if (length(files) == 0) {
+    stop(paste("No CSV files found in", folder_path))
+  }
+
+  do.call(rbind, lapply(files, function(f) {
+    tmp <- read.csv(f)
+    tmp$source_file <- basename(f)
+    tmp
+  }))
+}
+# Load all the pilot data csvs into one dataset
+dataset1 <- load_folder(data_folder1)
+dataset2 <- load_folder(data_folder2)
+# combine dataset 1 and dataset 2 together in one csv
+all_data <- rbind(dataset1, dataset2)
+#check
+head(all_data)
+table(all_data$source_file)
+```
+
+#### Pre-processing Data
+
+Once the data in the file are all merged together, now we need to filter out the participants that failed the attention check. Since there is an unbalanced amount of participants, we will randomly select 40 participants per condition to equally analyze the data.
+
+#### Attention Check Filtering
+
+Will exclude all the participants that failed the attention check. This will ensure that there is no confound in the data.
+
+```{r}
+# Reload merged data
+data_base <- all_data
+# Score attention checks as true/false
+data_base$attention_question_yes <-
+  data_base$attention_question_passed == "true"
+data_base$attention_effort_yes <-
+  data_base$attention_effort_passed == "true"
+# Filter the rows where the attention checks are true
+passing_rows <- data_base [
+  data_base$attention_question_yes == TRUE &
+    data_base$attention_effort_yes == TRUE,
+]
+# Check how many rows passed the attention check
+nrow(passing_rows)
+# Look at the csv files that passed the attention checks
+head(passing_rows[, c("source_file",
+                      "attention_question_passed",
+                      "attention_effort_passed",
+                      "attention_question_yes",
+                      "attention_effort_yes")])
+
+# Select the source files that participants' passed.
+passed_ids <- unique(passing_rows$source_file)
+passed_ids
+length(passed_ids)
+# Finally, keep all the rows except those who have failed the attention check
+data_attention <- data_base [
+  data_base$source_file %in% passed_ids,
+]
+```
+
+#### Randomization
+
+Before we format the question, we will randomly select 40 participants from each condition (SE vs no SE) to analyze. This will amount to a total of 80 participants.
+
+```{r}
+# Split between the self-explanation versus no self-explanation participants.
+data_attention <- data_attention[
+  data_attention$condition %in% c("self_explanation", "no_self_explanation"),
+]
+# Obtain a row per participant in their respective conditions
+participants <- unique(data_attention[, c("source_file", "condition")])
+sampled_participants <- participants %>%
+  group_by(condition) %>%
+  sample_n(size = 40) %>%   # because both groups have at least 40
+  ungroup()
+print(sampled_participants)
+# Take the full data of those participants
+sampled_ids <- sampled_participants$source_file
+data_sampled <- data_attention %>%
+  filter(source_file %in% sampled_ids)
+# Number of unique participants = 80
+print(length(unique(data_sampled$source_file)))
+# Should show 40 in each condition
+participants_sampled <- unique(data_sampled[, c("source_file", "condition")])
+print(table(participants_sampled$condition))
+# Peek at full sampled dataset
+head(data_sampled)
+```
+
+#### Scoring Study
+
+In this section, we will try to score the pretest and posttest section before we run a descriptive statistics. Specifically, we will analyze both the pretest and posttest multi-choice answers.
+
+#### Pretest Accuracy
+
+```{r}
+# Define pretest CT skill questions
+pretest_accuracy_questions <- c("Q0", "Q2", "Q4", "Q6", "Q8", "Q10", "Q12", "Q14")
+# Pretest answer key
+pretest_accuracy_key <- list(
+  Q0 = "No correct conclusion possible",
+  Q2 = "X and 7",
+  Q4 = "Maybe they would be better off buying the Audi",
+  Q6 = "No correct conclusion possible",
+  Q8 = "Karin works at a bank",
+  Q10 = "Less than 3%",
+  Q12 = "15 and cola",
+  Q14 = "The students score at least 0.1 point higher on the exam"
+)
+# Now, select the questions that are only accuracy_questions
+pretest_accuracy_questions <- names(pretest_accuracy_key)
+# Compare the answers to the key. Correct is true, incorrect is false!
+correct_matrix <- as.data.frame(
+  lapply(pretest_accuracy_questions, function(q) {
+    pretest_all_data[[q]] == pretest_accuracy_key[[q]]
+  })
+)
+# Convert the true/false into binary numbers (1 and 0)
+correct_matrix <- correct_matrix * 1L
+names(correct_matrix) <- paste0(pretest_accuracy_questions, "_score")
+# Obtain both the total number correct per participant and the proportion correct
+pretest_total_accuracy <- rowSums(correct_matrix, na.rm = TRUE)
+pretest_total_prop    <- pretest_total_accuracy / length(pretest_accuracy_questions)
+# Combine the total scores for all participants
+pretest_scored <- cbind(
+  pretest_all_data,
+  correct_matrix,
+  pretest_total_accuracy = pretest_total_accuracy,
+  pretest_total_prop     = pretest_total_prop
+)
+# Look at the pretest scored data set
+head(pretest_scored[
+  , c("pretest_total_accuracy",
+      "pretest_total_prop",
+      "Q0_score", "Q2_score", "Q4_score")
+])
+```
+
+#### Pretest Mental Effort
+
+```{r}
+# Define pretest mental effort questions
+effort_questions <- c("Q1", "Q3", "Q5", "Q7", "Q9", "Q11", "Q13", "Q15")
+# Mental effort key. 
+effort_key <- c(
+  "Very little effort" = 1,
+  "Little effort" = 2,
+  "Not a little nor a lot of effort" = 3,
+  "Quite a lot of effort" = 4,
+  "A lot of effort" = 5
+)
+# Now, select the questions that are only effort_questions
+effort_data <- pretest_answers[effort_questions]
+# Convert the answers selected into the numbers in the effort_key
+effort_key_number <- as.data.frame(
+  lapply(effort_data, function(x) effort_key[x])
+)
+# Rename effort columns
+names(effort_key_number) <- paste0(names(effort_key_number), "_effort")
+# Bind them directly (same row order in both dataframes)
+pretest_scored_effort <- cbind(
+  pretest_scored,
+  effort_key_number
+)
+head(pretest_scored_effort)
+```
+
+#### Posttest Accuracy
+
+```{r}
+# Posttest answer key
+posttest_accuracy_key <- list(
+  q1_mc = "No correct conclusion possible",
+  q2_mc = "Perhaps give preference to graduates of Tilburg University.",
+  q3_mc = "No correct conclusion possible",
+  q4_mc = "Hearts and 2",
+  q5_mc = "Jacques is a janitor",
+  q6_mc = "Less than 10%",
+  q7_mc = "Madrid and Transavia",
+  q8_mc = "Within 5 years, the number of visitors will increase by 2%"
+)
+posttest_accuracy_questions <- names(posttest_accuracy_key)
+# Compare answers to key → TRUE/FALSE
+correct_matrix_post <- as.data.frame(
+  lapply(posttest_accuracy_questions, function(q) {
+    grepl(
+      posttest_accuracy_key[[q]],
+      posttest_all_data[[q]],
+      fixed = TRUE
+    )
+  })
+)
+# Convert the TRUE/FALSE answers 
+correct_matrix_post <- correct_matrix_post * 1L
+names(correct_matrix_post) <- paste0(posttest_accuracy_questions, "_score")
+# Compute total scores correct
+posttest_total_accuracy <- rowSums(correct_matrix_post, na.rm = TRUE)
+posttest_total_prop     <- posttest_total_accuracy / length(posttest_accuracy_questions)
+# Combine the scoring all together with the data set
+posttest_scored <- cbind(
+  posttest_all_data[, c("participant_id", "source_file", "condition")],
+  correct_matrix_post,
+  posttest_total_accuracy = posttest_total_accuracy,
+  posttest_total_prop     = posttest_total_prop
+)
+head(posttest_scored)
+```
+
+#### Posttest Mental Effort & Score
+
+```{r}
+# Effort columns in the new structure
+effort_questions_post <- paste0("q", 1:8, "_effort")
+# Take only those columns from posttest_all_data
+posttest_effort_data <- posttest_all_data[effort_questions_post]
+# Mental effort key (same as pretest)
+effort_key <- c(
+  "Very little effort",
+  "Little effort",
+  "Not a little nor a lot of effort",
+  "Quite a lot of effort",
+  "A lot of effort"
+)
+# Convert effort text → numeric 1–5
+effort_num_post <- as.data.frame(
+  lapply(posttest_effort_data, function(x) {
+    as.numeric(factor(x, levels = effort_key, labels = 1:5))
+  })
+)
+# Name them something clear, e.g. q1_effort_num, ...
+names(effort_num_post) <- paste0(names(effort_num_post), "_num")
+# Attach effort columns to your scored posttest data
+posttest_scored_effort <- cbind(posttest_scored, effort_num_post)
+head(posttest_scored_effort)
+```
+
+## Confirmatory Analysis
+
+### Analysis Code
+
+## Before Analysis – Formatting
+
+Before running the descriptive statistics, confirmatory, and exploratory analyses, we will first combine the accuracy data set and format it for the different statistical studies to be ran smoothly.
+
+### Combined Scored Data Set
+
+Before we analyze the data, we will combine the pretest and posttest scored data. The logic of this section is combining the pretest and posttest scores in one data set. The scores will use the total accuracy score, as everyone completed 8 questions which we hope to identify how much they improved.
+
+```{r}
+# Combine the pretest and posttest scorred data into one data set
+analysis_df <- pretest_scored %>%
+  select(
+    participant_id,
+    condition,
+    pretest = pretest_total_accuracy
+  ) %>%
+  left_join(
+    posttest_scored %>%
+      select(
+        participant_id,
+        posttest = posttest_total_accuracy
+      ),
+    by = "participant_id"
+  )
+# Open the combined, scored data of the pretest and posttest
+head(analysis_df)
+summary(analysis_df)
+```
+
+### Data Preparation for ANOVA
+
+Next, we are going to create a data-set interpretable for ANOVA analyses. In this section, we will have the participant pretest and posttest paired with each other and accuracy shown side by side. Structuring the data in this fashion will be interpretable for both ggplots and ANOVA.
+
+```{r}
+# Pull the columns that we want to add for the new data set used for the ANOVA analyses
+analysis_long <- analysis_df %>%
+  pivot_longer(
+    cols = c(pretest, posttest),
+    names_to = "time",
+    values_to = "accuracy"
+  ) %>%
+  mutate(
+    time = factor(time, levels = c("pretest", "posttest")),
+    condition = factor(condition)
+  )
+# Look at the data set
+head(analysis_long)
+names(analysis_long)
+```
+
+## Overview Statistics
+
+In the overview, we will try to analyze the overall descriptive statistics of posttest and pretest total accuracy means and standard deviations. First, we are going to look at the total sample size we collected as well as per condition.
+
+```{r}
+# Report the total number of N 
+overall_n <- data.frame(
+  condition = "Overall",
+  n = nrow(analysis_df)
+)
+# Report the total number of N per condition
+by_condition_n <- as.data.frame(table(analysis_df$condition))
+names(by_condition_n) <- c("condition", "n")
+by_condition_n
+# Combine
+n_table <- bind_rows(overall_n, by_condition_n)
+n_table
+```
+
+Afterwards, we are going to run the full descriptive statistics that will report the mean & standard deviation overall as well as per condition.
+
+```{r}
+# Overall descriptive statistics
+overall_desc <- analysis_df %>%
+  summarise(
+    n = nrow(.),
+    pretest_mean  = mean(pretest_total_accuracy, na.rm = TRUE),
+    pretest_sd    = sd(pretest_total_accuracy, na.rm = TRUE),
+    posttest_mean = mean(posttest_total_accuracy, na.rm = TRUE),
+    posttest_sd   = sd(posttest_total_accuracy, na.rm = TRUE)
+  )
+
+overall_desc
+# Descripitive statistics per condition
+condition_desc <- analysis_df %>%
+  dplyr::group_by(condition) %>%
+  dplyr::summarise(
+    n             = dplyr::n(),
+    pretest_mean  = mean(pretest,  na.rm = TRUE),
+    pretest_sd    = sd(pretest,    na.rm = TRUE),
+    posttest_mean = mean(posttest, na.rm = TRUE),
+    posttest_sd   = sd(posttest,   na.rm = TRUE),
+    .groups = "drop"
+  )
+
+condition_desc
+```
+
+## Visualization of Overview Stats
+
+In this section, we will be looking at a visualization of the mean pretest versus posttest accuracy by condition. Want to analyze which one improved more visually and look through the patterns before completing the confirmatory analysis to understand the main effects.
+
+```{r}
+# Creating a ggplot to see the mean pretest versus posttest accuracy by condition (SE vs no SE)
+ggplot(analysis_long, aes(
+  x = time,
+  y = accuracy,
+  group = condition,
+  color = condition
+)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1) +
+  stat_summary(fun = mean, geom = "point", size = 3) +
+  scale_color_manual(values = c("#004aad", "#ffde59")) + 
+  theme_classic(base_size = 14) +
+  labs(
+    x = "Time",
+    y = "Mean Accuracy",
+    color = "Condition",
+    title = "Mean Pretest vs Posttest Accuracy by Condition"
+  )
+```
+
+# Confirmatory Analyses
+
+For the confirmatory analyses, we will use a 2 X 2 mixed ANOVA to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not.
+
+## Mixed ANOVA Analysis
+
+In this section, we will run the main effect we want to see which is the interaction between condition (no SE versus SE) and timing (pretest versus posttest).
+
+```{r}
+# Label the two factors being analyzed`for the ANOVA`
+analysis_long <- analysis_long |>
+  mutate(
+    participant_id = factor(participant_id),
+    time           = factor(time),
+    condition      = factor(condition)
+  )
+# Run the ANOVA test and ensure that p-values will be reported
+anova_afex <- aov_ez(
+  id    = "participant_id",
+  dv    = "accuracy",
+  data  = analysis_long,
+  within = "time",
+  between = "condition",
+  type  = 3,
+  anova_table = list(es = "ges")  
+)
+anova_afex
+anova(anova_afex, correction = "GG") 
+
+```
+
+This analysis differs from the original replication project, that did a 3 X 2 X 2 analyses comparing the types of critical thinking questions. Additionally, they added a delayed posttest to measure the retention of this effect. This replication project truncated the analysis to ensure that people are writing the
+
+## Pairwise Comparison
+
+```{r}
+# Compute the estimated marginal means
+emm <- emmeans(anova_afex, ~ condition * time)
+emm_df <- as.data.frame(emm)
+emm_df
+# Compute pairwise comparison between pretest and posttest
+pairs_cond_within_time <- contrast(emm, 
+                                   method = "pairwise", 
+                                   by = "time",
+                                   adjust = "bonferroni")
+
+pairs_cond_df <- as.data.frame(pairs_cond_within_time)
+pairs_cond_df
+# Compute pairwise comparison on time within each condition
+pairs_time_within_cond <- contrast(emm, 
+                                   method = "pairwise",
+                                   by = "condition",
+                                   adjust = "bonferroni")
+
+pairs_time_df <- as.data.frame(pairs_time_within_cond)
+pairs_time_df
+```
+
+## Bar Plot
+
+```{r}
+ggplot(emm_df, aes(x = time, y = emmean, fill = condition)) +
+  geom_col(position = position_dodge(width = 0.9)) +
+  geom_errorbar(
+    aes(ymin = emmean - SE, ymax = emmean + SE),
+    position = position_dodge(width = 0.9),
+    width = 0.4,
+    color = "black"
+  ) +
+  scale_fill_manual(
+    values = c("#004aad", "#ffde59"),  # academic colors
+    name   = "Condition",
+    labels = c("no_self_explanation", "self_explanation")
+  ) +
+  labs(
+    title = "Mixed ANOVA Interaction Between Condition & Timing",
+    x = "Time",
+    y = "Accuracy Score (0-8 correct)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    panel.grid.minor = element_blank()
+  )
+ggsave("anova_graph.png")
+```
+
+# Exploratory Analyses
+
+The results reveal that
+
+## MC + Effort Data Set
+
+### Correlation Test for Pretest
+
+Pretest accuracy score & mental effort score correlation test
+
+```{r}
+# Find columns with "_effort" in the name
+effort_cols <- grep("_effort$", names(pretest_scored_effort), value = TRUE)
+
+# Convert all effort columns to numeric
+pretest_scored_effort[effort_cols] <- lapply(
+  pretest_scored_effort[effort_cols],
+  function(x) as.numeric(x)
+)
+# Create a mean pretest score of the participants
+pretest_scored_effort <- pretest_scored_effort %>%
+  mutate(
+    pretest_effort_mean = rowMeans(across(all_of(effort_cols)), na.rm = TRUE)
+  )
+# Run the correlation based on the proportion correct on the pretest
+cor.test(
+  pretest_scored_effort$pretest_total_prop,
+  pretest_scored_effort$pretest_effort_mean
+)
+```
+
+Create a correlation scatterplot to visually look at the weak correlation between pretest effort & accuracy.
+
+```{r}
+ggplot(pretest_scored_effort, aes(x = pretest_effort_mean,
+                                  y = pretest_total_prop)) +
+  geom_point(alpha = 0.6, size = 2) +
+  geom_smooth(method = "lm", se = TRUE, color = "#ffde59") +
+  labs(
+    title = "Correlation Between Pretest Effort and Pretest Accuracy",
+    x = "Mean Mental Effort (1 = low, 5 = high)",
+    y = "Pretest Accuracy (0-8 correct)"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Posttest MC + Effort Correlation
+
+```{r}
+# Numeric effort columns end in "_effort_num"
+effort_cols <- grep("_effort_num$", names(posttest_scored_effort), value = TRUE)
+# Participant-level mean mental effort
+posttest_scored_effort$mean_effort <- rowMeans(
+  posttest_scored_effort[effort_cols],
+  na.rm = TRUE
+)
+# Sanity check
+head(posttest_scored_effort[, c("posttest_total_accuracy", "mean_effort")])
+# Run correlation
+cor_test_result <- cor.test(
+  posttest_scored_effort$mean_effort,
+  posttest_scored_effort$posttest_total_accuracy,
+  method = "pearson"
+)
+cor_test_result
+```
+
+Ggplot
+
+```{r}
+ggplot(posttest_scored_effort, aes(
+  x = mean_effort,
+  y = posttest_total_accuracy
+)) +
+  geom_point(alpha = 0.7, size = 3, color = "black") +
+  geom_smooth(method = "lm", se = TRUE, color = "#ffde59") +
+  labs(
+    title = "Correlation Between Mental Effort and Posttest Accuracy",
+    x = "Mean Mental Effort (1 = low, 5 = high)",
+    y = "Posttest Accuracy (0–8 correct)"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Confirmatory Analysis Section
+
+Mixed ANOVAs analyses were heavily conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals.
+
+When analyzing the results, we found
+
+![](images/anova_graph.png)
+
+![]()
 
 ### Exploratory analyses
 
-Any follow-up analyses desired (not required).  
+Any follow-up analyses desired (not required).
+
+![](images/pretest_correlation.png){width="671"}
+
+![](images/posttest_correlation-01.png)
 
 ## Discussion
 
 ### Summary of Replication Attempt
 
-Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.\
+The confirmatory analysis of the replication study reveals a significant effect between pretest and posttest accuracy across both conditions. However, there is no evidence that self-explanations meaningfully impact how participants improve learning over time. Additionally, there is no significant effect between the condition (self-explanation versus no self-explanation) and timing (pretest versus posttest), further highlighting that the observed learning gains cannot be attributed to the self-explanation intervention itself. These results are consistent with the original findings, who also reported that there are no meaningful effects between self-explanation and timing. Similarly, the study also reported a substantial improvement over time between pretest and posttest accuracy across both conditions. Furthermore, the current study successfully replicates the original study's findings.
+
+![]()
 
 ### Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt. None of these need to be long.
+
+Regardless of the design changes made in the replication project, the replication was
