@@ -21,7 +21,7 @@ IMPORTANT LINKS FOR STUDY:
 
 Despite the growing access to information, students are struggling to develop critical thinking skills needed to evaluate evidence, analyze patterns, and create well-informed judgments (APA citation on definition). One may argue prior knowledge moderates critical thinking. Bao et al. (2022) explores this dynamic, recruiting both U.S. and Chinese students to learn about a scientific concept. After completing the intervention, participants were assessed on their understanding of the content and how well they applied their understanding to novel scenarios. Though both conditions scored higher on scientific content knowledge, scientific reasoning skills remained the same. Bao et al. (2022) exemplifies how prior knowledge alone has minimal impact in developing critical thinking skills. Numerous studies validate this assertion, finding that college students’ underperform in critical thinking and remain stagnant throughout undergraduate years (Billings and Roberts, 2014; Flores et al., 2012; Arum and Roska, 2011; Koehler et al, 2002; Rachlinski, 2004). Furthermore, this may indicate that critical thinking may depend more on how students study rather than how much content they know.
 
-One promising study strategy the authors investigate to increase critical thinking skills is self-explanation. Self-explanations involve analyzing a problem and articulating one's own reasoning to the solution. Research asserts how self-explanations are influential in helping students organize knowledge, promote analytical thinking, identify gaps in knowledge, and problem-solve creatively (Lombrozo, 2006; Dunlosky et al., 2013; Wylie and Chi, 2014; Fiorella and Mayer, 2016; Rittle-Johnson and Loehr, 2017f). With these benefits, Van Peppen et al. (2018) aims to understand whether self-explanations improve critical thinking skills. They predict that self-explanations will improve critical thinking and reduce the mental effort required to problem solve.
+One promising study strategy the authors investigate to increase critical thinking skills is self-explanation. Self-explanations involve analyzing a problem and articulating one's own reasoning to the solution. Research asserts how self-explanations are influential in helping students organize knowledge, promote analytical thinking, identify gaps in knowledge, and problem-solve creatively (Lombrozo, 2006; Dunlosky et al., 2013; Wylie and Chi, 2014; Fiorella and Mayer, 2016). With these benefits, Van Peppen et al. (2018) aims to understand whether self-explanations improve critical thinking skills. They predict that self-explanations will improve critical thinking and reduce the mental effort required to problem solve.
 
 # Methods
 
@@ -776,7 +776,17 @@ Given these findings, both the original and replication study found only a meani
 
 ## Exploratory analyses
 
-Any follow-up analyses desired (not required).
+Given that the self-explanation intervention did not meaningfully improve learning gains, a Pearson correlation test was conducted to examine the association between pretest/posttest accuracy scores and mean mental-effort ratings. This was to assess whether perceived mental effort played a meaningful role in participants’ performance outcomes.
+
+We found that mental-effort ratings did not significantly correlate with pretest accuracy, r(78) = –.108, p = .34.
+
+![](images/pretest_correlation-02.png)
+
+A weak correlation was also found with posttest accuracy, r(78) = –.087, p = .44.
+
+![](images/posttest_correlation-02.png)
+
+This further highlights that there is no meaningful interaction between mental effort and learning performance during this study.
 
 # Discussion
 
@@ -786,6 +796,28 @@ The confirmatory analysis of the replication study reveals a significant effect 
 
 ## Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt. None of these need to be long.
+Though the replication study was successful, one may question why the self-explanation learning intervention did not meaningfully affect learning outcomes. We conducted an Pearson's correlation test to explore whether or not mental effort ratings affected performance on the pretest and posttest. Both the pretest and posttest suggest a very weak association between mental effort and learning outcomes, pointing to potentially other factors that impacted learning gains. One may question if the differences from the original design could have affected the findings. Despite potential confounds like the study being conducted online, translated in a different language, and simplified from its original design, the current study replicates the finding of the original. Therefore, it is important to examine other potential moderators that could have influenced the results.
 
-Regardless of the design changes made in the replication project, the replication was
+One potential factor the original authors raise is how feedback was not provided. If feedback is given, then participants would not get the chance to know if their self-explanations were high quality. This can impact the results, as participants may potentially reinforce misconceptions in their knowledge due to no feedback. Adding onto this, I am equally curious whether teaching students how to write high-quality self-explanations could have improved learning outcomes. If participants do not know where to focus their thoughts on, it can be difficult to guide their own learning. Future studies can explore how teaching self-explanations and combining it with feedback influences ones critical thinking skills.
+
+# References
+
+Arum, R., and Roksa, J. (2011). Limited learning on college campuses. Society 48, 203–207. doi: 10.1007/s12115-011-9417-8
+
+Billings, L., & Roberts, T. (2014). Teaching critical thinking: Using seminars for 21st century literacy. Routledge.
+
+Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., & Willingham, D. T. (2013). Improving students’ learning with effective learning techniques: Promising directions from cognitive and educational psychology. Psychological Science in the Public interest, 14(1), 4-58.
+
+Fiorella, L., & Mayer, R. E. (2016). Eight ways to promote generative learning. Educational psychology review, 28(4), 717-741.
+
+Flores, K. L., Matkin, G. S., Burbach, M. E., Quinn, C. E., & Harding, H. (2012). Deficient critical thinking skills among college graduates: Implications for leadership. Educational Philosophy and Theory, 44(2), 212-230.
+
+Gilovich, D. W. Griffin, and D. Kahneman (New York, NY: Cambridge University Press), 686–715.
+
+Koehler, D. J., Brenner, L., and Griffin, D. (2002). “The calibration of expert judgment: Heuristics and biases beyond the labratory,” in Heuristics and Biases: The Psychology of Intuitive Judgment, eds T. Lombrozo, T. (2006). The structure and function of explanations. Trends in cognitive sciences, 10(10), 464-470.
+
+Rachlinski, J. J. (2004). “Heuristics, biases, and governance,” in Blackwell Handbook of Judgment and Decision Making, eds D. J. Koehler and N. Harvey (Malden, MA: Blackwell Publishing Ltd.), 567–584.
+
+Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T. (2018, November). Effects of self-explaining on learning and transfer of critical thinking skills. In Frontiers in education (Vol. 3, p. 100). Frontiers Media SA.
+
+Wylie, R., & Chi, M. T. (2014). 17 the self-explanation principle in multimedia learning. The Cambridge handbook of multimedia learning, 413-432.
