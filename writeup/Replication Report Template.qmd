@@ -764,7 +764,7 @@ To further show the comparison of the studies, below shows the original and repl
 
 [Original Study ANOVA Table:]{.underline}
 
-![](images/Screenshot 2025-12-09 at 3.55.37 PM.png)
+![](images/original anova.png)
 
 [Replication ANOVA Table:]{.underline}
 
