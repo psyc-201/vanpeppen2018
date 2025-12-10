@@ -1,79 +1,19 @@
 ---
-title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)"
-author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T."
-date: "2025-12-09" 
-format:
+title: "Replication of Vanpeppen et al. (2018) Data Analysis"
+author: "Christine Lee"
+date: "last updated at 11.29.2025"
+format: 
   html:
+    code-fold: false
     toc: true
     toc-depth: 3
----
-
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
-
----
-IMPORTANT LINKS FOR STUDY:
-- Github_Repo: https://github.com/psyc-201/vanpeppen2018
-- Pre-registration: https://osf.io/qvesk/overview
-- jspsych_Experiment: https://psyc-201.github.io/vanpeppen2018/
+    theme: cosmo
+editor: visual
 ---
 
 # Introduction
 
-Despite the growing access to information, students are struggling to develop critical thinking skills needed to evaluate evidence, analyze patterns, and create well-informed judgments (APA citation on definition). One may argue prior knowledge moderates critical thinking. Bao et al. (2022) explores this dynamic, recruiting both U.S. and Chinese students to learn about a scientific concept. After completing the intervention, participants were assessed on their understanding of the content and how well they applied their understanding to novel scenarios. Though both conditions scored higher on scientific content knowledge, scientific reasoning skills remained the same. Bao et al. (2022) exemplifies how prior knowledge alone has minimal impact in developing critical thinking skills. Numerous studies validate this assertion, finding that college students’ underperform in critical thinking and remain stagnant throughout undergraduate years (Billings and Roberts, 2014; Flores et al., 2012; Arum and Roska, 2011; Koehler et al, 2002; Rachlinski, 2004). Furthermore, this may indicate that critical thinking may depend more on how students study rather than how much content they know.
-
-One promising study strategy the authors investigate to increase critical thinking skills is self-explanation. Self-explanations involve analyzing a problem and articulating one's own reasoning to the solution. Research asserts how self-explanations are influential in helping students organize knowledge, promote analytical thinking, identify gaps in knowledge, and problem-solve creatively (Lombrozo, 2006; Dunlosky et al., 2013; Wylie and Chi, 2014; Fiorella and Mayer, 2016). With these benefits, Van Peppen et al. (2018) aims to understand whether self-explanations improve critical thinking skills. They predict that self-explanations will improve critical thinking and reduce the mental effort required to problem solve.
-
-# Methods
-
-## Power Analysis
-
-A power analysis was calculated, in which the study computed that 80 participants would be sufficient for the study. They computed the power analysis using a 3 X 2 X 2 mixed ANOVA model, with alpha of 0.05 and correlation of 0.3, and sample size of N=80. They found that this sample size would be sufficient for picking up medium sized effects.
-
-## Planned Sample
-
-80 UC San Diego psychology undergraduate students will be recruited for this replication project. Participants will be recruited through Sona. Participants are awarded 0.25 points of extra credit for completing the study.
-
-## Materials
-
-The materials for both the replication and original study are the same. For both the pretest and posttest, participants will be administered the critical thinking (CT) skills test. The CT-skills test tried to measure critical thinking skills in two key categories. The first category was to understand how well people were able to logically reason. To test this, they implemented two exams that measured how susceptible participants are to believe in false information (Syllogistic Reasoning task) as well as how likely participants verify versus disprove claims (Wason Selection task). The second category the study aimed to assess was participants’ statistical reasoning skills. The first test they used was the Base-rate tasks to evaluate whether people prioritized anecdotal evidence over statistical findings. Additionally, they integrated the Conjunction tasks which measured how likely people bias statistics: such as believing events described in detail are more probable than a simplistic recount.
-
-For the intervention phase, the study provided CT-instructions that educated participants on what inductive versus deductive reasoning is. Additionally, the instructions integrated two worked examples per exam they were administered in the pretest. Then, participants practiced the learned skills with CT-practice material that allowed participants to apply their skills to four different scenarios, and explain why they came to their conclusions. With each test administered, participants were given a mental effort survey where they rated on a 9-point Likert scale (1 being extremely low effort to 9 being extremely high effort) on how much cognitive effort it took to complete the task.
-
-## Procedure
-
-**Original Study:** Once completing a consent form, participants completed the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions.
-
-**Replication Study:** The study procedures follow the original study. The only difference is that the study was conducted online, so participants had to complete an online consent agreement by clicking 'I agree'. Afterwards, they completed the same eight critical thinking skill pretest questions followed my mental effort ratings. Instead of being given a paper packet, participants virtually read the critical thinking skills for 2 minutes. Afterwards, they completed either three self-explanation exercises or read through them. Then, they completed the posttest before being awarded Sona credits for their completion.
-
-## Analysis Plan
-
-**We will use a 2 X 2 mixed ANOVA** to analyze our results between prior knowledge (pretest vs posttest) as the within-subjects factor and instructional condition (self-explanation versus no self-explanation) as the between-subjects variable. We hope to assess whether critical thinking performance is improved by integrating self-explanation combined with instructional guidance or not. For all analyses in this paper, a p-value of 0.05 was used as a threshold for statistical signficance. Partial eta-squared is reported as a measure of effect size for the ANOVAs, for which 0,01 is considered small, 0.06 medium, and 0.14 large, and Cohen's d is reported for the post-hoc tests, with values of 0.2, 0.5, and 0.8 representing a small, medium, and large effect size respectively (Cohen, 1988).
-
-## Differences from Original Study
-
-Compared to the original study, the replication project employed a 2 X 2 mixed ANOVA analysis. Originally, the study tries to measure three different factors: timing, condition, and critical thinking test type. Due to the constrained timeline of the project, comparing how participants improved on the different critical thinking skills were not analyzed. Rather, we analyzed the main effect between self-explanation and timing. Additionally, this replication study did not include the delayed posttest. Beyond timing constraints, we felt that comparing immediate posttest alone could still reveal interesting findings of the role self-explanation has on critical thinking. Therefore, the replication study only measures the immediate posttest condition.
-
-Another key difference is that the study was launched online rather than the classroom. This would open several confounds, such as variability in concentration and distractions. To mitigate these risks, the replication study implemented an attention check to ensure that participants were paying attention. If they failed, their data would not be included for analysis and scoring. Finally, the original study was in Dutch while this current study is in English. Materials were recruited under the authors' OSF repository that included the pretest, practice materials, and posttest. The replication study used Google translate to create the materials, and did not make any edits towards the wording to ensure that minimal context is lost. Through these efforts, the hope is to mitigate as much differences from the original to replicate the study.
-
-## Reliability & Validity
-
-The original study scores reliability through recruiting two raters to score the data. Since interrater reliability was high, two raters only scored 25% of the tests (r=0.899) and one rater scored the rest of the CT skills tests. Beyond reliability, the study fails to have ecologically validity, as Vanpeppen and colleagues (2018) admit that the study may be difficult to translate into classroom environments. To elaborate, the study could not find any meaningful effects on how self-explanations benefit unbiased reasoning skills. This is due to how those who attend class are more likely to be motivated to do well on tasks, which make the perceived difficulty of the task less effective. For the purpose of time, the replication project only measured the accuracy scores between pretest and posttest and did not include data analysis on the length and quality of the self-explanations.
-
-## Methods Addendum (Post Data Collection)
-
-In the methods addendum, the actual sample recruited as well as differences from pre-data collection methods plan are outlined.
-
-### Actual Sample
-
-The study recruited 137 participants, but 40 people were taken out of the data due to technical issues or partially reported data. In the replication project, this will not be an issue as there is no delayed posttest. Therefore, the data of 80 participants were analyzed.
-
-### Differences from pre-data collection methods plan
-
-In total, we collected 137 participants. We over-recruited, as initially recruiting 80 participants was not sufficient due to many data failing the attention checks. When pre-processing the data, we got 97 valid participant data to analyze. When preprocessing the data, it created an imbalance of how many people were in per condition. To mitigate statistical biases in the data and remain consistent with my preregistered sample size, I randomly selected 40 participants per condition.
-
-# Analysis Code
-
-In the following section, I will show the coding steps I took to analyze the data. I loaded the required packages, preprocessed my data, scored the multiple choice and effort conditions, and ran several analyses: descriptive statistics, confirmatory analysis, and exploratory analysis.
+\[add brief introduction of what the project will be about\]
 
 ## Setup
 
@@ -745,79 +685,3 @@ ggplot(posttest_scored_effort, aes(
   theme_minimal(base_size = 14)
 ggsave("posttest_correlation.png")
 ```
-
-## Data preparation
-
-To prepare my data, I will launch my study on jsPsych to ensure that data analyses goes smooth as possible. I will label all my variables based on the CT skills test, as well as the pretest and immediate posttest. If there is any incomplete data, I will remove the participant out of the dataset. This will not be a huge issue, as there is no delayed posttest which would decrease the chance of this happening. I will also preregister my replication study to ensure that I remain open about my practices.
-
-# Results
-
-## Confirmatory Analysis
-
-**Key Test**: Mixed ANOVAs analyses were conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals.
-
-**Original Results:** The original study found no significant main effect between self-explanation and learning gains. However, the improvement between pretest and posttest accuracy significantly increased. The pretest performance was low (*M* = 40.40, SD = 29.09) than the immediate posttest (M = 78.06, SD = 29.09), p \<0.001, partial eta-squared = 0.647.
-
-**Replication Results:** Similar to the original study, there were no significant main effects between self-explanations and learning gains *F*(1, 78) = 0.22, *p* = .637, ges = .001. Additionally, there was no significant effects between the self-explanation and no self-explanation condition *F*(1, 78) = 0.05, *p* = .816, ges \< .001. However, they found a very large effect size between the test moment condition,*F*(1, 78) = 37.93, *p* \< .001, ges = .136. This is further revealed when conducting a pairwise comparison, where both the no self-explanation (*p* \< .001) and self-explanation (*p* \< .001) conditions improved from pretest to posttest.
-
-To further show the comparison of the studies, below shows the original and replication mixed ANOVA tables. For the replication ANOVA table, it is more simplified than the original study as the study design itself is more simplified than the original.
-
-[Original Study ANOVA Table:]{.underline}
-
-![](images/Screenshot 2025-12-09 at 3.55.37 PM.png)
-
-[Replication ANOVA Table:]{.underline}
-
-![](images/anova_table.png){fig-align="center" width="637"}
-
-![]()
-
-Given these findings, both the original and replication study found only a meaningful effect in the test moment condition.
-
-## Exploratory analyses
-
-Given that the self-explanation intervention did not meaningfully improve learning gains, a Pearson correlation test was conducted to examine the association between pretest/posttest accuracy scores and mean mental-effort ratings. This was to assess whether perceived mental effort played a meaningful role in participants’ performance outcomes.
-
-We found that mental-effort ratings did not significantly correlate with pretest accuracy, r(78) = –.108, p = .34.
-
-![](images/pretest_correlation-02.png)
-
-A weak correlation was also found with posttest accuracy, r(78) = –.087, p = .44.
-
-![](images/posttest_correlation-02.png)
-
-This further highlights that there is no meaningful interaction between mental effort and learning performance during this study.
-
-# Discussion
-
-## Summary of Replication Attempt
-
-The confirmatory analysis of the replication study reveals a significant effect between pretest and posttest accuracy across both conditions. However, there is no evidence that self-explanations meaningfully impact how participants improve learning over time. Additionally, there is no significant main effect between the condition (self-explanation versus no self-explanation) and timing (pretest versus posttest), further highlighting that the observed learning gains cannot be attributed to the self-explanation intervention itself. These results are consistent with the original findings, who also reported that there are no meaningful effects between self-explanation and timing. Similarly, the study also reported a substantial improvement over time between pretest and posttest accuracy across both conditions. Furthermore, the current study successfully replicates the original study's findings.
-
-## Commentary
-
-Though the replication study was successful, one may question why the self-explanation learning intervention did not meaningfully affect learning outcomes. We conducted an Pearson's correlation test to explore whether or not mental effort ratings affected performance on the pretest and posttest. Both the pretest and posttest suggest a very weak association between mental effort and learning outcomes, pointing to potentially other factors that impacted learning gains. One may question if the differences from the original design could have affected the findings. Despite potential confounds like the study being conducted online, translated in a different language, and simplified from its original design, the current study replicates the finding of the original. Therefore, it is important to examine other potential moderators that could have influenced the results.
-
-One potential factor the original authors raise is how feedback was not provided. If feedback is given, then participants would not get the chance to know if their self-explanations were high quality. This can impact the results, as participants may potentially reinforce misconceptions in their knowledge due to no feedback. Adding onto this, I am equally curious whether teaching students how to write high-quality self-explanations could have improved learning outcomes. If participants do not know where to focus their thoughts on, it can be difficult to guide their own learning. Future studies can explore how teaching self-explanations and combining it with feedback influences ones critical thinking skills.
-
-# References
-
-Arum, R., and Roksa, J. (2011). Limited learning on college campuses. Society 48, 203–207. doi: 10.1007/s12115-011-9417-8
-
-Billings, L., & Roberts, T. (2014). Teaching critical thinking: Using seminars for 21st century literacy. Routledge.
-
-Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., & Willingham, D. T. (2013). Improving students’ learning with effective learning techniques: Promising directions from cognitive and educational psychology. Psychological Science in the Public interest, 14(1), 4-58.
-
-Fiorella, L., & Mayer, R. E. (2016). Eight ways to promote generative learning. Educational psychology review, 28(4), 717-741.
-
-Flores, K. L., Matkin, G. S., Burbach, M. E., Quinn, C. E., & Harding, H. (2012). Deficient critical thinking skills among college graduates: Implications for leadership. Educational Philosophy and Theory, 44(2), 212-230.
-
-Gilovich, D. W. Griffin, and D. Kahneman (New York, NY: Cambridge University Press), 686–715.
-
-Koehler, D. J., Brenner, L., and Griffin, D. (2002). “The calibration of expert judgment: Heuristics and biases beyond the labratory,” in Heuristics and Biases: The Psychology of Intuitive Judgment, eds T. Lombrozo, T. (2006). The structure and function of explanations. Trends in cognitive sciences, 10(10), 464-470.
-
-Rachlinski, J. J. (2004). “Heuristics, biases, and governance,” in Blackwell Handbook of Judgment and Decision Making, eds D. J. Koehler and N. Harvey (Malden, MA: Blackwell Publishing Ltd.), 567–584.
-
-Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T. (2018, November). Effects of self-explaining on learning and transfer of critical thinking skills. In Frontiers in education (Vol. 3, p. 100). Frontiers Media SA.
-
-Wylie, R., & Chi, M. T. (2014). 17 the self-explanation principle in multimedia learning. The Cambridge handbook of multimedia learning, 413-432.
