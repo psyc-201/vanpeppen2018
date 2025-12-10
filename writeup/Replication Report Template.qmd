@@ -746,17 +746,21 @@ ggplot(posttest_scored_effort, aes(
 ggsave("posttest_correlation.png")
 ```
 
-# Results
-
 ## Data preparation
 
 To prepare my data, I will launch my study on jsPsych to ensure that data analyses goes smooth as possible. I will label all my variables based on the CT skills test, as well as the pretest and immediate posttest. If there is any incomplete data, I will remove the participant out of the dataset. This will not be a huge issue, as there is no delayed posttest which would decrease the chance of this happening. I will also preregister my replication study to ensure that I remain open about my practices.
 
-## Confirmatory Analysis Section
+# Results
 
-Mixed ANOVAs analyses were heavily conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals.
+## Confirmatory Analysis 
 
-When analyzing the results, we found
+**Key Test**: Mixed ANOVAs analyses were conducted to test the performance gains on MC-answers. Though the original study employed a 3x2 design, I will analyze the data through a mixed ANOVA 2x2 design. Specifically, I will analyze self-explanation effectiveness and timing (which would compare pretest and immediate posttest). I will be calculating the p-value, effect size (through Cohen's d), and 95% confidence intervals.
+
+**Original Results:** The original study found no significant main effect between self-explanation and learning gains. However, the improvement between pretest and posttest accuracy significantly increased. The pretest performance was low (*M* = 40.40, SD = 29.09) than the immediate posttest (M = 78.06, SD = 29.09), p \<0.001, partial eta-squared = 0.647.
+
+**Replication Results:** Similar to the original study, there were no significant main effects between self-explanations and learning gains *F*(1, 78) = 0.22, *p* = .637, ges = .001. Additionally, there was no significant effects between the self-explanation and no self-explanation condition *F*(1, 78) = 0.05, *p* = .816, ges \< .001. However, they found a very large effect size between the test moment condition,*F*(1, 78) = 37.93, *p* \< .001, ges = .136. This is further revealed when conducting a pairwise comparison, where both the no self-explanation (*p* \< .001) and self-explanation (*p* \< .001) conditions improved from pretest to posttest.
+
+To further show the comparison of the studies, below shows the original and replication mixed ANOVA tables. For the replication ANOVA table, it is more simplified than the original study as the study design itself is more simplified than the original.
 
 [Original Study ANOVA Table:]{.underline}
 
@@ -767,6 +771,8 @@ When analyzing the results, we found
 ![](images/anova_table.png){fig-align="center" width="637"}
 
 ![]()
+
+Given these findings, both the original and replication study found only a meaningful effect in the test moment condition.
 
 ## Exploratory analyses
 
