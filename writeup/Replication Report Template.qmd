@@ -1,11 +1,11 @@
 ---
-title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)"
-author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T."
+title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)" 
+author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T." 
 date: "2025-12-09" 
-format:
-  html:
-    toc: true
-    toc-depth: 3
+format: 
+  html: 
+  toc: true 
+  toc-depth: 3
 ---
 
 <!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
@@ -763,10 +763,6 @@ To prepare my data, I will launch my study on jsPsych to ensure that data analys
 To further show the comparison of the studies, below shows the original and replication mixed ANOVA tables. For the replication ANOVA table, it is more simplified than the original study as the study design itself is more simplified than the original.
 
 [Original Study ANOVA Table:]{.underline}
-
-![Original Study ANOVA](original_anova.png)
-
-![](images/original anova.png)
 
 [Replication ANOVA Table:]{.underline}
 
