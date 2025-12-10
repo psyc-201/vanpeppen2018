@@ -1,7 +1,7 @@
 ---
 title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)"
 author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T."
-date: "2025-12-09"
+date: "2025-12-10"
 format:
   html:
     toc: true
@@ -43,7 +43,7 @@ For the intervention phase, the study provided CT-instructions that educated par
 
 **Original Study:** Once completing a consent form, participants completed the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions.
 
-**Replication Study:** The study procedures follow the original study. The only difference is that the study was conducted online, so participants had to complete an online consent agreement by clicking 'I agree'. Afterwards, they completed the same eight critical thinking skill pretest questions followed my mental effort ratings. Instead of being given a paper packet, participants virtually read the critical thinking skills for 2 minutes. Afterwards, they completed either three self-explanation exercises or read through them. Then, they completed the posttest before being awarded Sona credits for their completion.
+**Replication Study:** The replication study procedures follow the original study. The only difference is that the study was conducted online, so participants had to complete an online consent agreement by clicking 'I agree'. Afterwards, they completed the same eight critical thinking skill pretest questions followed my mental effort ratings. Instead of being given a paper packet, participants virtually read the critical thinking skills for 2 minutes. Afterwards, they completed either three self-explanation exercises or read through them. Then, they completed the posttest before being awarded Sona credits for their completion.
 
 ## Analysis Plan
 
@@ -243,6 +243,7 @@ pretest_all_data <- dplyr::bind_cols(
     dplyr::select(participant_id, source_file, condition),
   pretest_answers
 )
+# Look at the pretest data
 nrow(pretest_all_data)
 head(pretest_all_data)
 ```
@@ -281,6 +282,7 @@ posttest_all_data <- posttest_mc_effort %>%
     names_from  = key,    
     values_from = value
   )
+# Take a look at the posttest data
 nrow(posttest_all_data)
 names(posttest_all_data)
 head(posttest_all_data)
@@ -365,6 +367,7 @@ pretest_scored_effort <- cbind(
   pretest_scored,
   effort_key_number
 )
+# Look at pretest effort scored
 head(pretest_scored_effort)
 ```
 
@@ -409,6 +412,7 @@ posttest_scored <- cbind(
   posttest_total_accuracy = posttest_total_accuracy,
   posttest_total_prop     = posttest_total_prop
 )
+# Look at posttest scored
 head(posttest_scored)
 ```
 
@@ -439,6 +443,7 @@ effort_num_post <- as.data.frame(
 names(effort_num_post) <- paste0(names(effort_num_post), "_num")
 # Attach effort columns to your scored posttest data
 posttest_scored_effort <- cbind(posttest_scored, effort_num_post)
+# Look at the posttest effort scored data set
 head(posttest_scored_effort)
 ```
 

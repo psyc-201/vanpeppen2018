@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., &amp; Van Gog, T.">
-<meta name="dcterms.date" content="2025-12-09">
+<meta name="dcterms.date" content="2025-12-10">
 
 <title>Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al.&nbsp;(2018, November)</title>
 <style>
@@ -174,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 9, 2025</p>
+      <p class="date">December 10, 2025</p>
     </div>
   </div>
   
@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="procedure" class="level2">
 <h2 class="anchored" data-anchor-id="procedure">Procedure</h2>
 <p><strong>Original Study:</strong> Once completing a consent form, participants completed the pretest that measured their initial critical thinking skills through Sona-systems. Afterwards, they were given a paper packet of the CT-instruction, moving them to the intervention phase that taught participants different types of reasoning skills. Then, participants integrated what they learned by solving four practice problems by engaging in self-explanation. Once they completed the practice intervention, participants completed the immediate posttest. Two weeks later, participants were given a delayed posttest that involved the same questions as the immediate version. However, they were also tasked to rate how much mental effort was exerted in completing the questions.</p>
-<p><strong>Replication Study:</strong> The study procedures follow the original study. The only difference is that the study was conducted online, so participants had to complete an online consent agreement by clicking ‘I agree’. Afterwards, they completed the same eight critical thinking skill pretest questions followed my mental effort ratings. Instead of being given a paper packet, participants virtually read the critical thinking skills for 2 minutes. Afterwards, they completed either three self-explanation exercises or read through them. Then, they completed the posttest before being awarded Sona credits for their completion.</p>
+<p><strong>Replication Study:</strong> The replication study procedures follow the original study. The only difference is that the study was conducted online, so participants had to complete an online consent agreement by clicking ‘I agree’. Afterwards, they completed the same eight critical thinking skill pretest questions followed my mental effort ratings. Instead of being given a paper packet, participants virtually read the critical thinking skills for 2 minutes. Afterwards, they completed either three self-explanation exercises or read through them. Then, they completed the posttest before being awarded Sona credits for their completion.</p>
 </section>
 <section id="analysis-plan" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-plan">Analysis Plan</h2>
@@ -965,7 +965,8 @@ $attention_check_pretest_effort
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, source_file, condition),</span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  pretest_answers</span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pretest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the pretest data</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pretest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 80</code></pre>
 </div>
@@ -1108,7 +1109,8 @@ $attention_check_pretest_effort
 <span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> key,    </span>
 <span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(posttest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the posttest data</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(posttest_all_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 80</code></pre>
 </div>
@@ -1222,7 +1224,8 @@ $attention_check_pretest_effort
 <span id="cb71-21"><a href="#cb71-21" aria-hidden="true" tabindex="-1"></a>  pretest_scored,</span>
 <span id="cb71-22"><a href="#cb71-22" aria-hidden="true" tabindex="-1"></a>  effort_key_number</span>
 <span id="cb71-23"><a href="#cb71-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb71-24"><a href="#cb71-24" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_scored_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-24"><a href="#cb71-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at pretest effort scored</span></span>
+<span id="cb71-25"><a href="#cb71-25" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pretest_scored_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  participant_id         source_file           condition
 1         223300 1m3jhrcedv_TEST.csv    self_explanation
@@ -1358,7 +1361,8 @@ $attention_check_pretest_effort
 <span id="cb73-34"><a href="#cb73-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">posttest_total_accuracy =</span> posttest_total_accuracy,</span>
 <span id="cb73-35"><a href="#cb73-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">posttest_total_prop     =</span> posttest_total_prop</span>
 <span id="cb73-36"><a href="#cb73-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_scored)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at posttest scored</span></span>
+<span id="cb73-38"><a href="#cb73-38" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_scored)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  participant_id         source_file           condition q1_mc_score
 1         223300 1m3jhrcedv_TEST.csv    self_explanation           1
@@ -1410,7 +1414,8 @@ $attention_check_pretest_effort
 <span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(effort_num_post) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">names</span>(effort_num_post), <span class="st">"_num"</span>)</span>
 <span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach effort columns to your scored posttest data</span></span>
 <span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>posttest_scored_effort <span class="ot">&lt;-</span> <span class="fu">cbind</span>(posttest_scored, effort_num_post)</span>
-<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_scored_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the posttest effort scored data set</span></span>
+<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(posttest_scored_effort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  participant_id         source_file           condition q1_mc_score
 1         223300 1m3jhrcedv_TEST.csv    self_explanation           1
