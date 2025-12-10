@@ -1,11 +1,11 @@
 ---
-title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)" 
-author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T." 
-date: "2025-12-09" 
-format: 
-  html: 
-  toc: true 
-  toc-depth: 3
+title: "Replication of Effects of Self-Explaining on Learning and Transfer of Critical Thinking Skills X by Van Peppen et al. (2018, November)"
+author: "Van Peppen, L. M., Verkoeijen, P. P., Heijltjes, A. E., Janssen, E. M., Koopmans, D., & Van Gog, T."
+date: "2025-12-09"
+format:
+  html:
+    toc: true
+    toc-depth: 3
 ---
 
 <!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
@@ -764,7 +764,7 @@ To further show the comparison of the studies, below shows the original and repl
 
 [Original Study ANOVA Table:]{.underline}
 
-![](original anova.png)
+![Original ANOVA](original_anova.png)
 
 [Replication ANOVA Table:]{.underline}
 
